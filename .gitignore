@@ -1,0 +1,24 @@
+# Archivos y directorios comunes a ignorar
+.DS_Store
+.idea/
+*.iml
+*.swp
+
+# Específicos para el backend de Spring
+backend/target/
+backend/.mvn/
+backend/.classpath
+backend/.project
+backend/.settings/
+
+# Específicos para frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.cache/
+frontend/package-lock.json
+
+# Docker y docker-compose
+docker-compose.override.yml
+
+# Base de datos MySQL
+mysql/data/

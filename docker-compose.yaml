@@ -1,0 +1,49 @@
+version: '3.8'
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.backend
+    ports:
+      - "4000:4000"
+    depends_on:
+      - mysql
+
+  mysql:
+    build:
+      context: ./mysql
+      dockerfile: Dockerfile.mysql
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+    volumes:
+      # - mysql-data:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root-web-softwaredocbuilder
+      MYSQL_DATABASE: web-softwaredocbuilder
+      MYSQL_USER: web-softwaredocbuilder
+      MYSQL_PASSWORD: web-softwaredocbuilder
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: web-softwaredocbuilder
+      PMA_PASSWORD: web-softwaredocbuilder
+
+volumes:
+  # mysql-data:
+  init:
