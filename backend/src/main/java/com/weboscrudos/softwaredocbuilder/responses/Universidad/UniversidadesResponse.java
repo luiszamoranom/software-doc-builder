@@ -1,9 +1,13 @@
 package com.weboscrudos.softwaredocbuilder.responses.Universidad;
 
 import com.weboscrudos.softwaredocbuilder.models.UniversidadModel;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 
+@Getter
+@Setter
 public class UniversidadesResponse {
     private boolean exito;
     private String mensaje;
@@ -11,30 +15,6 @@ public class UniversidadesResponse {
     private ArrayList<UniversidadModel> universidades;
 
     public UniversidadesResponse() {
-    }
-
-    public boolean isExito() {
-        return exito;
-    }
-
-    public void setExito(boolean exito) {
-        this.exito = exito;
-    }
-
-    public String getMensaje() {
-        return mensaje;
-    }
-
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
-    }
-
-    public ArrayList<UniversidadModel> getUniversidades() {
-        return universidades;
-    }
-
-    public void setUniversidades(ArrayList<UniversidadModel> universidades) {
-        this.universidades = universidades;
     }
 }
 

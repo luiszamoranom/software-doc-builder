@@ -1,7 +1,11 @@
 package com.weboscrudos.softwaredocbuilder.responses.Usuario;
 
 import com.weboscrudos.softwaredocbuilder.models.UsuarioModel;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class UsuarioResponse {
     private boolean exito;
     private String mensaje;
@@ -9,29 +13,5 @@ public class UsuarioResponse {
     private UsuarioModel usuario;
 
     public UsuarioResponse() {
-    }
-
-    public boolean isExito() {
-        return exito;
-    }
-
-    public void setExito(boolean exito) {
-        this.exito = exito;
-    }
-
-    public String getMensaje() {
-        return mensaje;
-    }
-
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
-    }
-
-    public UsuarioModel getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(UsuarioModel usuario) {
-        this.usuario = usuario;
     }
 }
