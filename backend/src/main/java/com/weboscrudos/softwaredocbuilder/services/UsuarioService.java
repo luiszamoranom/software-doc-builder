@@ -14,7 +14,7 @@ public class UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
 
-    public UsuarioModel guardarUsuario(@RequestBody UsuarioModel usuarioModel) {
+    public UsuarioModel save(UsuarioModel usuarioModel) {
         return usuarioRepository.save(usuarioModel);
     }
 
@@ -24,9 +24,5 @@ public class UsuarioService {
 
     public Optional<UsuarioModel> findById(String rut) {
         return usuarioRepository.findById(rut);
-    }
-
-    public UsuarioModel save(UsuarioModel usuarioModel) {
-        return usuarioRepository.save(usuarioModel);
     }
 }

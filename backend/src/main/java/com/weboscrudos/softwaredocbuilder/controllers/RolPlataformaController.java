@@ -21,7 +21,7 @@ public class RolPlataformaController {
     public RolesPlataformaResponse obtenerTodosLosRolPlataforma(){
         RolesPlataformaResponse response = new RolesPlataformaResponse();
 
-        ArrayList<RolPlataformaModel> roles = (ArrayList<RolPlataformaModel>) rolPlataformaService.findAll();
+        ArrayList<RolPlataformaModel> roles = rolPlataformaService.findAll();
         if (roles.isEmpty()) {
             response.setExito(false);
             response.setMensaje("No se encontraron roles");
