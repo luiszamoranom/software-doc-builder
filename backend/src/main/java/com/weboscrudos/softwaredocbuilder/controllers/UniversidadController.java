@@ -1,17 +1,14 @@
 package com.weboscrudos.softwaredocbuilder.controllers;
 
 import com.weboscrudos.softwaredocbuilder.models.UniversidadModel;
-import com.weboscrudos.softwaredocbuilder.repository.UniversidadRepository;
 import com.weboscrudos.softwaredocbuilder.responses.Universidad.UniversidadResponse;
 import com.weboscrudos.softwaredocbuilder.responses.Universidad.UniversidadesResponse;
 import com.weboscrudos.softwaredocbuilder.services.UniversidadService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 @RestController
