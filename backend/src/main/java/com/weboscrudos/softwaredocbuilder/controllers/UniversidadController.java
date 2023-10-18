@@ -21,11 +21,11 @@ public class UniversidadController {
     public UniversidadesResponse findFiltrado(@PathVariable("filtro") String filtro){
         ArrayList<UniversidadModel> universidades;
         if("todas".equals(filtro)){
-            universidades= (ArrayList<UniversidadModel>) universidadService.findAll();
+            universidades= universidadService.findAll();
         }else if("habilitadas".equals(filtro)){
-            universidades= (ArrayList<UniversidadModel>) universidadService.findByEstadoTrue();
+            universidades= universidadService.findByEstadoTrue();
         }else if("deshabilitadas".equals(filtro)){
-            return UniversidadesResponse.createErrorResponse("PathVariable no válido");
+            universidades= universidadService.findByEstadoFalse();
         } else {
             return UniversidadesResponse.createErrorResponse("PathVariable no válido");
         }

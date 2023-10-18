@@ -25,4 +25,26 @@ public class UsuarioService {
     public Optional<UsuarioModel> findById(String rut) {
         return usuarioRepository.findById(rut);
     }
+
+    public ArrayList<UsuarioModel> findByEstadoTrue() {
+        return usuarioRepository.findByEstadoTrue();
+    }
+
+    public ArrayList<UsuarioModel> findByEstadoFalse() {
+        return usuarioRepository.findByEstadoFalse();
+    }
+
+    public UsuarioModel setEstadoTrue(Optional<UsuarioModel> usuarioExistente) {
+        UsuarioModel usuarioActualizado = usuarioExistente.get();
+        usuarioActualizado.setEstado(true);
+        usuarioRepository.save(usuarioActualizado);
+        return usuarioActualizado;
+    }
+
+    public UsuarioModel setEstadoFalse(Optional<UsuarioModel> usuarioExistente) {
+        UsuarioModel usuarioActualizado = usuarioExistente.get();
+        usuarioActualizado.setEstado(false);
+        usuarioRepository.save(usuarioActualizado);
+        return usuarioActualizado;
+    }
 }
