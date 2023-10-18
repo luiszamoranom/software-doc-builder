@@ -1,5 +1,6 @@
 package com.weboscrudos.softwaredocbuilder.services;
 
+import com.weboscrudos.softwaredocbuilder.dto.universidad.UniversidadCreateDTO;
 import com.weboscrudos.softwaredocbuilder.models.UniversidadModel;
 import com.weboscrudos.softwaredocbuilder.repository.UniversidadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,11 @@ public class UniversidadService {
     }
 
 
-    public UniversidadModel save(UniversidadModel universidadModel) {
+    public UniversidadModel save(UniversidadCreateDTO universidadCreateDTO) {
+        UniversidadModel universidadModel = new UniversidadModel();
+        universidadModel.setNombre(universidadCreateDTO.getNombre());
+        universidadModel.setAbreviacion(universidadCreateDTO.getAbreviacion());
+        universidadModel.setEstado(universidadCreateDTO.isEstado());
         return universidadRepository.save(universidadModel);
     }
 

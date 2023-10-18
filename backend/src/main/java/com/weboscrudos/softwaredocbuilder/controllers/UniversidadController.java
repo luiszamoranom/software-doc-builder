@@ -1,5 +1,7 @@
 package com.weboscrudos.softwaredocbuilder.controllers;
 
+import com.weboscrudos.softwaredocbuilder.dto.universidad.UniversidadCreateDTO;
+import com.weboscrudos.softwaredocbuilder.dto.universidad.UniversidadUpdateDTO;
 import com.weboscrudos.softwaredocbuilder.models.UniversidadModel;
 import com.weboscrudos.softwaredocbuilder.responses.Universidad.UniversidadResponse;
 import com.weboscrudos.softwaredocbuilder.responses.Universidad.UniversidadesResponse;
@@ -38,14 +40,14 @@ public class UniversidadController {
     }
 
     @PostMapping
-    public UniversidadResponse save(@RequestBody UniversidadModel universidadModel){
-        Optional<UniversidadModel> universidadExistente = universidadService.findById(universidadModel.getAbreviacion());
+    public UniversidadResponse save(@RequestBody UniversidadCreateDTO universidadCreateDTO){
+        Optional<UniversidadModel> universidadExistente = universidadService.findById(universidadCreateDTO.getAbreviacion());
         if (universidadExistente.isPresent()) {
             return UniversidadResponse.createErrorResponse("Ya existe una universidad con ese id");
         }
 
-        UniversidadModel universidadGuardada = universidadService.save(universidadModel);
-        return UniversidadResponse.createSuccessResponse("Universidad guardada con éxito", universidadGuardada);
+        UniversidadModel universidadGuardada = universidadService.save(universidadCreateDTO);
+        return UniversidadResponse.createSuccessResponse("Universidad creada con éxito", universidadGuardada);
     }
 
     @GetMapping("/{abreviacion}")
@@ -57,15 +59,15 @@ public class UniversidadController {
         return UniversidadResponse.createSuccessResponse("Existe una universidad con esa abreviación", universidadExistente.orElse(null));
     }
 
-    @PutMapping("/{abreviacion}")
+    @PatchMapping("/{abreviacion}")
     public UniversidadResponse update(@PathVariable("abreviacion") String abreviacion,
-                                      @RequestBody Map<String, String> campos) {
+                                      @RequestBody UniversidadUpdateDTO universidadUpdateDTO) {
         Optional<UniversidadModel> universidadExistente = universidadService.findById(abreviacion);
         if (universidadExistente.isEmpty()) {
             return UniversidadResponse.createErrorResponse("No existe una universidad con esa abreviación");
         }
 
-        UniversidadModel universidadActualizada = universidadService.update(universidadExistente, campos.get("nuevoNombre"));
+        UniversidadModel universidadActualizada = universidadService.update(universidadExistente, universidadUpdateDTO.getNombre());
         return UniversidadResponse.createSuccessResponse("Universidad actualizada con éxito", universidadActualizada);
     }
 

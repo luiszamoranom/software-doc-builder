@@ -1,5 +1,6 @@
 package com.weboscrudos.softwaredocbuilder.services;
 
+import com.weboscrudos.softwaredocbuilder.dto.usuario.UsuarioCreateDTO;
 import com.weboscrudos.softwaredocbuilder.models.UsuarioModel;
 import com.weboscrudos.softwaredocbuilder.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,13 @@ public class UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
 
-    public UsuarioModel save(UsuarioModel usuarioModel) {
+    public UsuarioModel save(UsuarioCreateDTO usuarioCreateDTO) {
+        UsuarioModel usuarioModel= new UsuarioModel();
+        usuarioModel.setRut(usuarioCreateDTO.getNombres());
+        usuarioModel.setNombres(usuarioCreateDTO.getNombres());
+        usuarioModel.setApellidos(usuarioCreateDTO.getApellidos());
+        usuarioModel.setContrasena(usuarioCreateDTO.getContrasena());
+        usuarioModel.setEmail(usuarioCreateDTO.getEmail());
         return usuarioRepository.save(usuarioModel);
     }
 

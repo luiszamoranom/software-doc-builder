@@ -1,5 +1,6 @@
 package com.weboscrudos.softwaredocbuilder.controllers;
 
+import com.weboscrudos.softwaredocbuilder.dto.usuario.UsuarioCreateDTO;
 import com.weboscrudos.softwaredocbuilder.models.UniversidadModel;
 import com.weboscrudos.softwaredocbuilder.models.UsuarioModel;
 import com.weboscrudos.softwaredocbuilder.responses.Universidad.UniversidadResponse;
@@ -61,13 +62,13 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public UsuarioResponse save(@RequestBody UsuarioModel usuarioModel){
-        Optional<UsuarioModel> posibleUsuario = usuarioService.findById(usuarioModel.getRut());
+    public UsuarioResponse save(@RequestBody UsuarioCreateDTO usuarioCreateDTO){
+        Optional<UsuarioModel> posibleUsuario = usuarioService.findById(usuarioCreateDTO.getRut());
         if (posibleUsuario.isPresent()) {
             return UsuarioResponse.createErrorResponse("Ya existe un usuario con ese rut, no es posible registrarlo");
         }
 
-        usuarioService.save(usuarioModel);
+        UsuarioModel usuarioModel = usuarioService.save(usuarioCreateDTO);
         return UsuarioResponse.createSuccessResponse("Usuario guardado exitosamente",usuarioModel);
     }
 
