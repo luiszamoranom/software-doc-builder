@@ -18,7 +18,7 @@ public class UniversidadController {
     UniversidadService universidadService;
 
     @GetMapping("/filtro/{filtro}")
-    public UniversidadesResponse obtenerTodasLasUniversidades(@PathVariable("filtro") String filtro){
+    public UniversidadesResponse findFiltrado(@PathVariable("filtro") String filtro){
         ArrayList<UniversidadModel> universidades;
         if("todas".equals(filtro)){
             universidades= (ArrayList<UniversidadModel>) universidadService.findAll();
@@ -38,7 +38,7 @@ public class UniversidadController {
     }
 
     @PostMapping
-    public UniversidadResponse guardarUniversidad(@RequestBody UniversidadModel universidadModel){
+    public UniversidadResponse save(@RequestBody UniversidadModel universidadModel){
         Optional<UniversidadModel> universidadExistente = universidadService.findById(universidadModel.getAbreviacion());
         if (universidadExistente.isPresent()) {
             return UniversidadResponse.createErrorResponse("Ya existe una universidad con ese id");
@@ -49,7 +49,7 @@ public class UniversidadController {
     }
 
     @GetMapping("/{abreviacion}")
-    public UniversidadResponse buscarPorAbreviacion(@PathVariable("abreviacion") String abreviacion){
+    public UniversidadResponse findById(@PathVariable("abreviacion") String abreviacion){
         Optional<UniversidadModel> universidadExistente = universidadService.findById(abreviacion);
         if (universidadExistente.isEmpty()) {
             return UniversidadResponse.createErrorResponse("No existe una universidad con esa abreviación");
@@ -58,36 +58,36 @@ public class UniversidadController {
     }
 
     @PutMapping("/{abreviacion}")
-    public UniversidadResponse actualizarInformacion(@PathVariable("abreviacion") String abreviacion,
-                                                     @RequestBody Map<String, String> campos) {
+    public UniversidadResponse update(@PathVariable("abreviacion") String abreviacion,
+                                      @RequestBody Map<String, String> campos) {
         Optional<UniversidadModel> universidadExistente = universidadService.findById(abreviacion);
         if (universidadExistente.isEmpty()) {
             return UniversidadResponse.createErrorResponse("No existe una universidad con esa abreviación");
         }
 
-        UniversidadModel universidadActualizada = universidadService.actualizarInformacion(universidadExistente, campos.get("nuevoNombre"));
+        UniversidadModel universidadActualizada = universidadService.update(universidadExistente, campos.get("nuevoNombre"));
         return UniversidadResponse.createSuccessResponse("Universidad actualizada con éxito", universidadActualizada);
     }
 
     @PutMapping("/habilitar/{abreviacion}")
-    public UniversidadResponse habilitarPorAbreviacion(@PathVariable("abreviacion") String abreviacion){
+    public UniversidadResponse setEstadoTrue(@PathVariable("abreviacion") String abreviacion){
         Optional<UniversidadModel> universidadExistente = universidadService.findById(abreviacion);
         if (universidadExistente.isEmpty()) {
             return UniversidadResponse.createErrorResponse("No existe una universidad con esa abreviación");
         }
 
-        UniversidadModel universidadActualizada = universidadService.habilitarPorAbreviacion(universidadExistente);
+        UniversidadModel universidadActualizada = universidadService.setEstadoTrue(universidadExistente);
         return UniversidadResponse.createSuccessResponse("Universidad habilitada con éxito", universidadActualizada);
     }
 
     @PutMapping("/deshabilitar/{abreviacion}")
-    public UniversidadResponse deshabilitarPorAbreviacion(@PathVariable("abreviacion") String abreviacion){
+    public UniversidadResponse setEstadoFalse(@PathVariable("abreviacion") String abreviacion){
         Optional<UniversidadModel> universidadExistente = universidadService.findById(abreviacion);
         if (universidadExistente.isEmpty()) {
             return UniversidadResponse.createErrorResponse("No existe una universidad con esa abreviación");
         }
 
-        UniversidadModel universidadActualizada = universidadService.deshabilitarPorAbreviacion(universidadExistente);
+        UniversidadModel universidadActualizada = universidadService.setEstadoFalse(universidadExistente);
         return UniversidadResponse.createSuccessResponse("Universidad deshabilitada con éxito", universidadActualizada);
     }
 }

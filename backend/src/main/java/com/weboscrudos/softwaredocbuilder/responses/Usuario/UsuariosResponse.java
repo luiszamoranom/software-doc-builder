@@ -1,8 +1,6 @@
 package com.weboscrudos.softwaredocbuilder.responses.Usuario;
-
-import com.weboscrudos.softwaredocbuilder.models.UniversidadModel;
 import com.weboscrudos.softwaredocbuilder.models.UsuarioModel;
-import com.weboscrudos.softwaredocbuilder.responses.Universidad.UniversidadesResponse;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
