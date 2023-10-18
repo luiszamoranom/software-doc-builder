@@ -14,15 +14,24 @@ public class UniversidadService {
     @Autowired
     UniversidadRepository universidadRepository;
 
-    public ArrayList<UniversidadModel> obtenerTodasLasUniversidades(){
+    public ArrayList<UniversidadModel> findAll(){
         return (ArrayList<UniversidadModel>) universidadRepository.findAll();
     }
 
-    public UniversidadModel guardarUniversidad(@RequestBody UniversidadModel universidadModel) {
+    public ArrayList<UniversidadModel> findByEstadoTrue(){
+        return (ArrayList<UniversidadModel>) universidadRepository.findByEstadoTrue();
+    }
+
+    public ArrayList<UniversidadModel> findByEstadoFalse(){
+        return (ArrayList<UniversidadModel>) universidadRepository.findByEstadoFalse();
+    }
+
+
+    public UniversidadModel save(UniversidadModel universidadModel) {
         return universidadRepository.save(universidadModel);
     }
 
-    public Optional<UniversidadModel> buscarPorAbreviacion(String abreviacion){
+    public Optional<UniversidadModel> findById(String abreviacion){
         return universidadRepository.findById(abreviacion);
     }
 
@@ -33,23 +42,17 @@ public class UniversidadService {
         return universidad;
     }
 
-    public UniversidadModel habilitarPorAbreviacion(Optional<UniversidadModel> request, String abreviacion){
-        UniversidadModel universidadActualizada = buscarPorAbreviacion(abreviacion).get();
+    public UniversidadModel habilitarPorAbreviacion(Optional<UniversidadModel> universidadExistente){
+        UniversidadModel universidadActualizada = universidadExistente.get();
         universidadActualizada.setEstado(true);
         universidadRepository.save(universidadActualizada);
         return universidadActualizada;
     }
 
-    public UniversidadModel deshabilitarPorAbreviacion(Optional<UniversidadModel> request, String abreviacion){
-        UniversidadModel universidadActualizada = buscarPorAbreviacion(abreviacion).get();
+    public UniversidadModel deshabilitarPorAbreviacion(Optional<UniversidadModel> universidadExistente){
+        UniversidadModel universidadActualizada =  universidadExistente.get();
         universidadActualizada.setEstado(false);
         universidadRepository.save(universidadActualizada);
         return universidadActualizada;
     }
-
-
-
-
-
-
 }

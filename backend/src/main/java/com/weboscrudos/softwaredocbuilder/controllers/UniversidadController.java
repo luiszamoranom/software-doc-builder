@@ -20,9 +20,6 @@ public class UniversidadController {
     @Autowired
     UniversidadService universidadService;
 
-    @Autowired
-    UniversidadRepository universidadRepository;
-
     @GetMapping("/filtro/{filtro}")
     public UniversidadesResponse obtenerTodasLasUniversidades(@PathVariable("filtro") String filtro){
         UniversidadesResponse response = new UniversidadesResponse();
@@ -31,11 +28,11 @@ public class UniversidadController {
 
         ArrayList<UniversidadModel> universidades;
         if(Objects.equals(filtro, "todas")){
-            universidades= (ArrayList<UniversidadModel>) universidadRepository.findAll();
+            universidades= (ArrayList<UniversidadModel>) universidadService.findAll();
         }else if(Objects.equals(filtro, "habilitadas")){
-            universidades= (ArrayList<UniversidadModel>) universidadRepository.findByEstadoTrue();
+            universidades= (ArrayList<UniversidadModel>) universidadService.findByEstadoTrue();
         }else if(Objects.equals(filtro, "deshabilitadas")){
-            universidades= (ArrayList<UniversidadModel>) universidadRepository.findByEstadoFalse();
+            universidades= (ArrayList<UniversidadModel>) universidadService.findByEstadoFalse();
         }else{
             response.setExito(false);
             response.setMensaje("PathVariable no válido");
@@ -60,7 +57,7 @@ public class UniversidadController {
     public UniversidadResponse guardarUniversidad(@RequestBody UniversidadModel universidadModel){
         UniversidadResponse response = new UniversidadResponse();
 
-        Optional<UniversidadModel> universidadExistente = universidadRepository.findById(universidadModel.getAbreviacion());
+        Optional<UniversidadModel> universidadExistente = universidadService.findById(universidadModel.getAbreviacion());
         if (universidadExistente.isPresent()) {
             response.setExito(false);
             response.setMensaje("Ya existe una universidad con ese id");
@@ -68,7 +65,7 @@ public class UniversidadController {
             return response;
         }
 
-        UniversidadModel universidadGuardada = universidadRepository.save(universidadModel);
+        UniversidadModel universidadGuardada = universidadService.save(universidadModel);
         response.setExito(true);
         response.setMensaje("Universidad guardada con éxito");
         response.setUniversidad(universidadGuardada);
@@ -78,7 +75,7 @@ public class UniversidadController {
     @GetMapping("/{abreviacion}")
     public UniversidadResponse buscarPorAbreviacion(@PathVariable("abreviacion") String abreviacion){
         UniversidadResponse response = new UniversidadResponse();
-        Optional<UniversidadModel> universidadExistente = universidadService.buscarPorAbreviacion(abreviacion);
+        Optional<UniversidadModel> universidadExistente = universidadService.findById(abreviacion);
         if (universidadExistente.isEmpty()) {
             response.setExito(false);
             response.setMensaje("No existe una universidad con esa abreviación");
@@ -99,7 +96,7 @@ public class UniversidadController {
 
         String nuevoNombre = campos.get("nuevoNombre");
 
-        Optional<UniversidadModel> universidadExistente = universidadService.buscarPorAbreviacion(abreviacion);
+        Optional<UniversidadModel> universidadExistente = universidadService.findById(abreviacion);
         if (universidadExistente.isEmpty()) {
             response.setExito(false);
             response.setMensaje("No existe una universidad con esa abreviación");
@@ -119,7 +116,7 @@ public class UniversidadController {
     @PutMapping("/habilitar/{abreviacion}")
     public UniversidadResponse habilitarPorAbreviacion(@PathVariable("abreviacion") String abreviacion){
         UniversidadResponse response = new UniversidadResponse();
-        Optional<UniversidadModel> universidadExistente =universidadService.buscarPorAbreviacion(abreviacion);
+        Optional<UniversidadModel> universidadExistente =universidadService.findById(abreviacion);
         if (universidadExistente.isEmpty()) {
             response.setExito(false);
             response.setMensaje("No existe una universidad con esa abreviación");
@@ -127,7 +124,7 @@ public class UniversidadController {
             return response;
         }
 
-        UniversidadModel universidadActualizada = universidadService.habilitarPorAbreviacion(universidadExistente,abreviacion);
+        UniversidadModel universidadActualizada = universidadService.habilitarPorAbreviacion(universidadExistente);
         response.setExito(true);
         response.setMensaje("Universidad habilitada con éxito");
         response.setUniversidad(universidadActualizada);
@@ -137,7 +134,7 @@ public class UniversidadController {
     @PutMapping("/deshabilitar/{abreviacion}")
     public UniversidadResponse deshabilitarPorAbreviacion(@PathVariable("abreviacion") String abreviacion){
         UniversidadResponse response = new UniversidadResponse();
-        Optional<UniversidadModel> universidadExistente =universidadService.buscarPorAbreviacion(abreviacion);
+        Optional<UniversidadModel> universidadExistente =universidadService.findById(abreviacion);
         if (universidadExistente.isEmpty()) {
             response.setExito(false);
             response.setMensaje("No existe una universidad con esa abreviación");
@@ -145,7 +142,7 @@ public class UniversidadController {
             return response;
         }
 
-        UniversidadModel universidadActualizada = universidadService.deshabilitarPorAbreviacion(universidadExistente,abreviacion);
+        UniversidadModel universidadActualizada = universidadService.deshabilitarPorAbreviacion(universidadExistente);
         response.setExito(true);
         response.setMensaje("Universidad deshabilitada con éxito");
         response.setUniversidad(universidadActualizada);
