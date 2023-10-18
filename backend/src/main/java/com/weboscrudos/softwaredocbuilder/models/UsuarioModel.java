@@ -23,5 +23,11 @@ public class UsuarioModel {
     private String apellidos;
 
     @Column
+    private String contrasena;
+
+    @Column
+    private String email;
+
+    @Column
     private boolean estado = true;
 }
