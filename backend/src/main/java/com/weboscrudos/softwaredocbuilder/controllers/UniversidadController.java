@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -91,7 +92,31 @@ public class UniversidadController {
         return response;
     }
 
-    @GetMapping("/habilitar/{abreviacion}")
+    @PutMapping("/{abreviacion}")
+    public UniversidadResponse actualizarInformacion(@PathVariable("abreviacion") String abreviacion,
+                                                     @RequestBody Map<String, String> campos) {
+        UniversidadResponse response = new UniversidadResponse();
+
+        String nuevoNombre = campos.get("nuevoNombre");
+
+        Optional<UniversidadModel> universidadExistente = universidadService.buscarPorAbreviacion(abreviacion);
+        if (universidadExistente.isEmpty()) {
+            response.setExito(false);
+            response.setMensaje("No existe una universidad con esa abreviación");
+            response.setUniversidad(null);
+            return response;
+        }
+
+
+        UniversidadModel universidadActualizada = universidadService.actualizarInformacion(universidadExistente,nuevoNombre);
+        response.setExito(true);
+        response.setMensaje("Universidad actualizada con éxito");
+        response.setUniversidad(universidadActualizada);
+
+        return response;
+    }
+
+    @PutMapping("/habilitar/{abreviacion}")
     public UniversidadResponse habilitarPorAbreviacion(@PathVariable("abreviacion") String abreviacion){
         UniversidadResponse response = new UniversidadResponse();
         Optional<UniversidadModel> universidadExistente =universidadService.buscarPorAbreviacion(abreviacion);
@@ -109,7 +134,7 @@ public class UniversidadController {
         return response;
     }
 
-    @GetMapping("/deshabilitar/{abreviacion}")
+    @PutMapping("/deshabilitar/{abreviacion}")
     public UniversidadResponse deshabilitarPorAbreviacion(@PathVariable("abreviacion") String abreviacion){
         UniversidadResponse response = new UniversidadResponse();
         Optional<UniversidadModel> universidadExistente =universidadService.buscarPorAbreviacion(abreviacion);

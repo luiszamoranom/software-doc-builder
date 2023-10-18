@@ -26,11 +26,11 @@ public class UniversidadService {
         return universidadRepository.findById(abreviacion);
     }
 
-    // sólo se puede actualizar el nombre, no la abreviacion
-    public UniversidadModel actualizarNombrePorAbreviacion(UniversidadModel request, String abreviacion){
-        UniversidadModel universidadActualizada = buscarPorAbreviacion(abreviacion).get();
-        universidadActualizada.setNombre(request.getNombre());
-        return universidadActualizada;
+    public UniversidadModel actualizarInformacion(Optional<UniversidadModel> universidadExistente, String nuevoNombre) {
+        UniversidadModel universidad = universidadExistente.get();
+        universidad.setNombre(nuevoNombre);
+        universidadRepository.save(universidad);
+        return universidad;
     }
 
     public UniversidadModel habilitarPorAbreviacion(Optional<UniversidadModel> request, String abreviacion){
