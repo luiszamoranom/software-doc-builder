@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -38,6 +39,25 @@ public class UsuarioController {
         } else {
             return UsuariosResponse.createSuccessResponse("Usuarios obtenidas con éxito", usuarios);
         }
+    }
+
+    @GetMapping("/login/{rut}")
+    public UsuarioResponse login(@PathVariable("rut") String rut,
+                                      @RequestBody Map<String, String> campos) {
+        Optional<UsuarioModel> usuarioExistente = usuarioService.findById(rut);
+        if (usuarioExistente.isEmpty()) {
+            return UsuarioResponse.createErrorResponse("No es posible realizar el login ya que no existe usuario con dicho rut");
+        }
+
+        if(campos.get("rut").equals(usuarioExistente.get().getRut()) && campos.get("contrasena").equals(usuarioExistente.get().getContrasena())) {
+            if(usuarioExistente.get().isEstado()){
+                return UsuarioResponse.createSuccessResponse("Login exitoso", usuarioExistente.get());
+            }else{
+                return UsuarioResponse.createErrorResponse("Credenciales correctas pero el usuario esta deshabilitado, login fallido");
+            }
+        }
+
+        return UsuarioResponse.createErrorResponse("Contraseña incorrecta");
     }
 
     @PostMapping
