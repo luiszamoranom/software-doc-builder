@@ -16,4 +16,6 @@ public class RolPlataformaService {
     public ArrayList<RolPlataformaModel> obtenerTodosLosRolPlataforma() {
         return (ArrayList<RolPlataformaModel>) rolPlataformaRepository.findAll();
     }
+
+
 }

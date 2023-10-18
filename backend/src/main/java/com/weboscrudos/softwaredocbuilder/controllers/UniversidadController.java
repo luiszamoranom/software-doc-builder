@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -21,11 +22,27 @@ public class UniversidadController {
     @Autowired
     UniversidadRepository universidadRepository;
 
-    @GetMapping
-    public UniversidadesResponse obtenerTodasLasUniversidades(){
+    @GetMapping("/filtro/{filtro}")
+    public UniversidadesResponse obtenerTodasLasUniversidades(@PathVariable("filtro") String filtro){
         UniversidadesResponse response = new UniversidadesResponse();
+        System.out.println("RequestBody "+filtro);
 
-        ArrayList<UniversidadModel> universidades = (ArrayList<UniversidadModel>) universidadRepository.findAll();
+
+        ArrayList<UniversidadModel> universidades;
+        if(Objects.equals(filtro, "todas")){
+            universidades= (ArrayList<UniversidadModel>) universidadRepository.findAll();
+        }else if(Objects.equals(filtro, "habilitadas")){
+            universidades= (ArrayList<UniversidadModel>) universidadRepository.findByEstadoTrue();
+        }else if(Objects.equals(filtro, "deshabilitadas")){
+            universidades= (ArrayList<UniversidadModel>) universidadRepository.findByEstadoFalse();
+        }else{
+            response.setExito(false);
+            response.setMensaje("PathVariable no válido");
+            response.setUniversidades(null);
+            return response;
+        }
+
+
         if (universidades.isEmpty()) {
             response.setExito(false);
             response.setMensaje("No se encontraron universidades");
@@ -57,4 +74,56 @@ public class UniversidadController {
         return response;
     }
 
+    @GetMapping("/{abreviacion}")
+    public UniversidadResponse buscarPorAbreviacion(@PathVariable("abreviacion") String abreviacion){
+        UniversidadResponse response = new UniversidadResponse();
+        Optional<UniversidadModel> universidadExistente = universidadService.buscarPorAbreviacion(abreviacion);
+        if (universidadExistente.isEmpty()) {
+            response.setExito(false);
+            response.setMensaje("No existe una universidad con esa abreviación");
+            response.setUniversidad(null);
+            return response;
+        }
+
+        response.setExito(true);
+        response.setMensaje("Existe una universidad con esa abreviación");
+        response.setUniversidad(universidadExistente.orElse(null));
+        return response;
+    }
+
+    @GetMapping("/habilitar/{abreviacion}")
+    public UniversidadResponse habilitarPorAbreviacion(@PathVariable("abreviacion") String abreviacion){
+        UniversidadResponse response = new UniversidadResponse();
+        Optional<UniversidadModel> universidadExistente =universidadService.buscarPorAbreviacion(abreviacion);
+        if (universidadExistente.isEmpty()) {
+            response.setExito(false);
+            response.setMensaje("No existe una universidad con esa abreviación");
+            response.setUniversidad(null);
+            return response;
+        }
+
+        UniversidadModel universidadActualizada = universidadService.habilitarPorAbreviacion(universidadExistente,abreviacion);
+        response.setExito(true);
+        response.setMensaje("Universidad habilitada con éxito");
+        response.setUniversidad(universidadActualizada);
+        return response;
+    }
+
+    @GetMapping("/deshabilitar/{abreviacion}")
+    public UniversidadResponse deshabilitarPorAbreviacion(@PathVariable("abreviacion") String abreviacion){
+        UniversidadResponse response = new UniversidadResponse();
+        Optional<UniversidadModel> universidadExistente =universidadService.buscarPorAbreviacion(abreviacion);
+        if (universidadExistente.isEmpty()) {
+            response.setExito(false);
+            response.setMensaje("No existe una universidad con esa abreviación");
+            response.setUniversidad(null);
+            return response;
+        }
+
+        UniversidadModel universidadActualizada = universidadService.deshabilitarPorAbreviacion(universidadExistente,abreviacion);
+        response.setExito(true);
+        response.setMensaje("Universidad deshabilitada con éxito");
+        response.setUniversidad(universidadActualizada);
+        return response;
+    }
 }
