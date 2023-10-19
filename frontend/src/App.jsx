@@ -10,8 +10,11 @@ import ProfesorDashboard from './components/ProfesorDashboard'
 import AdministradorDashboard from './components/AdministradorDashboard'
 import PrivateRoute from './routes/PrivateRoute';
 
+// ADMINISTRADOR
 import BienvenidaDashboard from './components/BienvenidaDashboard';
 import Universidades from './components/administrador/Universidades';
+import Usuarios from './components/administrador/Usuarios';
+import Modulos from './components/administrador/Modulos';
 
 function App() {
   const {authUser,updateAuth} = useAuth()
@@ -32,6 +35,8 @@ function App() {
               <Route index element={<Navigate to="bienvenida" />} />
               <Route path='bienvenida' element= {<BienvenidaDashboard />}/>
               <Route path='universidades' element= {<Universidades />}/>
+              <Route path='modulos' element= {<Modulos />}/>
+              <Route path='usuarios' element= {<Usuarios />}/>
             </Route>
           </Route>
         </Route>

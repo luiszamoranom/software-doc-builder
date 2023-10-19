@@ -32,14 +32,17 @@ const AdministradorDashboard = () => {
             </Offcanvas.Header>
             <Offcanvas.Body>
               <div className='text-black'>
+                <div className='border-2 rounded-2  mt-2 mb-2 div-link'>
+                  <h5><Link className='pt-2 pb-2 ps-4 text-decoration-none text-black w-100 d-flex' to="/administrador/bienvenida">Bienvenida</Link></h5>
+                </div>
                 <div className='border-2 rounded-2 mb-2 div-link'>
                   <h5><Link className='pt-2 pb-2 ps-4 text-decoration-none text-black w-100 d-flex' to="/administrador/universidades">Universidades</Link></h5>
                 </div>
                 <div className='border-2 rounded-2 mb-2 div-link'>
-                  <h5><a className='pt-2 pb-2 ps-4 text-decoration-none text-black w-100 d-flex' href="/">Modulos</a></h5>
+                  <h5><Link className='pt-2 pb-2 ps-4 text-decoration-none text-black w-100 d-flex' to="/administrador/modulos">Modulos</Link></h5>
                 </div>
                 <div className='border-2 rounded-2 mb-2 div-link'>
-                  <h5><a className='pt-2 pb-2 ps-4 text-decoration-none text-black w-100 d-flex' href="/">Usuarios</a></h5>
+                  <h5><Link className='pt-2 pb-2 ps-4 text-decoration-none text-black w-100 d-flex' to="/administrador/usuarios">Usuarios</Link></h5>
                 </div>
               </div>
             </Offcanvas.Body>
@@ -47,7 +50,7 @@ const AdministradorDashboard = () => {
         </div>
         <div className='content'>
           <div className='container bg-body-secondary mt-5 pt-1 pb-1'>
-          <Outlet />
+            <Outlet />
 
           </div>
           {/* <BienvenidaDashboard /> */}
