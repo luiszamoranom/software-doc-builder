@@ -48,7 +48,7 @@ const Login = () => {
                     nombres:'Bastian',
                     apellidos:'Nuñez',
                     correo:'bastian@estudiante.cl',
-                    rol:'Profesor',
+                    rol:'Administrador',
                 };
 
                 localStorage.setItem("auth", JSON.stringify(datos));

@@ -27,6 +27,7 @@ function setLocalStorage(key, value) {
 
 export function AuthProvider(props){
     const [authUser, setAuthUser] = useState( () => getLocalStorage("user",null))
+    const [showSidebar,setShowSidebar] = useState(false)
     //const [isLoggedIn, setIsLoggedIn] = useState( () => getLocalStorage("logged",false))
 
     useEffect( () => {
@@ -41,7 +42,7 @@ export function AuthProvider(props){
     //const value = {authUser, updateAuth, isLoggedIn, setIsLoggedIn}
 
     return(
-        <AuthContext.Provider value = {{authUser,updateAuth}}>
+        <AuthContext.Provider value = {{authUser,updateAuth,showSidebar,setShowSidebar}}>
 
         {props.children}
 
