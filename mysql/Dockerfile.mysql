@@ -1,8 +1,8 @@
 FROM mysql
 
-ENV MYSQL_ROOT_PASSWORD=root-web-softwaredocbuilder
-ENV MYSQL_DATABASE=web-softwaredocbuilder
-ENV MYSQL_USER=web-softwaredocbuilder
-ENV MYSQL_PASSWORD=web-softwaredocbuilder
+ENV MYSQL_ROOT_PASSWORD=root-softwaredocbuilder
+ENV MYSQL_DATABASE=softwaredocbuilder
+ENV MYSQL_USER=softwaredocbuilder
+ENV MYSQL_PASSWORD=softwaredocbuilder
 
 EXPOSE 3306

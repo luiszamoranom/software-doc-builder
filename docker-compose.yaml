@@ -14,7 +14,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile.backend
     ports:
-      - "4000:4000"
+      - "8080:8080"
     depends_on:
       - mysql
 
@@ -30,10 +30,10 @@ services:
       - ./mysql/init:/docker-entrypoint-initdb.d
 
     environment:
-      MYSQL_ROOT_PASSWORD: root-web-softwaredocbuilder
-      MYSQL_DATABASE: web-softwaredocbuilder
-      MYSQL_USER: web-softwaredocbuilder
-      MYSQL_PASSWORD: web-softwaredocbuilder
+      MYSQL_ROOT_PASSWORD: root-softwaredocbuilder
+      MYSQL_DATABASE: softwaredocbuilder
+      MYSQL_USER: softwaredocbuilder
+      MYSQL_PASSWORD: softwaredocbuilder
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
