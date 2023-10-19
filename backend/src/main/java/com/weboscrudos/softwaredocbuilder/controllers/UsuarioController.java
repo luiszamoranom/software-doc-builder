@@ -1,6 +1,8 @@
 package com.weboscrudos.softwaredocbuilder.controllers;
 
+import com.weboscrudos.softwaredocbuilder.dto.universidad.UniversidadUpdateDTO;
 import com.weboscrudos.softwaredocbuilder.dto.usuario.UsuarioCreateDTO;
+import com.weboscrudos.softwaredocbuilder.dto.usuario.UsuarioUpdateDTO;
 import com.weboscrudos.softwaredocbuilder.models.UniversidadModel;
 import com.weboscrudos.softwaredocbuilder.models.UsuarioModel;
 import com.weboscrudos.softwaredocbuilder.responses.Universidad.UniversidadResponse;
@@ -70,6 +72,20 @@ public class UsuarioController {
 
         UsuarioModel usuarioModel = usuarioService.save(usuarioCreateDTO);
         return UsuarioResponse.createSuccessResponse("Usuario guardado exitosamente",usuarioModel);
+    }
+
+    @PatchMapping("/{rut}")
+    public UsuarioResponse update(@PathVariable("rut") String rut,
+                                      @RequestBody UsuarioUpdateDTO usuarioUpdateDTO) {
+        Optional<UsuarioModel> usuarioExistente = usuarioService.findById(rut);
+
+        if(usuarioExistente.isEmpty()){
+            UsuarioResponse.createErrorResponse("No existe un usuario con ese rut, no se puede actualizar");
+        }
+
+        UsuarioModel usuarioActualizado = usuarioService.update(usuarioExistente, usuarioUpdateDTO);
+
+        return UsuarioResponse.createSuccessResponse("Usuario actualizado con éxito",usuarioActualizado);
     }
 
     @GetMapping("/{rut}")
