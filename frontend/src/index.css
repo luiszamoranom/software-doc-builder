@@ -133,3 +133,19 @@ background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(148,171,233,1) 
   align-items: center;
   justify-content: center;
 }
+.espacio{
+  top: 60px;
+}
+
+/* OFFCANVAS */
+/* Estilos para la barra lateral (sidebar) */
+.bg-offcanvas{
+  background: #BBC7CE;
+}
+.div-link{
+  background-color: dimgray;
+}
+
+.div-link:hover{
+  background-color: darkgray;
+}

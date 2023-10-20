@@ -1,13 +1,20 @@
 import React, { useState,useEffect} from 'react';
-import { BrowserRouter as Router,useNavigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router,useNavigate,Navigate, Route, Routes } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import './App.css'
+import './Sidebar.css'
 import Layout from './components/Layout';
 import Login from './components/Login';
 import EstudianteDashboard from './components/EstudianteDashboard';
 import ProfesorDashboard from './components/ProfesorDashboard'
 import AdministradorDashboard from './components/AdministradorDashboard'
 import PrivateRoute from './routes/PrivateRoute';
+
+// ADMINISTRADOR
+import BienvenidaDashboard from './components/BienvenidaDashboard';
+import Universidades from './components/administrador/Universidades';
+import Usuarios from './components/administrador/Usuarios';
+import Modulos from './components/administrador/Modulos';
 
 function App() {
   const {authUser,updateAuth} = useAuth()
@@ -24,7 +31,13 @@ function App() {
             <Route path='/profesor' element = {<ProfesorDashboard />} /> 
           </Route>
           <Route element={<PrivateRoute />}>
-            <Route path='/administrador' element = {<AdministradorDashboard />} /> 
+            <Route path='/administrador' element = {<AdministradorDashboard />}>
+              <Route index element={<Navigate to="bienvenida" />} />
+              <Route path='bienvenida' element= {<BienvenidaDashboard />}/>
+              <Route path='universidades' element= {<Universidades />}/>
+              <Route path='modulos' element= {<Modulos />}/>
+              <Route path='usuarios' element= {<Usuarios />}/>
+            </Route>
           </Route>
         </Route>
       </Routes>
