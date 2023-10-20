@@ -5,5 +5,4 @@ import lombok.Getter;
 public class UniversidadCreateDTO {
     private String nombre;
     private String abreviacion;
-    private boolean estado;
 }

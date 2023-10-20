@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class RolPlataformaService {
@@ -14,5 +15,9 @@ public class RolPlataformaService {
 
     public ArrayList<RolPlataformaModel> findAll() {
         return (ArrayList<RolPlataformaModel>) rolPlataformaRepository.findAll();
+    }
+
+    public Optional<RolPlataformaModel> findById(Long rolId) {
+        return rolPlataformaRepository.findById(rolId);
     }
 }
