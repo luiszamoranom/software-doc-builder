@@ -119,12 +119,12 @@ public class UsuarioController {
             // crear y guardar nuevo usuario
             UsuarioModel nuevoUsuario = usuarioService.generarUsuario(usuarioCreateUniversidadRolDTO);
             UsuarioUniversidadRolModel nuevoUsuarioUniversidadRol = usuariouniversidadRolService.generarnuevoUsuarioUniversidadRol(rolPlataformaModel,universidadModel);
-            UsuarioModel usuarioListo = usuarioService.setearUsuarioUniversidadRolModel(nuevoUsuario,nuevoUsuarioUniversidadRol);
-            UsuarioUniversidadRolModel usuarioUniversidadRolModelListo = usuariouniversidadRolService.setearUsuario(nuevoUsuarioUniversidadRol,nuevoUsuario);
+            nuevoUsuario.getUsuarioUniversidadRoles().add(nuevoUsuarioUniversidadRol);
+            nuevoUsuarioUniversidadRol.setUsuario(nuevoUsuario);
 
-            usuarioService.saveConRolEnUniversidad(usuarioListo);
-            usuariouniversidadRolService.saveConUsuarioRolUniverisdad(usuarioUniversidadRolModelListo);
-            return UsuarioResponse.createSuccessResponse("Usuario creado correctamente con el rol en la universidad correspondiente",usuarioListo);
+            usuarioService.saveConRolEnUniversidad(nuevoUsuario);
+            usuariouniversidadRolService.saveConUsuarioRolUniverisdad(nuevoUsuarioUniversidadRol);
+            return UsuarioResponse.createSuccessResponse("Usuario creado correctamente con el rol en la universidad correspondiente",nuevoUsuario);
         }
 
     }
