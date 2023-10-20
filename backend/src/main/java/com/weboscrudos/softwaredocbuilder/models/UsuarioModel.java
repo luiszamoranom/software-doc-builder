@@ -1,11 +1,11 @@
 package com.weboscrudos.softwaredocbuilder.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -30,4 +30,7 @@ public class UsuarioModel {
 
     @Column
     private boolean estado = true;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<UsuarioUniversidadRolModel> usuarioUniversidadRoles = new ArrayList<>();
 }
