@@ -79,7 +79,7 @@ public class UsuarioController {
         return UsuarioResponse.createErrorResponse("Contraseña incorrecta");
     }
 
-    @PostMapping
+    @PostMapping("/guardar_sin_rol_en_universidad")
     public UsuarioResponse save(@RequestBody UsuarioCreateDTO usuarioCreateDTO){
         Optional<UsuarioModel> posibleUsuario = usuarioService.findById(usuarioCreateDTO.getRut());
         if (posibleUsuario.isPresent()) {
@@ -90,9 +90,9 @@ public class UsuarioController {
         return UsuarioResponse.createSuccessResponse("Usuario guardado exitosamente",usuarioModel);
     }
 
-    @PostMapping("/guardar_con_rol")
+    @PostMapping("/guardar_con_rol_en_universidad")
     public UsuarioResponse saveComplex(@RequestBody UsuarioCreateUniversidadRolDTO usuarioCreateUniversidadRolDTO){
-        // Validaciones: Verificar si el usuario ya existe
+        // verificar si el rut ya esta tomado
         Optional<UsuarioModel> posibleUsuario = usuarioService.findById(usuarioCreateUniversidadRolDTO.getRut());
         if (posibleUsuario.isPresent()) {
             return UsuarioResponse.createErrorResponse("Ya existe un usuario con ese rut, no es posible registrarlo");

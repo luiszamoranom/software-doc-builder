@@ -30,7 +30,7 @@ exit;
   - localhost:8080/usuario/{rut} 
     - Busca según rut, por tanto, hay que indicarselo, ejemplo => localhost:8080/usuario/11.111.111-1
 - **POST**
-  - localhost:8080/usuario
+  - **EN TEORIA, NO DEBERIA USARSE** localhost:8080/usuario/guardar_sin_rol_en_universidad 
     - Para crear un usuario debe tener el body con los siguientes parametros: rut, nombres, apellidos, contrasena, email
     - Ejemplo:
     {
@@ -39,6 +39,18 @@ exit;
       "apellidos":"Romero",
       "contrasena":"pepito123",
       "email":"pepito@gmail.com"
+    }
+  - localhost:8080/usuario/guardar_con_rol_en_universidad
+    - Para crear un usuario debe tener el body con los siguientes parametros: rut, nombres, apellidos, contrasena, email, rolId, universidadId
+    - Ejemplo:
+      {
+      "rut":"99.999.999-9",
+      "nombres":"Pepito",
+      "apellidos":"Romero",
+      "contrasena":"pepito123",
+      "email":"pepito@gmail.com",
+      "rolId":3,
+      "universidadId":"UTALCA"
       }
 - **PATCH**
   - localhost:8080/usuario
