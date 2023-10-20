@@ -16,6 +16,7 @@ import Universidades from './components/administrador/Universidades';
 import Usuarios from './components/administrador/Usuarios';
 import Modulos from './components/administrador/Modulos';
 import AgregarUniversidad from './components/administrador/AgregarUniversidad';
+import AgregarUsuario from './components/administrador/AgregarUsuario';
 
 function App() {
   const {authUser,updateAuth} = useAuth()
@@ -45,6 +46,8 @@ function App() {
 
               <Route path='modulos' element= {<Modulos />}/>
               <Route path='usuarios' element= {<Usuarios />}/>
+              <Route path='usuarios/agregar' element= {<AgregarUsuario />}/>
+
             </Route>
           </Route>
         </Route>
