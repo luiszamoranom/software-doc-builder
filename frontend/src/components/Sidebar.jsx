@@ -1,12 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import {useAuth} from '../context/AuthContext'
 
 function Sidebar() {
+  const {showSidebar,setShowSidebar,authUser, updateAuth} = useAuth()
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  useEffect(() => {
+    setShow(showSidebar)
+    console.log("Sidebar:",show)
+  },[showSidebar])
 
   return (
     <>
