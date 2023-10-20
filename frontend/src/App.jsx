@@ -15,6 +15,7 @@ import BienvenidaDashboard from './components/BienvenidaDashboard';
 import Universidades from './components/administrador/Universidades';
 import Usuarios from './components/administrador/Usuarios';
 import Modulos from './components/administrador/Modulos';
+import AgregarUniversidad from './components/administrador/AgregarUniversidad';
 
 function App() {
   const {authUser,updateAuth} = useAuth()
@@ -24,6 +25,9 @@ function App() {
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route path='/login' element={<Login />} /> {/* Define la ruta para "/login" aquí */}
+
+          {/* HACER INTERMEDIARIO PARA DISTINTOS ROLES PARA UNA MISMA PERSONA */}
+
           <Route element={<PrivateRoute />}>
              <Route path='/estudiante' element = {<EstudianteDashboard />} /> 
           </Route>
@@ -32,9 +36,13 @@ function App() {
           </Route>
           <Route element={<PrivateRoute />}>
             <Route path='/administrador' element = {<AdministradorDashboard />}>
+              
               <Route index element={<Navigate to="bienvenida" />} />
               <Route path='bienvenida' element= {<BienvenidaDashboard />}/>
-              <Route path='universidades' element= {<Universidades />}/>
+              {/* universidades */}
+              <Route path='universidades' element= {<Universidades />} />
+              <Route path='universidades/agregar' element={<AgregarUniversidad />} />
+
               <Route path='modulos' element= {<Modulos />}/>
               <Route path='usuarios' element= {<Usuarios />}/>
             </Route>
