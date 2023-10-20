@@ -2,6 +2,7 @@ package com.weboscrudos.softwaredocbuilder.controllers;
 
 import com.weboscrudos.softwaredocbuilder.dto.universidad.UniversidadUpdateDTO;
 import com.weboscrudos.softwaredocbuilder.dto.usuario.UsuarioCreateDTO;
+import com.weboscrudos.softwaredocbuilder.dto.usuario.UsuarioLoginDTO;
 import com.weboscrudos.softwaredocbuilder.dto.usuario.UsuarioUpdateDTO;
 import com.weboscrudos.softwaredocbuilder.models.UniversidadModel;
 import com.weboscrudos.softwaredocbuilder.models.UsuarioModel;
@@ -44,15 +45,16 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("/login/{rut}")
-    public UsuarioResponse login(@PathVariable("rut") String rut,
-                                      @RequestBody Map<String, String> campos) {
-        Optional<UsuarioModel> usuarioExistente = usuarioService.findById(rut);
+    @GetMapping("/login")
+    public UsuarioResponse login(@RequestBody UsuarioLoginDTO usuarioLoginDTO) {
+        System.out.println("rut:"+usuarioLoginDTO.getRut());
+        System.out.println("contrasena:"+usuarioLoginDTO.getContrasena());
+        Optional<UsuarioModel> usuarioExistente = usuarioService.findById(usuarioLoginDTO.getRut());
         if (usuarioExistente.isEmpty()) {
             return UsuarioResponse.createErrorResponse("No es posible realizar el login ya que no existe usuario con dicho rut");
         }
 
-        if(campos.get("rut").equals(usuarioExistente.get().getRut()) && campos.get("contrasena").equals(usuarioExistente.get().getContrasena())) {
+        if(usuarioLoginDTO.getRut().equals(usuarioExistente.get().getRut()) && usuarioLoginDTO.getContrasena().equals(usuarioExistente.get().getContrasena())) {
             if(usuarioExistente.get().isEstado()){
                 return UsuarioResponse.createSuccessResponse("Login exitoso", usuarioExistente.get());
             }else{
