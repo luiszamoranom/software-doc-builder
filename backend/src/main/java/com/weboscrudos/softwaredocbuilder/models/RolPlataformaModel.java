@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -15,4 +18,7 @@ public class RolPlataformaModel {
 
     @Column
     private String nombre;
+
+    @OneToMany(mappedBy = "rol")
+    private List<UsuarioUniversidadRolModel> usuarioUniversidadRoles = new ArrayList<>();
 }
