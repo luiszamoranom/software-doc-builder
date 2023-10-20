@@ -2,6 +2,7 @@ package com.weboscrudos.softwaredocbuilder.controllers;
 
 import com.weboscrudos.softwaredocbuilder.dto.universidad.UniversidadUpdateDTO;
 import com.weboscrudos.softwaredocbuilder.dto.usuario.UsuarioCreateDTO;
+import com.weboscrudos.softwaredocbuilder.dto.usuario.UsuarioLoginDTO;
 import com.weboscrudos.softwaredocbuilder.dto.usuario.UsuarioUpdateDTO;
 import com.weboscrudos.softwaredocbuilder.models.UniversidadModel;
 import com.weboscrudos.softwaredocbuilder.models.UsuarioModel;
@@ -19,6 +20,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuario")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UsuarioController {
 
     @Autowired
@@ -44,15 +46,16 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("/login/{rut}")
-    public UsuarioResponse login(@PathVariable("rut") String rut,
-                                      @RequestBody Map<String, String> campos) {
-        Optional<UsuarioModel> usuarioExistente = usuarioService.findById(rut);
+    @GetMapping("/login")
+    public UsuarioResponse login(@RequestBody UsuarioLoginDTO usuarioLoginDTO) {
+        System.out.println("rut:"+usuarioLoginDTO.getRut());
+        System.out.println("contrasena:"+usuarioLoginDTO.getContrasena());
+        Optional<UsuarioModel> usuarioExistente = usuarioService.findById(usuarioLoginDTO.getRut());
         if (usuarioExistente.isEmpty()) {
             return UsuarioResponse.createErrorResponse("No es posible realizar el login ya que no existe usuario con dicho rut");
         }
 
-        if(campos.get("rut").equals(usuarioExistente.get().getRut()) && campos.get("contrasena").equals(usuarioExistente.get().getContrasena())) {
+        if(usuarioLoginDTO.getRut().equals(usuarioExistente.get().getRut()) && usuarioLoginDTO.getContrasena().equals(usuarioExistente.get().getContrasena())) {
             if(usuarioExistente.get().isEstado()){
                 return UsuarioResponse.createSuccessResponse("Login exitoso", usuarioExistente.get());
             }else{
@@ -74,10 +77,9 @@ public class UsuarioController {
         return UsuarioResponse.createSuccessResponse("Usuario guardado exitosamente",usuarioModel);
     }
 
-    @PatchMapping("/{rut}")
-    public UsuarioResponse update(@PathVariable("rut") String rut,
-                                      @RequestBody UsuarioUpdateDTO usuarioUpdateDTO) {
-        Optional<UsuarioModel> usuarioExistente = usuarioService.findById(rut);
+    @PatchMapping
+    public UsuarioResponse update(@RequestBody UsuarioUpdateDTO usuarioUpdateDTO) {
+        Optional<UsuarioModel> usuarioExistente = usuarioService.findById(usuarioUpdateDTO.getRut());
 
         if(usuarioExistente.isEmpty()){
             UsuarioResponse.createErrorResponse("No existe un usuario con ese rut, no se puede actualizar");
@@ -97,7 +99,7 @@ public class UsuarioController {
         return UsuarioResponse.createSuccessResponse("Existe un usuario con ese rut", usuarioExistente.orElse(null));
     }
 
-    @PutMapping("/habilitar/{rut}")
+    @PatchMapping("/habilitar/{rut}")
     public UsuarioResponse setEstadoTrue(@PathVariable("rut") String rut){
         Optional<UsuarioModel> usuarioExistente = usuarioService.findById(rut);
         if (usuarioExistente.isEmpty()) {
@@ -108,7 +110,7 @@ public class UsuarioController {
         return UsuarioResponse.createSuccessResponse("Universidad habilitada con éxito", usuarioActualizado);
     }
 
-    @PutMapping("/deshabilitar/{rut}")
+    @PatchMapping("/deshabilitar/{rut}")
     public UsuarioResponse setEstadoFalse(@PathVariable("rut") String rut){
         Optional<UsuarioModel> usuarioExistente = usuarioService.findById(rut);
         if (usuarioExistente.isEmpty()) {
@@ -118,7 +120,4 @@ public class UsuarioController {
         UsuarioModel usuarioActualizado = usuarioService.setEstadoFalse(usuarioExistente);
         return UsuarioResponse.createSuccessResponse("Universidad habilitada con éxito", usuarioActualizado);
     }
-
-
-
 }
