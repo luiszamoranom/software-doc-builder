@@ -31,7 +31,6 @@ public class UniversidadService {
         UniversidadModel universidadModel = new UniversidadModel();
         universidadModel.setNombre(universidadCreateDTO.getNombre());
         universidadModel.setAbreviacion(universidadCreateDTO.getAbreviacion());
-        universidadModel.setEstado(universidadCreateDTO.isEstado());
         return universidadRepository.save(universidadModel);
     }
 

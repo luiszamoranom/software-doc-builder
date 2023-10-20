@@ -20,7 +20,7 @@ public class RolPlataformaController {
     RolPlataformaService rolPlataformaService;
 
     @GetMapping
-    public RolesPlataformaResponse obtenerTodosLosRolPlataforma(){
+    public RolesPlataformaResponse findAll(){
         RolesPlataformaResponse response = new RolesPlataformaResponse();
 
         ArrayList<RolPlataformaModel> roles = rolPlataformaService.findAll();

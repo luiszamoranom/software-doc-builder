@@ -60,10 +60,9 @@ public class UniversidadController {
         return UniversidadResponse.createSuccessResponse("Existe una universidad con esa abreviación", universidadExistente.orElse(null));
     }
 
-    @PatchMapping("/{abreviacion}")
-    public UniversidadResponse update(@PathVariable("abreviacion") String abreviacion,
-                                      @RequestBody UniversidadUpdateDTO universidadUpdateDTO) {
-        Optional<UniversidadModel> universidadExistente = universidadService.findById(abreviacion);
+    @PatchMapping
+    public UniversidadResponse update(@RequestBody UniversidadUpdateDTO universidadUpdateDTO) {
+        Optional<UniversidadModel> universidadExistente = universidadService.findById(universidadUpdateDTO.getAbreviacion());
         if (universidadExistente.isEmpty()) {
             return UniversidadResponse.createErrorResponse("No existe una universidad con esa abreviación");
         }
@@ -72,7 +71,7 @@ public class UniversidadController {
         return UniversidadResponse.createSuccessResponse("Universidad actualizada con éxito", universidadActualizada);
     }
 
-    @PutMapping("/habilitar/{abreviacion}")
+    @PatchMapping("/habilitar/{abreviacion}")
     public UniversidadResponse setEstadoTrue(@PathVariable("abreviacion") String abreviacion){
         Optional<UniversidadModel> universidadExistente = universidadService.findById(abreviacion);
         if (universidadExistente.isEmpty()) {
@@ -83,7 +82,7 @@ public class UniversidadController {
         return UniversidadResponse.createSuccessResponse("Universidad habilitada con éxito", universidadActualizada);
     }
 
-    @PutMapping("/deshabilitar/{abreviacion}")
+    @PatchMapping("/deshabilitar/{abreviacion}")
     public UniversidadResponse setEstadoFalse(@PathVariable("abreviacion") String abreviacion){
         Optional<UniversidadModel> universidadExistente = universidadService.findById(abreviacion);
         if (universidadExistente.isEmpty()) {

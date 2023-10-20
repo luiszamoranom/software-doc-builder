@@ -77,10 +77,9 @@ public class UsuarioController {
         return UsuarioResponse.createSuccessResponse("Usuario guardado exitosamente",usuarioModel);
     }
 
-    @PatchMapping("/{rut}")
-    public UsuarioResponse update(@PathVariable("rut") String rut,
-                                      @RequestBody UsuarioUpdateDTO usuarioUpdateDTO) {
-        Optional<UsuarioModel> usuarioExistente = usuarioService.findById(rut);
+    @PatchMapping
+    public UsuarioResponse update(@RequestBody UsuarioUpdateDTO usuarioUpdateDTO) {
+        Optional<UsuarioModel> usuarioExistente = usuarioService.findById(usuarioUpdateDTO.getRut());
 
         if(usuarioExistente.isEmpty()){
             UsuarioResponse.createErrorResponse("No existe un usuario con ese rut, no se puede actualizar");
@@ -100,7 +99,7 @@ public class UsuarioController {
         return UsuarioResponse.createSuccessResponse("Existe un usuario con ese rut", usuarioExistente.orElse(null));
     }
 
-    @PutMapping("/habilitar/{rut}")
+    @PatchMapping("/habilitar/{rut}")
     public UsuarioResponse setEstadoTrue(@PathVariable("rut") String rut){
         Optional<UsuarioModel> usuarioExistente = usuarioService.findById(rut);
         if (usuarioExistente.isEmpty()) {
@@ -111,7 +110,7 @@ public class UsuarioController {
         return UsuarioResponse.createSuccessResponse("Universidad habilitada con éxito", usuarioActualizado);
     }
 
-    @PutMapping("/deshabilitar/{rut}")
+    @PatchMapping("/deshabilitar/{rut}")
     public UsuarioResponse setEstadoFalse(@PathVariable("rut") String rut){
         Optional<UsuarioModel> usuarioExistente = usuarioService.findById(rut);
         if (usuarioExistente.isEmpty()) {
@@ -121,7 +120,4 @@ public class UsuarioController {
         UsuarioModel usuarioActualizado = usuarioService.setEstadoFalse(usuarioExistente);
         return UsuarioResponse.createSuccessResponse("Universidad habilitada con éxito", usuarioActualizado);
     }
-
-
-
 }

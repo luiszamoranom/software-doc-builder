@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class UsuarioUpdateDTO {
+    private String rut;
     private String nombres;
     private String apellidos;
     private String contrasena;
