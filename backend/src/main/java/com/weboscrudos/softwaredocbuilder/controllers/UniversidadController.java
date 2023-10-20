@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/universidad")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UniversidadController {
     @Autowired
     UniversidadService universidadService;
