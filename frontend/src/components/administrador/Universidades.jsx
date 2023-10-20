@@ -1,58 +1,76 @@
 import React, { useState,useEffect } from 'react'
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import axios from 'axios';
 
 const Universidades = () => {
 
-  const [exito,setExito] = useState()
-  const [mensaje,setMensaje] = useState()
-  const [universidades,setUniversidades] = useState({"universidades":[{"algo":"algo"}]})
-
+  const [universidades,setUniversidades] = useState([])
+  
+  const getUniversidades = async () => {
+    const response = await axios.get('http://localhost:8080/universidad/filtro/todas');
+    setUniversidades(response.data.universidades); // Actualiza el estado con los datos obtenidos
+  }
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.get('http://localhost:8080/universidad/filtro/todas', {
-          exito,
-          mensaje,
-          universidades,
-        });
-        setUniversidades(response.data.Universidades); // Actualiza el estado con los datos obtenidos
-        console.log(universidades)
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchData();
-  }, []); // Este efecto se ejecuta solo una vez al cargar el componente
+    getUniversidades()
+  }, []);
 
+  const navigate = useNavigate()
 
-  return ( 
+  const irAgregarUniversidad = () =>{
+    // navigate('/administrador/universidades/agregar',{ state: { nombre, apellido } }) //este es un ejemplo si es que se quiere pasar parametros
+    navigate('/administrador/universidades/agregar')
+  }
+
+  //<input type='checkbox' checked={universidad.estado} /> 
+
+  return (
     <div>
-      <Table responsive>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Nombre</th>
-              <th>Abreviación</th>
-              <th>Habilitado</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* {universidades.universidades.map( (universidad,index) =>{
-              <tr key={index}>
-                <td>{index+1}</td>
-                <td>{universidad.nombre}</td>
-                <td>{universidad.abreviacion}</td>
-                <td>{universidad.habilitada ? "Si" : "No"}</td>
-              </tr>
-            } )} */}
-            
-          </tbody>
-        </Table>
+      <div className='pt-2 pb-5'>
+        <h1 className='text-center'>Gestion de Universidades</h1>
+      </div>
+      <div>
+        <div>
+          <div className='bg-white w-100 justify-content-end d-flex p-3'>
+            <button className='btn btn-primary border-0 rounded-2 p-1 d-flex text-white' onClick={irAgregarUniversidad}>
+              <div className='p-1'>
+                <i className="bi bi-plus-circle"></i>
+              </div>
+              <div className='p-1'>
+                Agregar universidad
+              </div>
+            </button>
+          </div>
+        </div>
+        <div>
+          <Table responsive>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nombre</th>
+                  <th>Abreviación</th>
+                  <th>Habilitado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {universidades.map( (universidad,index) =>(
+                  <tr key={index} className='m-1 mt-2 align-align-items-center'>
+                    <td>{index+1}</td>
+                    <td>{universidad.nombre}</td>
+                    <td>{universidad.abreviacion}</td>
+                    <td>{universidad.estado ? "Si" : "No"}</td>
+                    <td><button className='btn btn-primary'><i className="bi bi-pencil-square"></i></button> <button className='btn btn-danger'><i className="bi bi-trash"></i></button> </td>
+                  </tr>
+                ) )}
+              </tbody>
+            </Table>
+        </div>
+      </div>
       
-      <h1>UN EJEMPLO QUE AQUI SE DEBEN MOSTRAR LAS UNIVERSIDADES Y TODO LO Q SE DESEE</h1>
     </div>
+    
   )
 }
 
