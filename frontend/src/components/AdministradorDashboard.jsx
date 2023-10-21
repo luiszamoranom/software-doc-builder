@@ -4,20 +4,22 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useAuth } from '../context/AuthContext';
 import BienvenidaDashboard from './BienvenidaDashboard';
 
-import { Route, Link, Outlet } from 'react-router-dom';
+import { Route, Link, Outlet,useLocation} from 'react-router-dom';
 
 
 const AdministradorDashboard = () => {
+  const {showSidebar,setShowSidebar, authUser,lastPath,setLastPath} = useAuth()
+  const location = useLocation();
+  const currentPathname = location.pathname;
 
-  const {showSidebar,setShowSidebar, authUser} = useAuth()
-  //const [show, setShow] = useState(false);
+  useEffect(() => {
+      setLastPath(currentPathname)
+  },[])
+  
   const [localShowSidebar, setLocalShowSidebar] = useState(showSidebar);
 
   const handleClose = () => setShowSidebar(false);
-  //const handleClose = () => setShowSidebar(false);
-  const handleShow = () => setShowSidebar(true);
 
-  
   useEffect(() => {
     // Actualizar el estado local cuando showSidebar cambie
     setShowSidebar(showSidebar);

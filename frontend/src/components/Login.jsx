@@ -1,9 +1,9 @@
 import React,{useState,useEffect,useNav} from 'react'
 import { useAuth } from '../context/AuthContext';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation, Navigate } from 'react-router-dom';
 
 
-const Login = () => {
+const Login = ({authUser}) => {
     const {updateAuth} = useAuth();
 
     const [rutUsuario,setRutUsuario] = useState('');
@@ -12,6 +12,10 @@ const Login = () => {
 
     const from = location.state?.from?.pathname || "/";
 
+    useEffect(() =>{
+        console.log("de login:",authUser)
+    },[])
+    
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -87,6 +91,9 @@ const Login = () => {
 
     return (
         <>
+            {authUser?
+                <> <Navigate to={"/administrador"} /> </> :<></>  
+                }
             <div className='d-flex vh-100 vw-100 fondo'>
                 <div className='vw-100 container-login justify-content-center align-items-center p-2'>
                     <div className='wrapper p-3 row'>
