@@ -54,7 +54,7 @@ const Usuarios = () => {
                 </tr>
               </thead>
               <tbody>
-                {usuarios.map( (universidad,index) =>(
+                {usuarios.map( (usuarios,index) =>(
                   <tr key={index} className='m-1 mt-2 align-align-items-center'>
                     <td>{usuarios.rut}</td>
                     <td>{usuarios.nombres} {usuarios.apellidos}</td>

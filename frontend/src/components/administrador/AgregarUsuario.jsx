@@ -63,7 +63,7 @@ const AgregarUsuario = () => {
                         </Form.Group>
                         
                         <Form.Group className="mb-3" controlId="">
-                            <Form.Label>Abreviación</Form.Label>
+                            <Form.Label>Apellidos</Form.Label>
                             <Form.Control type="text" placeholder="Ingrese apellidos"  onChange={(e) => setApellidosUsuario(e.target.value)}/>
                             {/* <Form.Text className="text-muted">
                                 Ingrese abreviación
@@ -71,7 +71,15 @@ const AgregarUsuario = () => {
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="">
-                            <Form.Label>Abreviación</Form.Label>
+                            <Form.Label>Correo</Form.Label>
+                            <Form.Control type="text" placeholder="Ingrese correo"  onChange={(e) => setEmailUsuario(e.target.value)}/>
+                            {/* <Form.Text className="text-muted">
+                                Ingrese abreviación
+                            </Form.Text> */}
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="">
+                            <Form.Label>Contraseña</Form.Label>
                             <Form.Control type="text" placeholder="Ingrese contraseña"  onChange={(e) => setPasswordUsuario(e.target.value)}/>
                             {/* <Form.Text className="text-muted">
                                 Ingrese abreviación
@@ -79,23 +87,17 @@ const AgregarUsuario = () => {
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="">
-                            <Form.Label>Abreviación</Form.Label>
-                            <Form.Control type="text" placeholder="Ingrese correo"  onChange={(e) => setEmailUsuario(e.target.value)}/>
-                            {/* <Form.Text className="text-muted">
-                                Ingrese abreviación
-                            </Form.Text> */}
+                            <Form.Label>Rol</Form.Label>
+                            <Form.Select aria-label="Default select example">
+                                <option>Elegir rol</option>
+                                <option value="1">Estudiante</option>
+                                <option value="2">Profesor</option>
+                                <option value="3">Administrador</option>
+                            </Form.Select>
                         </Form.Group>
                         
                         <Form.Group className="mb-3" controlId="">
-                            <Form.Label>Abreviación</Form.Label>
-                            <Form.Control type="number" placeholder="Ingrese rol usuario"  onChange={(e) => setRolUsuario(e.target.value)}/>
-                            {/* <Form.Text className="text-muted">
-                                Ingrese abreviación
-                            </Form.Text> */}
-                        </Form.Group>
-                        
-                        <Form.Group className="mb-3" controlId="">
-                            <Form.Label>Abreviación</Form.Label>
+                            <Form.Label>Universidad asociada</Form.Label>
                             <Form.Control type="number" placeholder="Ingrese id universidad"  onChange={(e) => setUniversidadId(e.target.value)}/>
                             {/* <Form.Text className="text-muted">
                                 Ingrese abreviación
