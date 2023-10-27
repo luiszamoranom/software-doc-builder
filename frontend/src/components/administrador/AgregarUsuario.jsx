@@ -12,10 +12,24 @@ const AgregarUsuario = () => {
     const [emailUsuario,setEmailUsuario] = useState();
     const [rolUsuario, setRolUsuario] = useState();
     const [universidadId, setUniversidadId] = useState();
+    const [universidades, setUniversidades] = useState([]);
+    
 
+    useEffect(() => {
+        const fetchUniversidades = async () => {
+        try {
+            const response = await axios.get("http://localhost:8080/universidad/filtro/habilitadas");
+            setUniversidades(response.data.universidades);
+        } catch (error) {
+            console.error("Hubo un problema al obtener las universidades: ", error);
+        }
+        };
+        fetchUniversidades();
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+       
         //Agregar universidad a la base de datos.
         try{
             const response = await axios.post('http://localhost:8080/guardar_con_rol_en_universidad', {
@@ -28,9 +42,10 @@ const AgregarUsuario = () => {
                 universidadId
 
             });
+            
             console.log(response.data)
-            // console.log(nombreUniversidad)
-            // console.log(abreviacion) 
+
+
         }
         catch(error){
             console.log(error)
@@ -47,7 +62,7 @@ const AgregarUsuario = () => {
                 <div className='p-4'>
                     <Form onSubmit={handleSubmit}>
                         <Form.Group className="mb-3" controlId="">
-                            <Form.Label>Nombre</Form.Label>
+                            <Form.Label>RUT</Form.Label>
                             <Form.Control type="text" placeholder="Ingrese rut" onChange={(e) => setRutUsuario(e.target.value)}/>
                             {/* <Form.Text className="text-muted">
                                 Ingrese nombre universidad
@@ -80,7 +95,7 @@ const AgregarUsuario = () => {
 
                         <Form.Group className="mb-3" controlId="">
                             <Form.Label>Contraseña</Form.Label>
-                            <Form.Control type="text" placeholder="Ingrese contraseña"  onChange={(e) => setPasswordUsuario(e.target.value)}/>
+                            <Form.Control type="password" placeholder="Ingrese contraseña"  onChange={(e) => setPasswordUsuario(e.target.value)}/>
                             {/* <Form.Text className="text-muted">
                                 Ingrese abreviación
                             </Form.Text> */}
@@ -88,20 +103,24 @@ const AgregarUsuario = () => {
 
                         <Form.Group className="mb-3" controlId="">
                             <Form.Label>Rol</Form.Label>
-                            <Form.Select aria-label="Default select example">
+                            <Form.Select aria-label="Default select example" onChange={ (e) => setRolUsuario(e.target.value) } value={rolUsuario}>
                                 <option>Elegir rol</option>
-                                <option value="1">Estudiante</option>
-                                <option value="2">Profesor</option>
-                                <option value="3">Administrador</option>
+                                <option key={"1"} value="1">Estudiante</option>
+                                <option key={"2"} value="2">Profesor</option>
+                                <option key={"3"} value="3">Administrador</option>
                             </Form.Select>
                         </Form.Group>
                         
                         <Form.Group className="mb-3" controlId="">
                             <Form.Label>Universidad asociada</Form.Label>
-                            <Form.Control type="number" placeholder="Ingrese id universidad"  onChange={(e) => setUniversidadId(e.target.value)}/>
-                            {/* <Form.Text className="text-muted">
-                                Ingrese abreviación
-                            </Form.Text> */}
+                            <Form.Select aria-label="Default select example" onChange={(e) => setUniversidadId(e.target.value)}>
+                            <option>Seleccionar universidad</option>
+                            {universidades.map((universidad) => (
+                                <option key={universidad.abreviacion} value={universidad.abreviacion}>
+                                {universidad.nombre}
+                                </option>
+                            ))}
+                            </Form.Select>
                         </Form.Group>
 
                         <Button variant="primary" type="submit">
