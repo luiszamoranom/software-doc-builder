@@ -32,7 +32,7 @@ const AgregarUsuario = () => {
        
         //Agregar universidad a la base de datos.
         try{
-            const response = await axios.post('http://localhost:8080/guardar_con_rol_en_universidad', {
+            const response = await axios.post('http://localhost:8080/usuario/guardar_con_rol_en_universidad', {
                 rutUsuario,
                 nombresUsuario,
                 apellidosUsuario,
@@ -42,13 +42,14 @@ const AgregarUsuario = () => {
                 universidadId
 
             });
-            
+            console.log("Se agrego el usuario");
             console.log(response.data)
 
 
         }
         catch(error){
             console.log(error)
+            console.log("Error");
         }
     }
 
