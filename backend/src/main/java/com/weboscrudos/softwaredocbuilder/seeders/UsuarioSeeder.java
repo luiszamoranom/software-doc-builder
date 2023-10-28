@@ -20,6 +20,15 @@ public class UsuarioSeeder {
         if (usuarioRepository.count() == 0) {
             List<UsuarioModel> usuarios = new ArrayList<>();
 
+            UsuarioModel u0 = new UsuarioModel();
+            u0.setRut("00.000.000-0");
+            u0.setNombres("Sr");
+            u0.setApellidos("Admin");
+            u0.setContrasena("administrador");
+            u0.setEmail("admin@softwaredocbuilder.cl");
+            u0.setRol_plataforma("Administrador");
+            usuarios.add(u0);
+
             UsuarioModel u1 = new UsuarioModel();
             u1.setRut("11.111.111-1");
             u1.setNombres("Luis");
