@@ -5,13 +5,13 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
 
 const AgregarUsuario = () => {
-    const [rutUsuario, setRutUsuario] = useState();
-    const [nombresUsuario,setNombresUsuario] = useState();
-    const [apellidosUsuario, setApellidosUsuario] = useState();
-    const [passwordUsuario, setPasswordUsuario] = useState();
-    const [emailUsuario,setEmailUsuario] = useState();
-    const [rolUsuario, setRolUsuario] = useState();
-    const [universidadId, setUniversidadId] = useState();
+    const [rut, setRut] = useState("");
+    const [nombresUsuario,setNombresUsuario] = useState("");
+    const [apellidosUsuario, setApellidosUsuario] = useState("");
+    const [passwordUsuario, setPasswordUsuario] = useState("");
+    const [emailUsuario,setEmailUsuario] = useState("");
+    const [rolId, setRolId] = useState();
+    const [universidadId, setUniversidadId] = useState("");
     const [universidades, setUniversidades] = useState([]);
     
 
@@ -29,16 +29,16 @@ const AgregarUsuario = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-       
+        
         //Agregar universidad a la base de datos.
         try{
             const response = await axios.post('http://localhost:8080/usuario/guardar_con_rol_en_universidad', {
-                rutUsuario,
-                nombresUsuario,
-                apellidosUsuario,
-                passwordUsuario,
-                emailUsuario,
-                rolUsuario,
+                rut,
+                nombres: nombresUsuario,
+                apellidos: apellidosUsuario,
+                contrasena: passwordUsuario,
+                email: emailUsuario,
+                rolId,
                 universidadId
 
             });
@@ -49,7 +49,6 @@ const AgregarUsuario = () => {
         }
         catch(error){
             console.log(error)
-            console.log("Error");
         }
     }
 
@@ -64,7 +63,7 @@ const AgregarUsuario = () => {
                     <Form onSubmit={handleSubmit}>
                         <Form.Group className="mb-3" controlId="">
                             <Form.Label>RUT</Form.Label>
-                            <Form.Control type="text" placeholder="Ingrese rut" onChange={(e) => setRutUsuario(e.target.value)}/>
+                            <Form.Control type="text" placeholder="Ingrese rut" onChange={(e) => setRut(e.target.value)}/>
                             {/* <Form.Text className="text-muted">
                                 Ingrese nombre universidad
                             </Form.Text> */}
@@ -104,7 +103,7 @@ const AgregarUsuario = () => {
 
                         <Form.Group className="mb-3" controlId="">
                             <Form.Label>Rol</Form.Label>
-                            <Form.Select aria-label="Default select example" onChange={ (e) => setRolUsuario(e.target.value) } value={rolUsuario}>
+                            <Form.Select aria-label="Default select example" onChange={ (e) => setRolId(e.target.value) } value={rolId}>
                                 <option>Elegir rol</option>
                                 <option key={"1"} value="1">Estudiante</option>
                                 <option key={"2"} value="2">Profesor</option>
