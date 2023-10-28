@@ -1,7 +1,7 @@
 import React from 'react'
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 
-const BienvenidaDashboard = () => {
+const BienvenidaAdministrador = () => {
     const {showSidebar,setShowSidebar, authUser} = useAuth()
   return (
     <div>
@@ -33,4 +33,4 @@ const BienvenidaDashboard = () => {
   )
 }
 
-export default BienvenidaDashboard
+export default BienvenidaAdministrador

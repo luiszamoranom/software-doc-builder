@@ -1,7 +1,7 @@
 import { Navigate, Outlet , useLocation,Route,Routes} from "react-router-dom"
 import { NavBarExport } from "./Navbar"
 import Footer from "./Footer"
-import { useAuth } from "../context/AuthContext"
+import { useAuth } from "../../context/AuthContext"
 import { useEffect} from "react"
 
 

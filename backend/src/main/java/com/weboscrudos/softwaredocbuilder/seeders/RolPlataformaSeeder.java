@@ -25,7 +25,7 @@ public class RolPlataformaSeeder {
             roles.add(adminRol);
 
             RolPlataformaModel jefeUniversidadRol = new RolPlataformaModel();
-            jefeUniversidadRol.setNombre("Jefe de Universidad");
+            jefeUniversidadRol.setNombre("Jefe de Carrera");
             roles.add(jefeUniversidadRol);
 
             RolPlataformaModel profesorRol = new RolPlataformaModel();

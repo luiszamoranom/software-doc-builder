@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import { Link, Outlet, useLocation, useNavigate} from 'react-router-dom';
-import {useAuth} from '../context/AuthContext'
+import {useAuth} from '../../context/AuthContext'
 
 
 
@@ -28,7 +28,7 @@ export const NavBarExport = () => {
 	};
 	
 	if (authUser){
-		pathRol="/"+authUser.rol.toLowerCase()
+		pathRol="/"+authUser.roles.toLowerCase()
 	}
 	
 	
