@@ -6,15 +6,12 @@ import { Link, Outlet, useLocation, useNavigate} from 'react-router-dom';
 import {useAuth} from '../../context/AuthContext'
 
 
-
 export const NavBarExport = () => {
 	const {showSidebar,setShowSidebar,authUser, updateAuth} = useAuth()
 	const [show, setShow] = useState(false);
 
 	const handleClose = () => setShowSidebar(false);
 	const handleShow = () => setShowSidebar(true);
-
-	
 	
 	const navigate = useNavigate();
 
@@ -35,7 +32,7 @@ export const NavBarExport = () => {
 	return (
 		<>
 			<header className='w-100'>
-				<Navbar className="bg-body-secondary">
+				<Navbar className='colorPrimario'>
 					<Container className='w-100' style={{maxWidth:"none"}}>
 						{
 							authUser ? 
@@ -59,7 +56,7 @@ export const NavBarExport = () => {
 											</Navbar.Text>
 										</div>
 										<div className='ms-3 me-3'>
-											<Button variant="outline-danger" onClick={onLogout}>Cerrar sesión</Button>{' '}
+											<Button className='boton-logout' onClick={onLogout}>Cerrar sesión</Button>{' '}
 										</div>
 									</div>
 								) : (
