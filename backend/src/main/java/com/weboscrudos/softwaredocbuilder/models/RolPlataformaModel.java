@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name="rol_plataforma")
+@Table(name="rol_en_universidad")
 public class RolPlataformaModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

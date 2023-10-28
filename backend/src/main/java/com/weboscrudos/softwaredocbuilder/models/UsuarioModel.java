@@ -32,6 +32,9 @@ public class UsuarioModel {
     @Column
     private boolean estado = true;
 
+    @Column
+    private String rol_plataforma="Usuario";
+
     @OneToMany(mappedBy = "usuario")
     private List<UsuarioUniversidadRolModel> usuarioUniversidadRoles = new ArrayList<>();
 }

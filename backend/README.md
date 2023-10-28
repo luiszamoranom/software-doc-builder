@@ -70,7 +70,7 @@ exit;
 ---
 ## RolPlataforma
 - **GET**
-  - localhost:8080/rol_plataforma
+  - localhost:8080/rol_en_universidad
     - obtiene todos los roles de la app
 
 ---

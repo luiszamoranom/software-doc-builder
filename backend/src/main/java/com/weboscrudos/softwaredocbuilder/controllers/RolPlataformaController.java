@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/rol_plataforma")
+@RequestMapping("/rol_en_universidad")
 @CrossOrigin(origins = "http://localhost:3000")
 public class RolPlataformaController {
     @Autowired
