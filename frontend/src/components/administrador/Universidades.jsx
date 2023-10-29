@@ -23,6 +23,12 @@ const Universidades = () => {
     navigate('/administrador/universidades/agregar')
   }
 
+  const irEditarUniversidad = (abreviacion) => {
+
+    navigate('/administrador/universidades/editar', { state: { parametro: abreviacion } });
+
+  }
+
   //<input type='checkbox' checked={universidad.estado} /> 
 
   return (
@@ -61,7 +67,10 @@ const Universidades = () => {
                     <td>{universidad.nombre}</td>
                     <td>{universidad.abreviacion}</td>
                     <td>{universidad.estado ? "Si" : "No"}</td>
-                    <td><button className='btn btn-primary'><i className="bi bi-pencil-square"></i></button> <button className='btn btn-danger'><i className="bi bi-trash"></i></button> </td>
+                    <td>
+                      <button className='btn btn-primary' onClick={() => irEditarUniversidad(universidad.abreviacion)}><i className="bi bi-pencil-square"></i></button> 
+                      <button className='btn btn-danger'><i className="bi bi-trash"></i></button> 
+                    </td>
                   </tr>
                 ) )}
               </tbody>
