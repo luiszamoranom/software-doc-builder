@@ -16,6 +16,33 @@ const Universidades = () => {
     getUniversidades()
   }, []);
 
+
+  const deshabilitarUniversidad = async (abreviacion) => {
+    //Agregar universidad a la base de datos.
+    try{
+        const response = await axios.patch(`http://localhost:8080/universidad/deshabilitar/${abreviacion}`);
+        alert("Se ha deshabilitado correctamente la universidad");
+        console.log(response.data);
+        await getUniversidades();
+    }
+    catch(error){
+        console.log(error)
+    }
+  }
+
+  const habilitarUniversidad = async (abreviacion) => {
+    //Agregar universidad a la base de datos.
+    try{
+        const response = await axios.patch(`http://localhost:8080/universidad/habilitar/${abreviacion}`);
+        alert("Se ha habilitado correctamente la universidad");
+        console.log(response.data);
+        await getUniversidades();
+    }
+    catch(error){
+        console.log(error)
+    }
+  }
+
   const navigate = useNavigate()
 
   const irAgregarUniversidad = () =>{
@@ -69,7 +96,11 @@ const Universidades = () => {
                     <td>{universidad.estado ? "Si" : "No"}</td>
                     <td>
                       <button className='btn btn-primary' onClick={() => irEditarUniversidad(universidad.abreviacion)}><i className="bi bi-pencil-square"></i></button> 
-                      <button className='btn btn-danger'><i className="bi bi-trash"></i></button> 
+                      {universidad.estado ? (
+                        <button className='btn btn-danger' onClick={() => deshabilitarUniversidad(universidad.abreviacion)}><i className="bi bi-trash"></i></button>
+                      ) : (
+                        <button className='btn btn-success' onClick={() => habilitarUniversidad(universidad.abreviacion)}><i className='bi bi-check'></i></button>
+                      )}
                     </td>
                   </tr>
                 ) )}
