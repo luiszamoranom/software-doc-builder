@@ -3,10 +3,20 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
+import VentanaModal from './VentanaModal';
 
 const AgregarUniversidad = () => {
     const [nombreUniversidad,setNombreUniversidad] = useState()
     const [abreviacion,setAbreviacion] = useState()
+    
+    const [showModal, setShowModal] = useState(false);
+    const [cuerpoModal, setCuerpoModal] = useState("");
+    const handleClose = () => {
+        setShowModal(false)
+    };
+    const mostrarModal = () => {
+        setShowModal(true)
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -16,9 +26,9 @@ const AgregarUniversidad = () => {
                 nombre: nombreUniversidad,
                 abreviacion
             });
+            setCuerpoModal(response.data.mensaje); 
+            mostrarModal();
             console.log(response.data)
-            // console.log(nombreUniversidad)
-            // console.log(abreviacion) 
         }
         catch(error){
             console.log(error)
@@ -57,7 +67,7 @@ const AgregarUniversidad = () => {
                 </div>
             </div>
         </div>
-        
+        {showModal && <VentanaModal cuerpo={cuerpoModal} showModal={showModal} handleClose={handleClose} />}
         
     </div>
     

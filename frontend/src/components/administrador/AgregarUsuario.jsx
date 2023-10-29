@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
+import VentanaModal from './VentanaModal';
 
 const AgregarUsuario = () => {
     const [rut, setRut] = useState("");
@@ -14,6 +15,14 @@ const AgregarUsuario = () => {
     const [universidadId, setUniversidadId] = useState("");
     const [universidades, setUniversidades] = useState([]);
     
+    const [showModal, setShowModal] = useState(false);
+    const [cuerpoModal, setCuerpoModal] = useState("");
+    const handleClose = () => {
+        setShowModal(false)
+    };
+    const mostrarModal = () => {
+        setShowModal(true)
+    };
 
     useEffect(() => {
         const fetchUniversidades = async () => {
@@ -42,7 +51,8 @@ const AgregarUsuario = () => {
                 universidadId
 
             });
-            alert("Se agregó el usuario");
+            setCuerpoModal(response.data.mensaje); 
+            mostrarModal();
             setRut("");
             console.log(response.data)
 
@@ -131,7 +141,7 @@ const AgregarUsuario = () => {
                 </div>
             </div>
         </div>
-        
+        {showModal && <VentanaModal cuerpo={cuerpoModal} showModal={showModal} handleClose={handleClose} />}
         
     </div>
     

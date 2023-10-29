@@ -10,7 +10,7 @@ const Usuarios = () => {
   const getUsuarios = async () => {
     const response = await axios.get('http://localhost:8080/usuario/filtro/todos');
     setUsuarios(response.data.usuarios); // Actualiza el estado con los datos obtenidos
-    // console.log(response.data.usuarios);
+    console.log(response.data.usuarios);
     // console.log(response.data.usuarios[1].usuarioUniversidadRoles[0].universidad.nombre);
   }
 
@@ -25,8 +25,8 @@ const Usuarios = () => {
     navigate('/administrador/usuarios/agregar')
   }
 
-  const irEditarUsuario = () => {
-    navigate('/administrador/usuarios/editar');
+  const irEditarUsuario = (rut, nombres, apellidos, correo, password) => {
+    navigate('/administrador/usuarios/editar', { state: { rut, nombres, apellidos, correo, password } });
   }
 
   //<input type='checkbox' checked={universidad.estado} /> 
@@ -65,7 +65,7 @@ const Usuarios = () => {
                     <td>{usuarios.rut}</td>
                     <td>{usuarios.nombres} {usuarios.apellidos}</td>
                     <td>{usuarios.universidad}</td>
-                    <td><button className='btn btn-primary' onClick={irEditarUsuario}><i className="bi bi-pencil-square"></i></button> <button className='btn btn-danger'><i className="bi bi-trash"></i></button> </td>
+                    <td><button className='btn btn-primary' onClick={() => irEditarUsuario(usuarios.rut, usuarios.nombres, usuarios.apellidos, usuarios.email, usuarios.contrasena)}><i className="bi bi-pencil-square"></i></button> <button className='btn btn-danger'><i className="bi bi-trash"></i></button> </td>
                   </tr>
                 ) )}
               </tbody>

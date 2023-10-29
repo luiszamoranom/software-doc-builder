@@ -4,12 +4,21 @@ import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import VentanaModal from './VentanaModal';
 
 const EditarUniversidad = () => {
     const [nombreUniversidad,setNombreUniversidad] = useState()
     const location = useLocation();
     const abreviacion = location.state.parametro;
 
+    const [showModal, setShowModal] = useState(false);
+    const [cuerpoModal, setCuerpoModal] = useState("");
+    const handleClose = () => {
+        setShowModal(false)
+    };
+    const mostrarModal = () => {
+        setShowModal(true)
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -19,7 +28,8 @@ const EditarUniversidad = () => {
                 abreviacion: abreviacion,
                 nombre: nombreUniversidad
             });
-            alert("Se han guardado los cambios");
+            setCuerpoModal(response.data.mensaje); 
+            mostrarModal();
             console.log(response.data)
         }
         catch(error){
@@ -59,6 +69,7 @@ const EditarUniversidad = () => {
                 </div>
             </div>
         </div>
+        {showModal && <VentanaModal cuerpo={cuerpoModal} showModal={showModal} handleClose={handleClose} />}
         
         
     </div>

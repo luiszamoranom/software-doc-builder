@@ -2,11 +2,16 @@ import React, { useState,useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import axios from 'axios';
+import VentanaModal from './VentanaModal';
 
 const Universidades = () => {
 
-  const [universidades,setUniversidades] = useState([])
-  
+  const [universidades,setUniversidades] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const handleClose = () => setShowModal(false);
+  const mostrarModal = () => setShowModal(true);
+  const [cuerpoModal, setCuerpoModal] = useState("");
+
   const getUniversidades = async () => {
     const response = await axios.get('http://localhost:8080/universidad/filtro/todas');
     setUniversidades(response.data.universidades); // Actualiza el estado con los datos obtenidos
@@ -18,11 +23,13 @@ const Universidades = () => {
 
 
   const deshabilitarUniversidad = async (abreviacion) => {
+    
     //Agregar universidad a la base de datos.
     try{
         const response = await axios.patch(`http://localhost:8080/universidad/deshabilitar/${abreviacion}`);
-        alert("Se ha deshabilitado correctamente la universidad");
         console.log(response.data);
+        setCuerpoModal("Se ha deshabilitado correctamente la universidad");
+        mostrarModal();
         await getUniversidades();
     }
     catch(error){
@@ -31,16 +38,20 @@ const Universidades = () => {
   }
 
   const habilitarUniversidad = async (abreviacion) => {
+    
     //Agregar universidad a la base de datos.
     try{
         const response = await axios.patch(`http://localhost:8080/universidad/habilitar/${abreviacion}`);
-        alert("Se ha habilitado correctamente la universidad");
         console.log(response.data);
+        setCuerpoModal("Se ha habilitado correctamente la universidad");
+        mostrarModal();
         await getUniversidades();
+        
     }
     catch(error){
         console.log(error)
     }
+    
   }
 
   const navigate = useNavigate()
@@ -108,6 +119,7 @@ const Universidades = () => {
             </Table>
         </div>
       </div>
+      {showModal && <VentanaModal cuerpo={cuerpoModal} showModal={showModal} handleClose={handleClose} />}
       
     </div>
     

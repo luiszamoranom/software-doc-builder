@@ -3,14 +3,32 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
+import VentanaModal from './VentanaModal';
 
 const EditarUsuario = () => {
-    const [rut, setRut] = useState("");
     const [nombresUsuario,setNombresUsuario] = useState("");
     const [apellidosUsuario, setApellidosUsuario] = useState("");
     const [passwordUsuario, setPasswordUsuario] = useState("");
     const [emailUsuario,setEmailUsuario] = useState("");
-    const [rolId, setRolId] = useState();
+    const location = useLocation();
+    const rut = location.state.rut;
+    
+    useEffect(() => {
+        setNombresUsuario(location.state.nombres);
+        setApellidosUsuario(location.state.apellidos);
+        setEmailUsuario(location.state.correo);
+        setPasswordUsuario(location.state.password);
+    }, [location]);
+
+    const [showModal, setShowModal] = useState(false);
+    const [cuerpoModal, setCuerpoModal] = useState("");
+    const handleClose = () => {
+        setShowModal(false)
+    };
+    const mostrarModal = () => {
+        setShowModal(true)
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -25,7 +43,8 @@ const EditarUsuario = () => {
                 email: emailUsuario,
 
             });
-            alert("Se agregó el usuario");
+            setCuerpoModal(response.data.mensaje); 
+            mostrarModal();
             setRut("");
             console.log(response.data)
 
@@ -55,7 +74,7 @@ const EditarUsuario = () => {
 
                         <Form.Group className="mb-3" controlId="">
                             <Form.Label>Nombre</Form.Label>
-                            <Form.Control type="text" placeholder="Ingrese nombres" onChange={(e) => setNombresUsuario(e.target.value)}/>
+                            <Form.Control type="text" placeholder="Ingrese nombres" value={nombresUsuario} onChange={(e) => setNombresUsuario(e.target.value)}/>
                             {/* <Form.Text className="text-muted">
                                 Ingrese nombre universidad
                             </Form.Text> */}
@@ -63,7 +82,7 @@ const EditarUsuario = () => {
                         
                         <Form.Group className="mb-3" controlId="">
                             <Form.Label>Apellidos</Form.Label>
-                            <Form.Control type="text" placeholder="Ingrese apellidos"  onChange={(e) => setApellidosUsuario(e.target.value)}/>
+                            <Form.Control type="text" placeholder="Ingrese apellidos" value={apellidosUsuario} onChange={(e) => setApellidosUsuario(e.target.value)}/>
                             {/* <Form.Text className="text-muted">
                                 Ingrese abreviación
                             </Form.Text> */}
@@ -71,7 +90,7 @@ const EditarUsuario = () => {
 
                         <Form.Group className="mb-3" controlId="">
                             <Form.Label>Correo</Form.Label>
-                            <Form.Control type="text" placeholder="Ingrese correo"  onChange={(e) => setEmailUsuario(e.target.value)}/>
+                            <Form.Control type="text" placeholder="Ingrese correo" value={emailUsuario} onChange={(e) => setEmailUsuario(e.target.value)}/>
                             {/* <Form.Text className="text-muted">
                                 Ingrese abreviación
                             </Form.Text> */}
@@ -79,7 +98,7 @@ const EditarUsuario = () => {
 
                         <Form.Group className="mb-3" controlId="">
                             <Form.Label>Contraseña</Form.Label>
-                            <Form.Control type="password" placeholder="Ingrese contraseña"  onChange={(e) => setPasswordUsuario(e.target.value)}/>
+                            <Form.Control type="password" placeholder="Ingrese contraseña" value={passwordUsuario} onChange={(e) => setPasswordUsuario(e.target.value)}/>
                             {/* <Form.Text className="text-muted">
                                 Ingrese abreviación
                             </Form.Text> */}
@@ -92,7 +111,7 @@ const EditarUsuario = () => {
                 </div>
             </div>
         </div>
-        
+        {showModal && <VentanaModal cuerpo={cuerpoModal} showModal={showModal} handleClose={handleClose} />}
         
     </div>
     
