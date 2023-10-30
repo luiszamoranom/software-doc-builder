@@ -104,7 +104,8 @@ exit;
     - Ejemplo:
       {
         "abreviacionUniversidad":"UTALCA",
-        "nombreModulo":"Programación Avanzada"
+        "nombreModulo":"Programación Avanzada",
+        "descripcionModulo":"Es un buen ramo si lo da un buen profesor"
       }
 
 - **PATCH**

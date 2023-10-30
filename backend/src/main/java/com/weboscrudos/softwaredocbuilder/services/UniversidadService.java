@@ -61,11 +61,12 @@ public class UniversidadService {
     }
 
     public UniversidadModel agregarModuloAUniversidad(Optional<UniversidadModel> universidadExistente,
-            String nombreModulo) {
+            String nombreModulo, String descripcion) {
 
         ModuloModel moduloModel = new ModuloModel();
         moduloModel.setNombre(nombreModulo);
         moduloModel.setUniversidad(universidadExistente.get());
+        moduloModel.setDescripcion(descripcion);
         universidadExistente.get().getModulos().add(moduloModel);
         universidadRepository.save(universidadExistente.get());
         return universidadExistente.get();

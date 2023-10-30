@@ -5,4 +5,5 @@ import lombok.Getter;
 public class UniversidadAgregarModuloDTO {
     private String abreviacionUniversidad;
     private String nombreModulo;
+    private String descripcionModulo;
 }

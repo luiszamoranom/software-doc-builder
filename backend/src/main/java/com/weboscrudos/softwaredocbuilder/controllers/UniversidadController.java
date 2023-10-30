@@ -97,9 +97,9 @@ public class UniversidadController {
     }
 
     @PostMapping("/agregar_modulo_universidad")
-    public UniversidadResponse agregarModuloAUniversidad(@RequestBody UniversidadAgregarModuloDTO universidaAgregarModuloDTO ){
-        Optional<UniversidadModel> universidadExistente = universidadService.findById(universidaAgregarModuloDTO.getAbreviacionUniversidad());
-        boolean moduloExisteEnUniversidad = universidadService.existeNombreModulo(universidadExistente,universidaAgregarModuloDTO.getNombreModulo());
+    public UniversidadResponse agregarModuloAUniversidad(@RequestBody UniversidadAgregarModuloDTO uDTO ){
+        Optional<UniversidadModel> universidadExistente = universidadService.findById(uDTO.getAbreviacionUniversidad());
+        boolean moduloExisteEnUniversidad = universidadService.existeNombreModulo(universidadExistente,uDTO.getNombreModulo());
 
         if (universidadExistente.isEmpty()) {
             return UniversidadResponse.createErrorResponse("No existe una universidad con esa abreviación");
@@ -109,7 +109,7 @@ public class UniversidadController {
             return UniversidadResponse.createErrorResponse("No podemos registrar el modulo ya que actualmente existe uno con el mismo nombre");
         }
         
-        return UniversidadResponse.createSuccessResponse("Se ha agregado el modulo a la universidad", universidadService.agregarModuloAUniversidad(universidadExistente,universidaAgregarModuloDTO.getNombreModulo()));
+        return UniversidadResponse.createSuccessResponse("Se ha agregado el modulo a la universidad", universidadService.agregarModuloAUniversidad(universidadExistente,uDTO.getNombreModulo(),uDTO.getDescripcionModulo()));
     }
 
     @PatchMapping("/cambiar_estado_modulo")

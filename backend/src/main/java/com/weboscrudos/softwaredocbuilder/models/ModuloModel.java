@@ -26,6 +26,9 @@ public class ModuloModel {
     @Column
     private Boolean estado=true;
 
+    @Column
+    private String descripcion;
+    
     @ManyToOne
     @JoinColumn(name = "universidad_abreviacion")
     @JsonIgnore
