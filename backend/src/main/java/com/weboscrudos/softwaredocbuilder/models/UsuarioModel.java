@@ -1,7 +1,12 @@
 package com.weboscrudos.softwaredocbuilder.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name="usuario")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "rut")
 public class UsuarioModel {
 
     @Id
@@ -25,6 +31,7 @@ public class UsuarioModel {
     private String apellidos;
 
     @Column
+    @JsonIgnore
     private String contrasena;
 
     @Column
@@ -37,6 +44,5 @@ public class UsuarioModel {
     private String rol_plataforma="Usuario";
 
     @OneToMany(mappedBy = "usuario")
-    @JsonManagedReference
     private List<UsuarioUniversidadRolModel> usuarioUniversidadRoles = new ArrayList<>();
 }

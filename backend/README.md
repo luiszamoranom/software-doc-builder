@@ -93,7 +93,7 @@ exit;
       }
 - **PATCH**
   - localhost:8080/universidad
-    - ara actualizar la información de una universidad, debe tener los siguientes parametros: abreviación y nombre
+    - Para actualizar la información de una universidad, debe tener los siguientes parametros: abreviación y nombre
     - se actualizará únicamente el nombre, por tanto, la abreviación no será editable en su formulario.
     - Ejemplo
       {
@@ -102,3 +102,11 @@ exit;
       }
   - localhost:8080/universidad/habilitar/{abreviacion}
   - localhost:8080/universidad/deshabilitar/{abreviacion}
+
+## Rol de Usuario en una Universidad
+Nota: Cada vez que se imprime un usuario, sale la información relevante al rol que posee en una universidad. Sin embargo, cada una de estas relaciones usuario-universidad-rol esta registrada en la tabla 'usuario_universidad_rol', con su correspondiente id.
+- **GET**
+  - localhost:8080/rol_de_usuario_en_universidad
+    - Obtener todas las relaciones triples de todos los usuarios registrados en la aplicación 
+  - localhost:8080/rol_de_usuario_en_universidad/{id} 
+    - Obtener la información de esta relación triple de un particular id 
