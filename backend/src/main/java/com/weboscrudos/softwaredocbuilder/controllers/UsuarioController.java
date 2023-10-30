@@ -1,5 +1,6 @@
 package com.weboscrudos.softwaredocbuilder.controllers;
 
+import com.weboscrudos.softwaredocbuilder.dto.usuario.UsuarioBuscarPorRolYUniversidadDTO;
 import com.weboscrudos.softwaredocbuilder.dto.usuario.UsuarioCreateDTO;
 import com.weboscrudos.softwaredocbuilder.dto.usuario.UsuarioCreateUniversidadRolDTO;
 import com.weboscrudos.softwaredocbuilder.dto.usuario.UsuarioLoginDTO;
@@ -171,5 +172,16 @@ public class UsuarioController {
 
         UsuarioModel usuarioActualizado = usuarioService.setEstadoFalse(usuarioExistente);
         return UsuarioResponse.createSuccessResponse("Universidad habilitada con éxito", usuarioActualizado);
+    }
+
+    @GetMapping("/buscar_por_rol_en_universidad")
+    public UsuariosResponse findByRolPlataformaAndUniversidad(@RequestBody UsuarioBuscarPorRolYUniversidadDTO uDTO) {
+        ArrayList<UsuarioModel> usuarios = usuarioService.findByRolPlataformaAndUniversidad(uDTO.getNombreRol(), uDTO.getAbreviacionUniversidad());
+
+        if (usuarios.isEmpty()) {
+            return UsuariosResponse.createErrorResponse("No se encontraron usuarios con ese rol en esa universidad");
+        } else {
+            return UsuariosResponse.createSuccessResponse("Usuarios obtenidos con éxito", usuarios);
+        }
     }
 }

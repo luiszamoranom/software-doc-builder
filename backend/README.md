@@ -29,6 +29,13 @@ exit;
       }
   - localhost:8080/usuario/{rut} 
     - Busca según rut, por tanto, hay que indicarselo, ejemplo => localhost:8080/usuario/11.111.111-1
+  - localhost:8080/usuario/buscar_por_rol_en_universidad
+    - Busca todos los usuarios con determinado "nombreRol" en determinada universidad identificada por "abreviacionUniversidad", ambos string.
+    - Ej:
+    {
+      "nombreRol":"Profesor",
+      "abreviacionUniversidad":"UTALCA"
+    }
 - **POST**
   - **EN TEORIA, NO DEBERIA USARSE** localhost:8080/usuario/guardar_sin_rol_en_universidad 
     - Para crear un usuario debe tener el body con los siguientes parametros: rut, nombres, apellidos, contrasena, email
