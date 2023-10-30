@@ -1,5 +1,6 @@
 package com.weboscrudos.softwaredocbuilder.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -36,5 +37,6 @@ public class UsuarioModel {
     private String rol_plataforma="Usuario";
 
     @OneToMany(mappedBy = "usuario")
+    @JsonManagedReference
     private List<UsuarioUniversidadRolModel> usuarioUniversidadRoles = new ArrayList<>();
 }

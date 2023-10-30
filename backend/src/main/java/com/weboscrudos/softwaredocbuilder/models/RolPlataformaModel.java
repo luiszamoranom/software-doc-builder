@@ -7,6 +7,9 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Getter
 @Setter
@@ -20,5 +23,6 @@ public class RolPlataformaModel {
     private String nombre;
 
     @OneToMany(mappedBy = "rol")
+    @JsonManagedReference
     private List<UsuarioUniversidadRolModel> usuarioUniversidadRoles = new ArrayList<>();
 }

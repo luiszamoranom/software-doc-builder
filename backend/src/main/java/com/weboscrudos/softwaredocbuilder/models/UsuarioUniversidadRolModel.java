@@ -18,12 +18,15 @@ public class UsuarioUniversidadRolModel {
     private Long id;
 
     @ManyToOne
+    @JsonBackReference
     private UsuarioModel usuario;
 
     @ManyToOne
+    @JsonBackReference
     private UniversidadModel universidad;
 
     @ManyToOne
+    @JsonBackReference
     private RolPlataformaModel rol;
 
     @Column
