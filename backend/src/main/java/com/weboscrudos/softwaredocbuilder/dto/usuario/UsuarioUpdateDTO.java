@@ -1,7 +1,6 @@
 package com.weboscrudos.softwaredocbuilder.dto.usuario;
 
 import lombok.Getter;
-
 @Getter
 public class UsuarioUpdateDTO {
     private String rut;

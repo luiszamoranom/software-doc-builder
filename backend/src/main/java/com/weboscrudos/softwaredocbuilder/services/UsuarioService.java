@@ -8,7 +8,6 @@ import com.weboscrudos.softwaredocbuilder.models.UsuarioUniversidadRolModel;
 import com.weboscrudos.softwaredocbuilder.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -86,5 +85,9 @@ public class UsuarioService {
 
     public void saveConRolEnUniversidad(UsuarioModel usuarioListo) {
         usuarioRepository.save(usuarioListo);
+    }
+
+    public ArrayList<UsuarioModel> findByRolPlataformaAndUniversidad(String nombreRol, String abreviacionUniversidad) {
+        return usuarioRepository.findByRolPlataformaAndUniversidad(nombreRol, abreviacionUniversidad);
     }
 }
