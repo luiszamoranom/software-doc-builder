@@ -3,6 +3,8 @@ package com.weboscrudos.softwaredocbuilder.controllers;
 import com.weboscrudos.softwaredocbuilder.dto.universidad.UniversidadAgregarModuloDTO;
 import com.weboscrudos.softwaredocbuilder.dto.universidad.UniversidadCreateDTO;
 import com.weboscrudos.softwaredocbuilder.dto.universidad.UniversidadUpdateDTO;
+import com.weboscrudos.softwaredocbuilder.dto.universidad.UniversidadUpdateModuloDTO;
+import com.weboscrudos.softwaredocbuilder.models.ModuloModel;
 import com.weboscrudos.softwaredocbuilder.models.UniversidadModel;
 import com.weboscrudos.softwaredocbuilder.responses.Universidad.UniversidadResponse;
 import com.weboscrudos.softwaredocbuilder.responses.Universidad.UniversidadesResponse;
@@ -108,5 +110,21 @@ public class UniversidadController {
         }
         
         return UniversidadResponse.createSuccessResponse("Se ha agregado el modulo a la universidad", universidadService.agregarModuloAUniversidad(universidadExistente,universidaAgregarModuloDTO.getNombreModulo()));
+    }
+
+    @PatchMapping("/cambiar_estado_modulo")
+    public UniversidadResponse cambiarEstadoModulo(@RequestBody UniversidadUpdateModuloDTO uDTO ){
+        Optional<UniversidadModel> universidadExistente = universidadService.findById(uDTO.getAbreviacionUniversidad());
+        UniversidadModel universidadActualizada = universidadService.cambiarEstadoModuloExistente(universidadExistente,uDTO.getNombreModulo(),uDTO.isEstadoModulo());
+
+        if (universidadExistente.isEmpty()) {
+            return UniversidadResponse.createErrorResponse("No existe una universidad con esa abreviación");
+        }
+
+        if(universidadActualizada==null){
+            return UniversidadResponse.createErrorResponse("No podemos cambiar el estado del modulo ya que no existe");
+        }
+        
+        return UniversidadResponse.createSuccessResponse("Se ha cambiado el modulo en la universidad", universidadActualizada);
     }
 }

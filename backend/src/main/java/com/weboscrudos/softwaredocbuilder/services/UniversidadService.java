@@ -79,4 +79,25 @@ public class UniversidadService {
         }
         return false;
     }
+
+    public ModuloModel retonarNombreModulo(Optional<UniversidadModel> universidadExistente, String nombreModulo){
+        for(ModuloModel modIt : universidadExistente.get().getModulos() ){
+            if(modIt.getNombre().equals(nombreModulo)){
+                return modIt;
+            }
+        }
+        return null;
+    }
+
+    public UniversidadModel cambiarEstadoModuloExistente(Optional<UniversidadModel> universidadExistente,
+            String nombreModulo, boolean estadoModulo) {
+        for(ModuloModel modIt : universidadExistente.get().getModulos() ){
+            if(modIt.getNombre().equals(nombreModulo)){
+                modIt.setEstado(estadoModulo);
+                universidadRepository.save(universidadExistente.get());
+                return universidadExistente.get();
+            }
+        }
+        return null;
+    }
 }

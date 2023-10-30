@@ -118,6 +118,14 @@ exit;
       }
   - localhost:8080/universidad/habilitar/{abreviacion}
   - localhost:8080/universidad/deshabilitar/{abreviacion}
+  - localhost:8080/universidad/cambiar_estado_modulo
+    - Cambia el estado de un modulo en una universidad, señalando la "abreviacionUniversidad", el "nombreModulo" y el estado "estadoModulo" al cual cambiará, todos String. 
+    - EJ:
+    {
+      "abreviacionUniversidad":"UTALCA",
+      "nombreModulo":"Programación Avanzada",
+      "estadoModulo":"true"
+    }
 
 ## Rol de Usuario en una Universidad
 Nota: Cada vez que se imprime un usuario, sale la información relevante al rol que posee en una universidad. Sin embargo, cada una de estas relaciones usuario-universidad-rol esta registrada en la tabla 'usuario_universidad_rol', con su correspondiente id.
