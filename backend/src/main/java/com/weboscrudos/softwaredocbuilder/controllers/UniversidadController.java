@@ -1,5 +1,6 @@
 package com.weboscrudos.softwaredocbuilder.controllers;
 
+import com.weboscrudos.softwaredocbuilder.dto.universidad.UniversidadAgregarModuloDTO;
 import com.weboscrudos.softwaredocbuilder.dto.universidad.UniversidadCreateDTO;
 import com.weboscrudos.softwaredocbuilder.dto.universidad.UniversidadUpdateDTO;
 import com.weboscrudos.softwaredocbuilder.models.UniversidadModel;
@@ -91,5 +92,21 @@ public class UniversidadController {
 
         UniversidadModel universidadActualizada = universidadService.setEstadoFalse(universidadExistente);
         return UniversidadResponse.createSuccessResponse("Universidad deshabilitada con éxito", universidadActualizada);
+    }
+
+    @PostMapping("/agregar_modulo_universidad")
+    public UniversidadResponse agregarModuloAUniversidad(@RequestBody UniversidadAgregarModuloDTO universidaAgregarModuloDTO ){
+        Optional<UniversidadModel> universidadExistente = universidadService.findById(universidaAgregarModuloDTO.getAbreviacionUniversidad());
+        boolean moduloExisteEnUniversidad = universidadService.existeNombreModulo(universidadExistente,universidaAgregarModuloDTO.getNombreModulo());
+
+        if (universidadExistente.isEmpty()) {
+            return UniversidadResponse.createErrorResponse("No existe una universidad con esa abreviación");
+        }
+
+        if(moduloExisteEnUniversidad){
+            return UniversidadResponse.createErrorResponse("No podemos registrar el modulo ya que actualmente existe uno con el mismo nombre");
+        }
+        
+        return UniversidadResponse.createSuccessResponse("Se ha agregado el modulo a la universidad", universidadService.agregarModuloAUniversidad(universidadExistente,universidaAgregarModuloDTO.getNombreModulo()));
     }
 }

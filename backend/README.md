@@ -91,6 +91,15 @@ exit;
       "nombres": "Universidad de la Vida",
       "abreviacion": "UDV"
       }
+  - localhost:8080/universidad/agregar_modulo_universidad
+    - Agrega un modulo a una universidad, este debe tener un body con "abreviacionUniversidad" y "nombreModulo", ambos string.
+    - No se podrán tener más de un modulo con un mismo nombre en una misma universidad.
+    - Ejemplo:
+      {
+        "abreviacionUniversidad":"UTALCA",
+        "nombreModulo":"Programación Avanzada"
+      }
+
 - **PATCH**
   - localhost:8080/universidad
     - Para actualizar la información de una universidad, debe tener los siguientes parametros: abreviación y nombre

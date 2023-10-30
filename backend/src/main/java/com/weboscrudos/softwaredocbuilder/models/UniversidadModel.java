@@ -32,4 +32,7 @@ public class UniversidadModel {
     @OneToMany(mappedBy = "universidad")
     @JsonIdentityReference(alwaysAsId = true)
     private List<UsuarioUniversidadRolModel> usuarioUniversidadRoles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "universidad", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ModuloModel> modulos = new ArrayList<>();
 }

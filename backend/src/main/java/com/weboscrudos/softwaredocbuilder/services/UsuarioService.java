@@ -3,6 +3,7 @@ package com.weboscrudos.softwaredocbuilder.services;
 import com.weboscrudos.softwaredocbuilder.dto.usuario.UsuarioCreateDTO;
 import com.weboscrudos.softwaredocbuilder.dto.usuario.UsuarioCreateUniversidadRolDTO;
 import com.weboscrudos.softwaredocbuilder.dto.usuario.UsuarioUpdateDTO;
+import com.weboscrudos.softwaredocbuilder.models.ModuloModel;
 import com.weboscrudos.softwaredocbuilder.models.UsuarioModel;
 import com.weboscrudos.softwaredocbuilder.models.UsuarioUniversidadRolModel;
 import com.weboscrudos.softwaredocbuilder.repository.UsuarioRepository;
