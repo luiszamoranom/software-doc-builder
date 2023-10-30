@@ -127,6 +127,14 @@ exit;
       "nombreModulo":"Programación Avanzada",
       "estadoModulo":"true"
     }
+  - localhost:8080/universidad/actualizar_informacion_modulo
+    - Sólo se puede actualizar la descripcion del estado (fuera del estado que se hace con la ruta anterior), esto es debido a que la PK no se pueden cambiar.
+    - EJ:
+    {
+      "abreviacionUniversidad":"UTALCA",
+      "nombreModulo":"Programación Avanzada",
+      "nuevaDescripcionModulo":"nueva descripcion"
+    }
 
 ## Rol de Usuario en una Universidad
 Nota: Cada vez que se imprime un usuario, sale la información relevante al rol que posee en una universidad. Sin embargo, cada una de estas relaciones usuario-universidad-rol esta registrada en la tabla 'usuario_universidad_rol', con su correspondiente id.

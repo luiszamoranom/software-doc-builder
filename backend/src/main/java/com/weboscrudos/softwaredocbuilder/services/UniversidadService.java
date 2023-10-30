@@ -101,4 +101,15 @@ public class UniversidadService {
         }
         return null;
     }
+
+    public UniversidadModel updateModuloExistente(Optional<UniversidadModel> universidadExistente, String nombreModulo, String nuevaDescripcionModulo) {
+       for(ModuloModel modIt : universidadExistente.get().getModulos() ){
+            if(modIt.getNombre().equals(nombreModulo)){
+                modIt.setDescripcion(nuevaDescripcionModulo);
+                universidadRepository.save(universidadExistente.get());
+                return universidadExistente.get();
+            }
+        }
+        return null;
+    }
 }
