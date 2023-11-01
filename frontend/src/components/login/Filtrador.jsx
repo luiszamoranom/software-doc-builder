@@ -2,6 +2,8 @@ import React,{useEffect, useState} from 'react'
 import { useLocation, useNavigate} from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { useAuth } from '../../context/AuthContext';
 
 function Filtrador() {
@@ -11,55 +13,64 @@ function Filtrador() {
   
     // // Acceder a la variable respuesta aquí
     // console.log(respuesta);
-    const [listaRoles,setListRoles] = useState([])
+    const [rolUniversidad,setRolUniversidad] = useState()
+    const [datosRol,setDatosRol] = useState()
+
+    const [showRoles,setShowRoles] = useState(false)
+    const [rolPorUniversidad,setRolPorUniversidad] = useState([])
     const navigate = useNavigate();
   
     // Acceder a la variable datos aquí
 
-    function handleRol(rol){
-        const credencial = location.state.datos;
-        credencial.roles=rol;
+    function handleRol(item){
 
-        localStorage.setItem("auth", JSON.stringify(credencial));
+        localStorage.setItem("auth", JSON.stringify(item));
         localStorage.setItem("logged", true);
-        updateAuth(credencial);
-
-        if (rol == 'Estudiante'){
+        updateAuth(item);
+        console.log("nombre rol:",item.rol.nombre)
+        if (item.rol.nombre == 'Estudiante'){
             navigate("/estudiante",{replace:true})
         }
-        else if (rol == 'Profesor'){
+        else if (item.rol.nombre == 'Profesor'){
             navigate("/profesor",{replace:true})
         }
-        else if (rol == 'Jefe de Carrera'){
+        else if (item.rol.nombre == 'Jefe de Carrera'){
             navigate("/director",{replace:true})
         }
-        else if (rol == 'Administrador'){
+        else if (item.rol.nombre == 'Administrador'){
             navigate("/administrador",{replace:true})
         }
     }
 
     useEffect( () => {
         //console.log("roles:",location.state.datos)
-        setListRoles(location.state.datos.roles);
+        //setDatosUsuarioRol(location.state.datos.usuarioUniversidadRoles.usuario);
+
+        //aqui tengo los roles que tiene un usuario en cada institucion
+        setRolPorUniversidad(location.state.datos.usuarioUniversidadRoles)
     },[])
   
     return (
       <div>
         <div>
             <div className='pt-2 pb-5'>
-                <h1 className='text-center'>Elije como quieres iniciar sesion</h1>
+                <h1 className='text-center'>¿Cómo desea iniciar sesión?</h1>
             </div>
         </div>
         <div>
-            <CardGroup>
-                {listaRoles.map( (rol,index) => (
-                    <Card style={{margin:"2rem"}}>
-                        <button onClick={() => handleRol(rol)}>
-                            <h1 key={index}>{rol}</h1>
+            <Row xs={1} md={3} className="g-4 m-3 justify-content-center">
+                {rolPorUniversidad.map( (item) => (
+                    <Card className='border-0' key={item.id}>
+                        <button onClick={() => handleRol(item)}>
+                            <div>
+                                <h2>{item.universidad.nombre}</h2>
+                                <h5>{item.rol.nombre}</h5>
+                            </div>
+                            
                         </button>
                     </Card>
                 )) }
-            </CardGroup>
+            </Row>            
         </div>
         
         

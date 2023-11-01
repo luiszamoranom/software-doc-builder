@@ -61,21 +61,37 @@ public class UsuarioController {
     }
 
     @GetMapping("/login")
-    public UsuarioResponse login(@RequestBody UsuarioLoginDTO usuarioLoginDTO) {
-        System.out.println("rut:"+usuarioLoginDTO.getRut());
-        System.out.println("contrasena:"+usuarioLoginDTO.getContrasena());
-        Optional<UsuarioModel> usuarioExistente = usuarioService.findById(usuarioLoginDTO.getRut());
+    // public UsuarioResponse login(@RequestBody UsuarioLoginDTO usuarioLoginDTO)
+    public UsuarioResponse login( @RequestParam("rutUsuario") String rutUsuario, @RequestParam("contrasenaUsuario") String contrasenaUsuario)  
+    {
+        System.out.println("rut:" + rutUsuario);
+        System.out.println("contrasena:" + contrasenaUsuario);
+        Optional<UsuarioModel> usuarioExistente = usuarioService.findById(rutUsuario);
         if (usuarioExistente.isEmpty()) {
             return UsuarioResponse.createErrorResponse("No es posible realizar el login ya que no existe usuario con dicho rut");
         }
 
-        if(usuarioLoginDTO.getRut().equals(usuarioExistente.get().getRut()) && usuarioLoginDTO.getContrasena().equals(usuarioExistente.get().getContrasena())) {
+        if(rutUsuario.equals(usuarioExistente.get().getRut()) && contrasenaUsuario.equals(usuarioExistente.get().getContrasena())) {
             if(usuarioExistente.get().isEstado()){
                 return UsuarioResponse.createSuccessResponse("Login exitoso", usuarioExistente.get());
             }else{
                 return UsuarioResponse.createErrorResponse("Credenciales correctas pero el usuario esta deshabilitado, login fallido");
             }
         }
+        // System.out.println("rut:"+usuarioLoginDTO.getRut());
+        // System.out.println("contrasena:"+usuarioLoginDTO.getContrasena());
+        // Optional<UsuarioModel> usuarioExistente = usuarioService.findById(usuarioLoginDTO.getRut());
+        // if (usuarioExistente.isEmpty()) {
+        //     return UsuarioResponse.createErrorResponse("No es posible realizar el login ya que no existe usuario con dicho rut");
+        // }
+
+        // if(usuarioLoginDTO.getRut().equals(usuarioExistente.get().getRut()) && usuarioLoginDTO.getContrasena().equals(usuarioExistente.get().getContrasena())) {
+        //     if(usuarioExistente.get().isEstado()){
+        //         return UsuarioResponse.createSuccessResponse("Login exitoso", usuarioExistente.get());
+        //     }else{
+        //         return UsuarioResponse.createErrorResponse("Credenciales correctas pero el usuario esta deshabilitado, login fallido");
+        //     }
+        // }
 
         return UsuarioResponse.createErrorResponse("Contraseña incorrecta");
     }
