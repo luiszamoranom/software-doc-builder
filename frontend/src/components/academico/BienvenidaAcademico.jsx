@@ -7,7 +7,7 @@ const BienvenidaAcademico = () => {
   return (
     <div>
       <div className='justify-content-center text-center mb-5 mt-3  p-1'>
-        <h1>Te damos la bienvenida {authUser.nombres}</h1>
+        <h1>Te damos la bienvenida {authUser.usuario.nombres}</h1>
       </div>
 
       <div className='container bordeNegro text-center  mb-5 mt-5 p-1'>

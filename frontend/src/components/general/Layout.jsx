@@ -17,10 +17,10 @@ const Layout = ({children}) => {
     },[])
 
     useEffect(() => {
-        console.log("Layout path:",lastPath)
+        //console.log("Layout path:",lastPath)
     },[lastPath])
 
-    console.log("Pasa por layout")
+    //console.log("Pasa por layout")
     return (
         <main className="App">
             <Outlet />
