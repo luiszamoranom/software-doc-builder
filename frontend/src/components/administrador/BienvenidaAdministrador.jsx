@@ -2,11 +2,11 @@ import React from 'react'
 import { useAuth } from '../../context/AuthContext';
 
 const BienvenidaAdministrador = () => {
-    const {showSidebar,setShowSidebar, authUser} = useAuth()
+  const {showSidebar,setShowSidebar, authUser} = useAuth()
   return (
     <div>
       <div className='justify-content-center text-center mb-5 mt-3  p-1'>
-        <h1>Te damos la bienvenida {authUser.nombres}</h1>
+        <h1>Te damos la bienvenida {authUser.nombres} {authUser.apellidos}</h1>
       </div>
 
       <div className='container bordeNegro text-center  mb-5 mt-5 p-1'>

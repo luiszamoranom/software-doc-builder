@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate} from 'react-router-dom';
+import axios from 'axios';
 
 
 const Login = ({authUser}) => {
@@ -22,82 +23,107 @@ const Login = ({authUser}) => {
         e.preventDefault()
 
         try{
-            // const response = await axios.post('http://localhost:8080/usuario/login', {
-            //     rutUsuario,
-            //     contrasenaUsuario,
-            // });
-            // console.log(response.data.exito)
-            // // Verifica si la respuesta es exito
-            // if (response.data.exito) {
-            //     const respuesta = response.data.usuario
+            console.log(rutUsuario,contrasenaUsuario)
+            const datos = {
+                rut:rutUsuario,
+                contrasena:contrasenaUsuario
+            }
+            const response = await axios.get('http://localhost:8080/usuario/login',{
+                params: {
+                    rutUsuario,
+                    contrasenaUsuario
+                }
+            });
+            console.log(response.data)
+            // Verifica si la respuesta es exito
+            if (response.data.exito == true) {
+                const respuesta = response.data.usuario
                 
-                const datos = {
-                    rut:'20185866-6',
-                    nombres:'Bastian',
-                    apellidos:'Nuñez',
-                    email:'bastian@estudiante.cl',
-                    contrasena: "bastian123",
-                    estado: true,
-                    roles:['Administrador'], //aqui colocar el rol que desea
-                    // roles:['Administrador','Profesor'],
-                };
+                // const datos = {
+                //     rut:'20185866-6',
+                //     nombres:'Bastian',
+                //     apellidos:'Nuñez',
+                //     email:'bastian@estudiante.cl',
+                //     contrasena: "bastian123",
+                //     estado: true,
+                //     rol_plataforma : "Usuario", // Administrador/Usuario
+                //     usuarioUniversidadRoles:[
+                //         //aqui tenemos los roles que puede tener en distintas universidades un usuario
+                //         //en este caso tenemos que un estudiante pertenece a dos universidades
+                //         {
+                //             id:1,
+                //             usuario: {
+                //                 rut:'20185866-6',
+                //                 nombres:'Bastian',
+                //                 apellidos:'Nuñez',
+                //                 email:'bastian@estudiante.cl',
+                //                 contrasena: "bastian123",
+                //                 estado: true,
+                //                 rol_plataforma : "Usuario",
+                //                 usuarioUniversidadRoles: [1]
+                //             },
+                //             universidad: {
+                //                 abreviacion: 'UTALCA',
+                //                 nombre: "Universidad de Talca",
+                //                 estado: true,
+                //                 usuarioUniversidadRoles: [1]
+                //             },
+                //             rol:{
+                //                 id: 3,
+                //                 nombre: 'Estudiante',
+                //                 usuarioUniversidadRoles:[1]
+                //             }
+                //         },
+                //         {
+                //             id:2,
+                //             usuario: {
+                //                 rut:'20185866-6',
+                //                 nombres:'Bastian',
+                //                 apellidos:'Nuñez',
+                //                 email:'bastian@estudiante.cl',
+                //                 contrasena: "bastian123",
+                //                 estado: true,
+                //                 rol_plataforma : "Usuario",
+                //                 usuarioUniversidadRoles: [2]
+                //             },
+                //             universidad: {
+                //                 abreviacion: 'UCM',
+                //                 nombre: "Universidad Católica del Maule",
+                //                 estado: true,
+                //                 usuarioUniversidadRoles: [2]
+                //             },
+                //             rol:{
+                //                 id: 2,
+                //                 nombre: 'Profesor',
+                //                 usuarioUniversidadRoles:[2]
+                //             }
+                //         }
+                //     ],
+                // };
 
                 setRutUsuario('')
                 setContrasenaUsuario('')
 
-                if (datos.roles.length>1){
-                    //console.log("Login auth: ",datos)
-                    navigate("/filtrador",{state:{datos},replace:true})
+                if (respuesta.rol_plataforma == 'Administrador'){
+                    console.log("deberia entrar a administrador")
+                    localStorage.setItem("auth", JSON.stringify(respuesta));
+                    localStorage.setItem("logged", true);
+                    updateAuth(respuesta);
+                    navigate("/administrador",{replace:true})
                 }
                 else{
-                    datos.roles=datos.roles[0]
-                    localStorage.setItem("auth", JSON.stringify(datos));
-                    localStorage.setItem("logged", true);
-                    updateAuth(datos);
-                    if (datos.roles == 'Estudiante'){
-                        navigate("/estudiante",{replace:true})
+                    if (respuesta.usuarioUniversidadRoles.length==1){
+                        //significa que el usuario solo tiene un rol en una unica institucion
                     }
-                    else if (datos.roles == 'Profesor'){
-                        navigate("/profesor",{replace:true})
-                    }
-                    else if (datos.roles == 'Jefe de Carrera'){
-                        navigate("/administrador",{replace:true})
-                    }
-                    else if (datos.roles == 'Administrador'){
-                        navigate("/administrador",{replace:true})
+                    else{
+                        //significa que el usuario tiene mas roles en varias instituciones
+                        navigate("/filtrador",{state:{respuesta},replace:true})
                     }
                 }
-
-                //NO DESCOMENTAR LO DE ABAJO YA QUE AUN NO ESTAN IMPLEMENTADOS LOS ROLES
-                //CUANDO SE DESCOMENTE HAY QUE CAMBIAR EL NOMBRE DE LA VARIABLE DE "ROLES"
-
-                //  if (respuesta.usuarioUniversidadRoles.length>1){
-                //      navigate("/filtrador",{state:respuesta,replace:true})
-                //  }
-                //  else{
-                        // respuesta.roles=respuesta.roles[0]
-                        // localStorage.setItem("auth", JSON.stringify(respuesta));
-                        // localStorage.setItem("logged", true);
-                        // updateAuth(respuesta);
-                //      if (respuesta.roles == 'Estudiante'){
-                //          navigate("/estudiante",{replace:true})
-                //      }
-                //      else if (respuesta.roles == 'Profesor'){
-                //          navigate("/profesor",{replace:true})
-                //      }
-                //      else if (respuesta.roles == 'Jefe de Carrera'){
-                //          navigate("/administrador",{replace:true})
-                //      }
-                //      else if (respuesta.roles == 'Administrador'){
-                //          navigate("/administrador",{replace:true})
-                //      }
-                //  }
-                
-
-            // }
-            // else{
-            //     setMensaje('Credenciales incorrectas');
-            // }
+            }
+            else{
+                setMensaje('Credenciales incorrectas');
+            }
         }
         catch(error){
             setMensaje('Error al iniciar sesión.');
