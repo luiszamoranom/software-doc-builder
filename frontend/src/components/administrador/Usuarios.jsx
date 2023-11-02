@@ -3,9 +3,15 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
 import Pagination from 'react-bootstrap/Pagination';
+import VentanaModal from "./VentanaModal";
 
 const Usuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const handleClose = () => setShowModal(false);
+  const mostrarModal = () => setShowModal(true);
+  const [cuerpoModal, setCuerpoModal] = useState("");
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Cantidad de elementos por página
 
@@ -30,6 +36,36 @@ const Usuarios = () => {
     getUsuarios();
   }, []);
 
+  const habilitarUsuario = async (rut) => {
+    //Agregar universidad a la base de datos.
+    try {
+      const response = await axios.patch(
+        `http://localhost:8080/usuario/habilitar/${rut}`
+      );
+      console.log(response.data);
+      setCuerpoModal("Se ha habilitado correctamente el usuario");
+      mostrarModal();
+      await getUsuarios();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deshabilitarUsuario = async (rut) => {
+    //Agregar universidad a la base de datos.
+    try {
+      const response = await axios.patch(
+        `http://localhost:8080/usuario/deshabilitar/${rut}`
+      );
+      console.log(response.data);
+      setCuerpoModal("Se ha deshabilitado correctamente el usuario");
+      mostrarModal();
+      await getUsuarios();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const navigate = useNavigate();
 
   const irAgregarUsuario = () => {
@@ -42,6 +78,8 @@ const Usuarios = () => {
       state: { rut, nombres, apellidos, correo, password },
     });
   };
+
+
 
   //<input type='checkbox' checked={universidad.estado} />
 
@@ -71,7 +109,8 @@ const Usuarios = () => {
                 <th>RUT</th>
                 <th>Nombre Completo</th>
                 <th>Universidad</th>
-                <th>Acciones</th>
+                <th>Editar</th>
+                <th className="d-flex justify-content-center">Habilitar/deshabilitar</th>
               </tr>
             </thead>
             <tbody>
@@ -94,12 +133,33 @@ const Usuarios = () => {
                           usuario.contrasena
                         )
                       }
+                      title="Editar Usuario"
                     >
                       <i className="bi bi-pencil-square"></i>
                     </button>
-                    <button className="btn btn-danger">
-                      <i className="bi bi-trash"></i>
-                    </button>
+                  </td>
+                  <td className="d-flex justify-content-center">
+                    {usuario.estado ? (
+                      <button
+                        className="btn btn-danger"
+                        onClick={() =>
+                          deshabilitarUsuario(usuario.rut)
+                        }
+                        title="Deshabilitar Usuario"
+                      >
+                        <i className="bi bi-dash"></i>
+                      </button>
+                    ) : (
+                      <button
+                        className="btn btn-success"
+                        onClick={() =>
+                          habilitarUsuario(usuario.rut)
+                        }
+                        title="Habilitar Usuario"
+                      >
+                        <i className="bi bi-check"></i>
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -120,6 +180,13 @@ const Usuarios = () => {
           </Pagination>
         </div>
       </div>
+      {showModal && (
+        <VentanaModal
+          cuerpo={cuerpoModal}
+          showModal={showModal}
+          handleClose={handleClose}
+        />
+      )}
     </div>
   );
 };
