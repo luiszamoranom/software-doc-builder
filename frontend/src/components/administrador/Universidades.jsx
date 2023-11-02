@@ -13,7 +13,7 @@ const Universidades = () => {
   const [cuerpoModal, setCuerpoModal] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 3; // Cantidad de elementos por página
+  const itemsPerPage = 10; // Cantidad de elementos por página
   const indexOfLastUniversidad = currentPage * itemsPerPage;
   const indexOfFirstUniversidad = indexOfLastUniversidad - itemsPerPage;
   const currentUniversidades = universidades.slice(indexOfFirstUniversidad, indexOfLastUniversidad);
@@ -106,7 +106,8 @@ const Universidades = () => {
                 <th>Nombre</th>
                 <th>Abreviación</th>
                 <th>Habilitado</th>
-                <th>Acciones</th>
+                <th>Editar</th>
+                <th className="d-flex justify-content-center">Habilitar/deshabilitar</th>
               </tr>
             </thead>
             <tbody>
@@ -122,17 +123,21 @@ const Universidades = () => {
                       onClick={() =>
                         irEditarUniversidad(universidad.abreviacion)
                       }
+                      title="Editar Universidad"
                     >
                       <i className="bi bi-pencil-square"></i>
                     </button>
+                  </td>
+                  <td className="d-flex justify-content-center">
                     {universidad.estado ? (
                       <button
                         className="btn btn-danger"
                         onClick={() =>
                           deshabilitarUniversidad(universidad.abreviacion)
                         }
+                        title="Deshabilitar Universidad"
                       >
-                        <i className="bi bi-trash"></i>
+                        <i className="bi bi-dash"></i>
                       </button>
                     ) : (
                       <button
@@ -140,6 +145,7 @@ const Universidades = () => {
                         onClick={() =>
                           habilitarUniversidad(universidad.abreviacion)
                         }
+                        title="Habilitar Universidad"
                       >
                         <i className="bi bi-check"></i>
                       </button>
