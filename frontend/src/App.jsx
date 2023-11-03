@@ -17,7 +17,10 @@ import Universidades from './components/administrador/Universidades';
 import Usuarios from './components/administrador/Usuarios';
 import Modulos from './components/administrador/Modulos';
 import AgregarUniversidad from './components/administrador/AgregarUniversidad';
+import EditarUniversidad from './components/administrador/EditarUniversidad';
 import AgregarUsuario from './components/administrador/AgregarUsuario';
+import EditarUsuario from './components/administrador/EditarUsuario';
+
 // Jefe de Carrera
 import JefeCarreraDashboard from './components/director/JefeCarreraDashboard';
 import BienvenidaDirector from './components/director/BienvenidaDirector';
@@ -68,10 +71,14 @@ function App() {
                 
                 <Route path='universidades' element= {<Universidades />} />
                 <Route path='universidades/agregar' element={<AgregarUniversidad />} />
+                <Route path='universidades/editar' element={<EditarUniversidad />} />
 
                 <Route path='modulos' element= {<Modulos />}/>
+                
                 <Route path='usuarios' element= {<Usuarios />}/>
                 <Route path='usuarios/agregar' element= {<AgregarUsuario />}/>
+                <Route path='usuarios/editar' element= {<EditarUsuario />}/>
+
 
               </Route>
             </Route>
