@@ -1,7 +1,7 @@
 import { Navigate, Outlet , useLocation,Route,Routes} from "react-router-dom"
 import { NavBarExport } from "./Navbar"
 import Footer from "./Footer"
-import { useAuth } from "../context/AuthContext"
+import { useAuth } from "../../context/AuthContext"
 import { useEffect} from "react"
 
 
@@ -17,10 +17,10 @@ const Layout = ({children}) => {
     },[])
 
     useEffect(() => {
-        console.log("Layout path:",lastPath)
+        //console.log("Layout path:",lastPath)
     },[lastPath])
 
-    console.log("Pasa por layout")
+    //console.log("Pasa por layout")
     return (
         <main className="App">
             <Outlet />

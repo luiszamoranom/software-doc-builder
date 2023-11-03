@@ -1,6 +1,7 @@
 package com.weboscrudos.softwaredocbuilder.services;
 
 import com.weboscrudos.softwaredocbuilder.dto.universidad.UniversidadCreateDTO;
+import com.weboscrudos.softwaredocbuilder.models.ModuloModel;
 import com.weboscrudos.softwaredocbuilder.models.UniversidadModel;
 import com.weboscrudos.softwaredocbuilder.repository.UniversidadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +58,58 @@ public class UniversidadService {
         universidadActualizada.setEstado(false);
         universidadRepository.save(universidadActualizada);
         return universidadActualizada;
+    }
+
+    public UniversidadModel agregarModuloAUniversidad(Optional<UniversidadModel> universidadExistente,
+            String nombreModulo, String descripcion) {
+
+        ModuloModel moduloModel = new ModuloModel();
+        moduloModel.setNombre(nombreModulo);
+        moduloModel.setUniversidad(universidadExistente.get());
+        moduloModel.setDescripcion(descripcion);
+        universidadExistente.get().getModulos().add(moduloModel);
+        universidadRepository.save(universidadExistente.get());
+        return universidadExistente.get();
+    }
+
+    public boolean existeNombreModulo(Optional<UniversidadModel> universidadExistente, String nombreModulo){
+        for(ModuloModel modIt : universidadExistente.get().getModulos() ){
+            if(modIt.getNombre().equals(nombreModulo)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public ModuloModel retonarNombreModulo(Optional<UniversidadModel> universidadExistente, String nombreModulo){
+        for(ModuloModel modIt : universidadExistente.get().getModulos() ){
+            if(modIt.getNombre().equals(nombreModulo)){
+                return modIt;
+            }
+        }
+        return null;
+    }
+
+    public UniversidadModel cambiarEstadoModuloExistente(Optional<UniversidadModel> universidadExistente,
+            String nombreModulo, boolean estadoModulo) {
+        for(ModuloModel modIt : universidadExistente.get().getModulos() ){
+            if(modIt.getNombre().equals(nombreModulo)){
+                modIt.setEstado(estadoModulo);
+                universidadRepository.save(universidadExistente.get());
+                return universidadExistente.get();
+            }
+        }
+        return null;
+    }
+
+    public UniversidadModel updateModuloExistente(Optional<UniversidadModel> universidadExistente, String nombreModulo, String nuevaDescripcionModulo) {
+       for(ModuloModel modIt : universidadExistente.get().getModulos() ){
+            if(modIt.getNombre().equals(nombreModulo)){
+                modIt.setDescripcion(nuevaDescripcionModulo);
+                universidadRepository.save(universidadExistente.get());
+                return universidadExistente.get();
+            }
+        }
+        return null;
     }
 }

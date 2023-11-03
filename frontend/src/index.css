@@ -68,13 +68,27 @@ button:focus-visible {
   }
 } 
 */
+
+.colorPrimario{
+  background-color: #0d6efd;
+}
+.boton-logout{
+  background-color: #fff;
+  color: #0d6efd;
+}
+.boton-logout:hover{
+  border-color: #fff;
+  color: #fff;
+  background-color: #0d6efd;
+}
+
 .fondo{
   background: rgb(255,255,255);
 background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(148,171,233,1) 82%);
 }
 
 .username {
-	color: #000;
+	color: #fff;
   font: 600;
   align-items: center;
 }
@@ -94,7 +108,9 @@ background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(148,171,233,1) 
   font-size: 500;
 }
 
-/*  */
+.bordeNegro{
+  border: 0.1rem solid black;
+}
 
 
 .wrapper {
@@ -139,13 +155,25 @@ background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(148,171,233,1) 
 
 /* OFFCANVAS */
 /* Estilos para la barra lateral (sidebar) */
+
+.width-offcanvas{
+  width: 350px !important;
+}
 .bg-offcanvas{
-  background: #BBC7CE;
+  background: #fff;
+}
+
+.a-link{
+  color: black;
+}
+.a-link:hover{
+  color: #fff;
 }
 .div-link{
-  background-color: dimgray;
+  border-radius: 0.3rem;
 }
 
 .div-link:hover{
-  background-color: darkgray;
+  background-color: #0d6efd;
+  color: #fff;
 }

@@ -1,8 +1,5 @@
 package com.weboscrudos.softwaredocbuilder.seeders;
-
-import com.weboscrudos.softwaredocbuilder.models.RolPlataformaModel;
 import com.weboscrudos.softwaredocbuilder.models.UniversidadModel;
-import com.weboscrudos.softwaredocbuilder.repository.RolPlataformaRepository;
 import com.weboscrudos.softwaredocbuilder.repository.UniversidadRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
