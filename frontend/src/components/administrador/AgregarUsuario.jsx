@@ -39,6 +39,14 @@ const AgregarUsuario = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         
+        if(universidadId === "" | rolId === ""){
+            setCuerpoModal("Falta la universidad y/o rol"); 
+            mostrarModal(); 
+            return;
+        }
+
+        alert("Password: " + passwordUsuario);
+
         //Agregar universidad a la base de datos.
         try{
             const response = await axios.post('http://localhost:8080/usuario/guardar_con_rol_en_universidad', {
@@ -74,7 +82,7 @@ const AgregarUsuario = () => {
                     <Form onSubmit={handleSubmit}>
                         <Form.Group className="mb-3" controlId="">
                             <Form.Label>RUT</Form.Label>
-                            <Form.Control type="text" placeholder="Ingrese rut" value={rut} onChange={(e) => setRut(e.target.value)}/>
+                            <Form.Control type="text" placeholder="Ingrese rut" value={rut} onChange={(e) => setRut(e.target.value)} required />
                             {/* <Form.Text className="text-muted">
                                 Ingrese nombre universidad
                             </Form.Text> */}
@@ -82,7 +90,7 @@ const AgregarUsuario = () => {
 
                         <Form.Group className="mb-3" controlId="">
                             <Form.Label>Nombre</Form.Label>
-                            <Form.Control type="text" placeholder="Ingrese nombres" onChange={(e) => setNombresUsuario(e.target.value)}/>
+                            <Form.Control type="text" placeholder="Ingrese nombres" onChange={(e) => setNombresUsuario(e.target.value)} required />
                             {/* <Form.Text className="text-muted">
                                 Ingrese nombre universidad
                             </Form.Text> */}
@@ -90,7 +98,7 @@ const AgregarUsuario = () => {
                         
                         <Form.Group className="mb-3" controlId="">
                             <Form.Label>Apellidos</Form.Label>
-                            <Form.Control type="text" placeholder="Ingrese apellidos"  onChange={(e) => setApellidosUsuario(e.target.value)}/>
+                            <Form.Control type="text" placeholder="Ingrese apellidos"  onChange={(e) => setApellidosUsuario(e.target.value)} required />
                             {/* <Form.Text className="text-muted">
                                 Ingrese abreviación
                             </Form.Text> */}
@@ -98,7 +106,7 @@ const AgregarUsuario = () => {
 
                         <Form.Group className="mb-3" controlId="">
                             <Form.Label>Correo</Form.Label>
-                            <Form.Control type="text" placeholder="Ingrese correo"  onChange={(e) => setEmailUsuario(e.target.value)}/>
+                            <Form.Control type="text" placeholder="Ingrese correo"  onChange={(e) => setEmailUsuario(e.target.value)} required />
                             {/* <Form.Text className="text-muted">
                                 Ingrese abreviación
                             </Form.Text> */}
@@ -106,7 +114,7 @@ const AgregarUsuario = () => {
 
                         <Form.Group className="mb-3" controlId="">
                             <Form.Label>Contraseña</Form.Label>
-                            <Form.Control type="password" placeholder="Ingrese contraseña"  onChange={(e) => setPasswordUsuario(e.target.value)}/>
+                            <Form.Control type="password" placeholder="Ingrese contraseña"  onChange={(e) => setPasswordUsuario(e.target.value)} required />
                             {/* <Form.Text className="text-muted">
                                 Ingrese abreviación
                             </Form.Text> */}
@@ -115,7 +123,7 @@ const AgregarUsuario = () => {
                         <Form.Group className="mb-3" controlId="">
                             <Form.Label>Rol</Form.Label>
                             <Form.Select aria-label="Default select example" onChange={ (e) => setRolId(e.target.value) } value={rolId}>
-                                <option>Elegir rol</option>
+                                <option value="">Elegir rol</option>
                                 <option key={"1"} value="1">Estudiante</option>
                                 <option key={"2"} value="2">Profesor</option>
                                 <option key={"3"} value="3">Administrador</option>
@@ -124,8 +132,8 @@ const AgregarUsuario = () => {
                         
                         <Form.Group className="mb-3" controlId="">
                             <Form.Label>Universidad asociada</Form.Label>
-                            <Form.Select aria-label="Default select example" onChange={(e) => setUniversidadId(e.target.value)}>
-                            <option>Seleccionar universidad</option>
+                            <Form.Select aria-label="Default select example" onChange={(e) => setUniversidadId(e.target.value)} value={universidadId}>
+                            <option value="">Seleccionar universidad</option>
                             {universidades.map((universidad) => (
                                 <option key={universidad.abreviacion} value={universidad.abreviacion}>
                                 {universidad.nombre}

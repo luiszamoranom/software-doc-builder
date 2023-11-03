@@ -18,7 +18,7 @@ const EditarUsuario = () => {
         setNombresUsuario(location.state.nombres);
         setApellidosUsuario(location.state.apellidos);
         setEmailUsuario(location.state.correo);
-        setPasswordUsuario(location.state.password);
+        
     }, [location]);
 
     const [showModal, setShowModal] = useState(false);

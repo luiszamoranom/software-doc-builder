@@ -73,9 +73,9 @@ const Usuarios = () => {
     navigate("/administrador/usuarios/agregar");
   };
 
-  const irEditarUsuario = (rut, nombres, apellidos, correo, password) => {
+  const irEditarUsuario = (rut, nombres, apellidos, correo) => {
     navigate("/administrador/usuarios/editar", {
-      state: { rut, nombres, apellidos, correo, password },
+      state: { rut, nombres, apellidos, correo},
     });
   };
 
@@ -120,7 +120,7 @@ const Usuarios = () => {
                   <td>
                     {usuario.nombres} {usuario.apellidos}
                   </td>
-                  <td>{usuario.universidad}</td>
+                  <td>{usuario.usuarioUniversidadRoles[0]?.universidad?.nombre}</td>
                   <td>
                     <button
                       className="btn btn-primary"
@@ -130,7 +130,6 @@ const Usuarios = () => {
                           usuario.nombres,
                           usuario.apellidos,
                           usuario.email,
-                          usuario.contrasena
                         )
                       }
                       title="Editar Usuario"
