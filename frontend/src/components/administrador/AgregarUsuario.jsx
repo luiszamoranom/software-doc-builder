@@ -45,7 +45,7 @@ const AgregarUsuario = () => {
             return;
         }
 
-        alert("Password: " + passwordUsuario);
+        //alert("Password: " + passwordUsuario);
 
         //Agregar universidad a la base de datos.
         try{
@@ -124,9 +124,10 @@ const AgregarUsuario = () => {
                             <Form.Label>Rol</Form.Label>
                             <Form.Select aria-label="Default select example" onChange={ (e) => setRolId(e.target.value) } value={rolId}>
                                 <option value="">Elegir rol</option>
-                                <option key={"1"} value="1">Estudiante</option>
+                                <option key={"1"} value="1">Jefe de Carrera</option>
                                 <option key={"2"} value="2">Profesor</option>
-                                <option key={"3"} value="3">Administrador</option>
+                                <option key={"3"} value="3">Estudiante</option>
+                                
                             </Form.Select>
                         </Form.Group>
                         
