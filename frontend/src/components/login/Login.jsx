@@ -113,7 +113,44 @@ const Login = ({authUser}) => {
                 }
                 else{
                     if (respuesta.usuarioUniversidadRoles.length==1){
+                        const datos_usuario = respuesta.usuarioUniversidadRoles[0]
                         //significa que el usuario solo tiene un rol en una unica institucion
+
+                        const nuevo_usuario ={
+                            usuario: {
+                                "rut":respuesta.rut,
+                                "nombres":respuesta.nombres,
+                                "apellidos":respuesta.apellidos,
+                                "email":respuesta.email,
+                                "rol_plataforma":respuesta.rol_plataforma
+                            },
+                            rol:{
+                                "id":datos_usuario.rol.id,
+                                "nombre":datos_usuario.rol.nombre,
+                                "universidad":datos_usuario.rol.usuarioUniversidadRoles
+                            },
+                            universidad:{
+                                "abreviacion": datos_usuario.universidad.abreviacion,
+                                "nombre":datos_usuario.universidad.nombre,
+                                "estado":datos_usuario.universidad.estado
+                            }
+                        }
+                        
+                        console.log(nuevo_usuario)
+
+                        localStorage.setItem("auth", JSON.stringify(nuevo_usuario));
+                        localStorage.setItem("logged", true);
+                        updateAuth(nuevo_usuario);
+                        //console.log("nombre rol:",item.rol.nombre)
+                        if (nuevo_usuario.rol.nombre == 'Estudiante'){
+                            navigate("/estudiante",{replace:true})
+                        }
+                        else if (nuevo_usuario.rol.nombre == 'Profesor'){
+                            navigate("/profesor",{replace:true})
+                        }
+                        else if (nuevo_usuario.rol.nombre == 'Jefe de Carrera'){
+                            navigate("/director",{replace:true})
+                        }
                     }
                     else{
                         //significa que el usuario tiene mas roles en varias instituciones

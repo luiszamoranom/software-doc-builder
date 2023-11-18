@@ -3,12 +3,14 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 import VentanaModal from './VentanaModal';
 
-const AgregarUniversidad = () => {
+const EditarUniversidad = () => {
     const [nombreUniversidad,setNombreUniversidad] = useState()
-    const [abreviacion,setAbreviacion] = useState()
-    
+    const location = useLocation();
+    const abreviacion = location.state.parametro;
+
     const [showModal, setShowModal] = useState(false);
     const [cuerpoModal, setCuerpoModal] = useState("");
     const handleClose = () => {
@@ -22,9 +24,9 @@ const AgregarUniversidad = () => {
         e.preventDefault()
         //Agregar universidad a la base de datos.
         try{
-            const response = await axios.post('http://localhost:8080/universidad', {
-                nombre: nombreUniversidad,
-                abreviacion
+            const response = await axios.patch('http://localhost:8080/universidad', {
+                abreviacion: abreviacion,
+                nombre: nombreUniversidad
             });
             setCuerpoModal(response.data.mensaje); 
             mostrarModal();
@@ -38,7 +40,7 @@ const AgregarUniversidad = () => {
     return (
     <div>
         <div>
-            <h1 className='text-center'>Agregar Universidad</h1>
+            <h1 className='text-center'>Editar Universidad</h1>
         </div>
         <div className='w-100 d-flex justify-content-center '>
             <div className='w-100' style={{maxWidth:"600px"}}>
@@ -54,14 +56,14 @@ const AgregarUniversidad = () => {
                         
                         <Form.Group className="mb-3" controlId="">
                             <Form.Label>Abreviación</Form.Label>
-                            <Form.Control type="text" placeholder="Ingrese abreviación"  onChange={(e) => setAbreviacion(e.target.value)}/>
+                            <Form.Control type="text" readOnly value={abreviacion}/>
                             {/* <Form.Text className="text-muted">
                                 Ingrese abreviación
                             </Form.Text> */}
                         </Form.Group>
                         
                         <Button variant="primary" type="submit">
-                            Agregar
+                            Guardar cambios
                         </Button>
                     </Form>
                 </div>
@@ -69,9 +71,10 @@ const AgregarUniversidad = () => {
         </div>
         {showModal && <VentanaModal cuerpo={cuerpoModal} showModal={showModal} handleClose={handleClose} />}
         
+        
     </div>
     
   )
 }
 
-export default AgregarUniversidad
+export default EditarUniversidad
