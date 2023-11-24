@@ -29,6 +29,13 @@ exit;
       }
   - localhost:8080/usuario/{rut} 
     - Busca según rut, por tanto, hay que indicarselo, ejemplo => localhost:8080/usuario/11.111.111-1
+  - localhost:8080/usuario/buscar_por_rol_en_universidad
+    - Busca todos los usuarios con determinado "nombreRol" en determinada universidad identificada por "abreviacionUniversidad", ambos string.
+    - Ej:
+    {
+      "nombreRol":"Profesor",
+      "abreviacionUniversidad":"UTALCA"
+    }
 - **POST**
   - **EN TEORIA, NO DEBERIA USARSE** localhost:8080/usuario/guardar_sin_rol_en_universidad 
     - Para crear un usuario debe tener el body con los siguientes parametros: rut, nombres, apellidos, contrasena, email
@@ -91,9 +98,19 @@ exit;
       "nombres": "Universidad de la Vida",
       "abreviacion": "UDV"
       }
+  - localhost:8080/universidad/agregar_modulo_universidad
+    - Agrega un modulo a una universidad, este debe tener un body con "abreviacionUniversidad" y "nombreModulo", ambos string.
+    - No se podrán tener más de un modulo con un mismo nombre en una misma universidad.
+    - Ejemplo:
+      {
+        "abreviacionUniversidad":"UTALCA",
+        "nombreModulo":"Programación Avanzada",
+        "descripcionModulo":"Es un buen ramo si lo da un buen profesor"
+      }
+
 - **PATCH**
   - localhost:8080/universidad
-    - ara actualizar la información de una universidad, debe tener los siguientes parametros: abreviación y nombre
+    - Para actualizar la información de una universidad, debe tener los siguientes parametros: abreviación y nombre
     - se actualizará únicamente el nombre, por tanto, la abreviación no será editable en su formulario.
     - Ejemplo
       {
@@ -102,3 +119,27 @@ exit;
       }
   - localhost:8080/universidad/habilitar/{abreviacion}
   - localhost:8080/universidad/deshabilitar/{abreviacion}
+  - localhost:8080/universidad/cambiar_estado_modulo
+    - Cambia el estado de un modulo en una universidad, señalando la "abreviacionUniversidad", el "nombreModulo" y el estado "estadoModulo" al cual cambiará, todos String. 
+    - EJ:
+    {
+      "abreviacionUniversidad":"UTALCA",
+      "nombreModulo":"Programación Avanzada",
+      "estadoModulo":"true"
+    }
+  - localhost:8080/universidad/actualizar_informacion_modulo
+    - Sólo se puede actualizar la descripcion del estado (fuera del estado que se hace con la ruta anterior), esto es debido a que la PK no se pueden cambiar.
+    - EJ:
+    {
+      "abreviacionUniversidad":"UTALCA",
+      "nombreModulo":"Programación Avanzada",
+      "nuevaDescripcionModulo":"nueva descripcion"
+    }
+
+## Rol de Usuario en una Universidad
+Nota: Cada vez que se imprime un usuario, sale la información relevante al rol que posee en una universidad. Sin embargo, cada una de estas relaciones usuario-universidad-rol esta registrada en la tabla 'usuario_universidad_rol', con su correspondiente id.
+- **GET**
+  - localhost:8080/rol_de_usuario_en_universidad
+    - Obtener todas las relaciones triples de todos los usuarios registrados en la aplicación 
+  - localhost:8080/rol_de_usuario_en_universidad/{id} 
+    - Obtener la información de esta relación triple de un particular id 

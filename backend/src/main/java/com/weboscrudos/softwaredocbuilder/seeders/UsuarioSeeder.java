@@ -29,6 +29,7 @@ public class UsuarioSeeder {
             u0.setRol_plataforma("Administrador");
             usuarios.add(u0);
 
+            /*
             UsuarioModel u1 = new UsuarioModel();
             u1.setRut("11.111.111-1");
             u1.setNombres("Luis");
@@ -85,6 +86,7 @@ public class UsuarioSeeder {
             u7.setEmail("admin@utalca.cl");
             usuarios.add(u7);
 
+            */
             usuarioRepository.saveAll(usuarios);
         }
     }
