@@ -129,7 +129,7 @@ const Usuarios = () => {
                   <td>
                     {usuario.nombres} {usuario.apellidos}
                   </td>
-                  <td>{usuario.universidad}</td>
+                  <td>{usuario.usuarioUniversidadRoles[0]?.universidad?.nombre}</td>
                   <td>
                     <button
                       className="btn btn-primary"

@@ -40,7 +40,7 @@ const AgregarUsuarios = () => {
       // Ahora puedes procesar los datos y realizar la llamada a la API
       for (const usuario of datos) {
         console.log(usuario.apellidos);
-        if (usuario.apellidos === undefined) {
+        if (!usuario.apellidos || !usuario.nombres || !usuario.rut || !usuario.contrasena || !usuario.email || !usuario.rolId || !usuario.universidadId) {
           setCuerpoModal('Hay datos vacíos para un usuario, revisa el archivo');
           cargarUsuarios = false;
           return;
@@ -57,7 +57,6 @@ const AgregarUsuarios = () => {
           }
         }
       }
-      console.log('Cargar usuarios: ' + cargarUsuarios);
       if(cargarUsuarios){
         datos.forEach(async (usuario) => {
           const response = await axios.post(
