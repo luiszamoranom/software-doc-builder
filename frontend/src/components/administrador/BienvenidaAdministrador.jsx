@@ -1,8 +1,31 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
+import { BarChart, Bar, XAxis, YAxis } from 'recharts';
 import { useAuth } from '../../context/AuthContext';
+import axios from "axios";
 
 const BienvenidaAdministrador = () => {
   const {showSidebar,setShowSidebar, authUser} = useAuth()
+  const [universidades, setUniversidades] = useState([]);
+  let datosPreprocesados;
+
+  const getUniversidades = async () => {
+    const response = await axios.get(
+      "http://localhost:8080/universidad/filtro/todas"
+    );
+    setUniversidades(response.data.universidades); // Actualiza el estado con los datos obtenidos
+  };
+
+  useEffect(() => {
+    getUniversidades();
+  }, []);
+  useEffect(() => {
+    datosPreprocesados = universidades.map((universidad) => ({
+      ...universidad,
+      cantidadModulos: universidad.modulos ? universidad.modulos.length : 0,
+    }));
+    setUniversidades(datosPreprocesados)
+  },[universidades])
+
   return (
     <div>
       <div className='justify-content-center text-center mb-5 mt-3  p-1'>
@@ -24,8 +47,20 @@ const BienvenidaAdministrador = () => {
             <h3>Resumen</h3>
           </div>
           <div className='pb-4 pt-4  d-flex justify-content-around'>
-            <h2>AQUI VAN GRAFICOS</h2>
-            <i className="bi bi-bar-chart-fill bi-md"></i>
+            <div>
+              <div>
+                <h2>Modulos por universidad</h2>
+              </div>
+              <div>
+                <BarChart width={600} height={300} data={universidades}>
+                  <XAxis dataKey="abreviacion" stroke="#8884d8" />
+                  <YAxis />
+                  <Bar dataKey="cantidadModulos" fill="#8884d8" barSize={30} />
+                </BarChart>
+              </div>
+            </div>
+            
+            
           </div>
         </div>
       </div>
