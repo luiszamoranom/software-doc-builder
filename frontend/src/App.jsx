@@ -24,6 +24,10 @@ import EditarUsuario from './components/administrador/EditarUsuario';
 // Jefe de Carrera
 import JefeCarreraDashboard from './components/director/JefeCarreraDashboard';
 import BienvenidaDirector from './components/director/BienvenidaDirector';
+import {Modulos as ModulosDirector} from './components/director/Modulos';
+import EditarModulo from './components/director/EditarModulo';
+import InstanciaModulo from './components/director/InstanciaModulo';
+
 // Academico
 import AcademicoDashboard from './components/academico/AcademicoDashboard'
 import BienvenidoAcademico from './components/academico/BienvenidaAcademico'
@@ -61,6 +65,9 @@ function App() {
               <Route path='/director' element = {<JefeCarreraDashboard />}>
                 <Route index element={<Navigate to="bienvenida" />} />
                 <Route path='bienvenida' element= {<BienvenidaDirector />}/>
+                <Route path='modulos' element = {<ModulosDirector />} />
+                <Route path='modulos/editar' element = {<EditarModulo />} />
+                <Route path='instancias' element = {<InstanciaModulo />} />
               </Route> 
             </Route>
 

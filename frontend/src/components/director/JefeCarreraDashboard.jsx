@@ -48,7 +48,7 @@ const JefeCarreraDashboard = () => {
         </Offcanvas>
       </div>
       <div className='content'>
-          <div className='container bg-body-secondary mt-5 pt-1 pb-1'>
+          <div className='container  mt-5 pt-1 pb-1'>
             <Outlet />
           </div>
         </div>
