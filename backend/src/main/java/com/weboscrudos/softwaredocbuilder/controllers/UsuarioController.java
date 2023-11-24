@@ -1,10 +1,6 @@
 package com.weboscrudos.softwaredocbuilder.controllers;
 
-import com.weboscrudos.softwaredocbuilder.dto.usuario.UsuarioBuscarPorRolYUniversidadDTO;
-import com.weboscrudos.softwaredocbuilder.dto.usuario.UsuarioCreateDTO;
-import com.weboscrudos.softwaredocbuilder.dto.usuario.UsuarioCreateUniversidadRolDTO;
-import com.weboscrudos.softwaredocbuilder.dto.usuario.UsuarioLoginDTO;
-import com.weboscrudos.softwaredocbuilder.dto.usuario.UsuarioUpdateDTO;
+import com.weboscrudos.softwaredocbuilder.dto.usuario.*;
 import com.weboscrudos.softwaredocbuilder.models.RolPlataformaModel;
 import com.weboscrudos.softwaredocbuilder.models.UniversidadModel;
 import com.weboscrudos.softwaredocbuilder.models.UsuarioModel;
@@ -177,6 +173,32 @@ public class UsuarioController {
 
         UsuarioModel usuarioActualizado = usuarioService.setEstadoTrue(usuarioExistente);
         return UsuarioResponse.createSuccessResponse("Universidad habilitada con éxito", usuarioActualizado);
+    }
+
+    @PatchMapping("/asignar_rol_en_universidad")
+    public UsuarioResponse asignarRolUsuarioExistente(@RequestBody UsuarioAsignarRolDTO uDto){
+        Optional<UsuarioModel> usuarioExistente = usuarioService.findById(uDto.getRut());
+        if (usuarioExistente.isEmpty()) {
+            return UsuarioResponse.createErrorResponse("No existe un usuario con dicho rut");
+        }
+
+        Optional<UniversidadModel> universidadExistente = universidadService.findById(uDto.getAbreviacionUniversidad());
+        if(universidadExistente.isEmpty()){
+            return UsuarioResponse.createErrorResponse("No existe la universidad a la que deseas asociar rol");
+        }
+
+        Optional<RolPlataformaModel> rolExistente = rolPlataformaService.findById(uDto.getRolId());
+        if(rolExistente.isEmpty()){
+            return UsuarioResponse.createErrorResponse("No existe un rol para asociar con ese id");
+        }
+
+        UsuarioUniversidadRolModel nuevoUsuarioUniversidadRol = usuariouniversidadRolService.generarnuevoUsuarioUniversidadRol(rolExistente,universidadExistente);
+        usuarioExistente.get().getUsuarioUniversidadRoles().add(nuevoUsuarioUniversidadRol);
+        nuevoUsuarioUniversidadRol.setUsuario(usuarioExistente.get());
+
+        usuarioService.saveConRolEnUniversidad(usuarioExistente.get());
+        usuariouniversidadRolService.saveConUsuarioRolUniverisdad(nuevoUsuarioUniversidadRol);
+        return UsuarioResponse.createSuccessResponse("Se le asignó el rol al usuario", usuarioExistente.get());
     }
 
     @PatchMapping("/deshabilitar/{rut}")

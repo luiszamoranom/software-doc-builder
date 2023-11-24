@@ -73,6 +73,8 @@ exit;
       }
   - localhost:8080/usuario/habilitar/{rut}
   - localhost:8080/usuario/deshabilitar/{rut}
+  - localhost:8080/usuario/asignar_rol_en_universidad
+    - Para anadir nuevo rol en universidad a usuario existente, se necesita en el body: rut, abreviacionUniversidad, rolId
   
 ---
 ## RolPlataforma
