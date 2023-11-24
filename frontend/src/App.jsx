@@ -19,6 +19,7 @@ import Modulos from './components/administrador/Modulos';
 import AgregarUniversidad from './components/administrador/AgregarUniversidad';
 import EditarUniversidad from './components/administrador/EditarUniversidad';
 import AgregarUsuario from './components/administrador/AgregarUsuario';
+import AgregarUsuarios from './components/administrador/AgregarUsuarios';
 import EditarUsuario from './components/administrador/EditarUsuario';
 
 // Jefe de Carrera
@@ -84,6 +85,7 @@ function App() {
                 
                 <Route path='usuarios' element= {<Usuarios />}/>
                 <Route path='usuarios/agregar' element= {<AgregarUsuario />}/>
+                <Route path='usuarios/agregarExcel' element={<AgregarUsuarios />} />
                 <Route path='usuarios/editar' element= {<EditarUsuario />}/>
 
 

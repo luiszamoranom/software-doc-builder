@@ -73,6 +73,11 @@ const Usuarios = () => {
     navigate("/administrador/usuarios/agregar");
   };
 
+  const irAgregarUsuarios = () => {
+    // navigate('/administrador/universidades/agregar',{ state: { nombre, apellido } }) //este es un ejemplo si es que se quiere pasar parametros
+    navigate("/administrador/usuarios/agregarExcel");
+  };
+
   const irEditarUsuario = (rut, nombres, apellidos, correo) => {
     navigate("/administrador/usuarios/editar", {
       state: { rut, nombres, apellidos, correo},
@@ -90,11 +95,15 @@ const Usuarios = () => {
       </div>
       <div>
         <div>
+          
           <div className="bg-white w-100 justify-content-end d-flex p-3">
-            <button
-              className="btn btn-primary border-0 rounded-2 p-1 d-flex text-white"
-              onClick={irAgregarUsuario}
-            >
+            <button className="btn btn-primary border-0 rounded-2 p-1 d-flex text-white mx-2" onClick={irAgregarUsuarios} >
+              <div className="p-1">
+                <i className="bi bi-plus-circle"></i>
+              </div>
+              <div className="p-1">Agregar usuarios</div>
+            </button>
+            <button className="btn btn-primary border-0 rounded-2 p-1 d-flex text-white" onClick={irAgregarUsuario} >
               <div className="p-1">
                 <i className="bi bi-plus-circle"></i>
               </div>
@@ -130,6 +139,7 @@ const Usuarios = () => {
                           usuario.nombres,
                           usuario.apellidos,
                           usuario.email,
+                          usuario.contrasena
                         )
                       }
                       title="Editar Usuario"
@@ -139,23 +149,11 @@ const Usuarios = () => {
                   </td>
                   <td className="d-flex justify-content-center">
                     {usuario.estado ? (
-                      <button
-                        className="btn btn-danger"
-                        onClick={() =>
-                          deshabilitarUsuario(usuario.rut)
-                        }
-                        title="Deshabilitar Usuario"
-                      >
+                      <button className="btn btn-danger" onClick={() => deshabilitarUsuario(usuario.rut)} title="Deshabilitar Usuario" >
                         <i className="bi bi-dash"></i>
                       </button>
                     ) : (
-                      <button
-                        className="btn btn-success"
-                        onClick={() =>
-                          habilitarUsuario(usuario.rut)
-                        }
-                        title="Habilitar Usuario"
-                      >
+                      <button className="btn btn-success" onClick={() => habilitarUsuario(usuario.rut) } title="Habilitar Usuario" >
                         <i className="bi bi-check"></i>
                       </button>
                     )}
