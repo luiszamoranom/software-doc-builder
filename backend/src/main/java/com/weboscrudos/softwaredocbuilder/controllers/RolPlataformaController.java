@@ -1,7 +1,6 @@
 package com.weboscrudos.softwaredocbuilder.controllers;
 
 import com.weboscrudos.softwaredocbuilder.models.RolPlataformaModel;
-import com.weboscrudos.softwaredocbuilder.repository.RolPlataformaRepository;
 import com.weboscrudos.softwaredocbuilder.responses.RolPlataforma.RolesPlataformaResponse;
 import com.weboscrudos.softwaredocbuilder.services.RolPlataformaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/rol_plataforma")
+@RequestMapping("/rol_en_universidad")
 @CrossOrigin(origins = "http://localhost:3000")
 public class RolPlataformaController {
     @Autowired

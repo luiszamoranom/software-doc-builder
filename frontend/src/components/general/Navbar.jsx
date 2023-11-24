@@ -3,8 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import { Link, Outlet, useLocation, useNavigate} from 'react-router-dom';
-import {useAuth} from '../context/AuthContext'
-
+import {useAuth} from '../../context/AuthContext'
 
 
 export const NavBarExport = () => {
@@ -13,8 +12,6 @@ export const NavBarExport = () => {
 
 	const handleClose = () => setShowSidebar(false);
 	const handleShow = () => setShowSidebar(true);
-
-	
 	
 	const navigate = useNavigate();
 
@@ -28,14 +25,35 @@ export const NavBarExport = () => {
 	};
 	
 	if (authUser){
-		pathRol="/"+authUser.rol.toLowerCase()
+		let pathRol="/"
+		if (authUser?.rol_plataforma === 'Administrador') {
+			pathRol+="administrador";
+		}
+		else{
+			if (authUser.rol.nombre == 'Estudiante'){
+				pathRol+="estudiante"
+			}
+			else if (authUser.rol.nombre == 'Profesor'){
+				pathRol+="profesor"
+			}
+			else if (authUser.rol.nombre == 'Jefe de Carrera'){
+				pathRol+="director"
+			}
+			else if (authUser.rol.nombre == 'Administrador'){
+				pathRol+="administrador"
+			}
+		}
+		
 	}
+	// useEffect(()=>{
+
+	// },[])
 	
 	
 	return (
 		<>
 			<header className='w-100'>
-				<Navbar className="bg-body-secondary">
+				<Navbar className='colorPrimario'>
 					<Container className='w-100' style={{maxWidth:"none"}}>
 						{
 							authUser ? 
@@ -55,11 +73,11 @@ export const NavBarExport = () => {
 									<div className='user d-flex'>
 										<div className='ms-3 me-3 align-items-center d-flex'>
 											<Navbar.Text>
-												<span className='username'>Usuario: {authUser.nombres}</span>
+												<span className='username'>Usuario: { authUser?.rol_plataforma == 'Administrador'  ? `${authUser.nombres} ${authUser.apellidos}` : authUser.usuario.nombres}</span>
 											</Navbar.Text>
 										</div>
 										<div className='ms-3 me-3'>
-											<Button variant="outline-danger" onClick={onLogout}>Cerrar sesión</Button>{' '}
+											<Button className='boton-logout' onClick={onLogout}>Cerrar sesión</Button>{' '}
 										</div>
 									</div>
 								) : (

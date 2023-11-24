@@ -2,8 +2,6 @@ package com.weboscrudos.softwaredocbuilder.dto.usuario;
 
 import lombok.Getter;
 
-import java.util.List;
-
 @Getter
 public class UsuarioCreateUniversidadRolDTO {
     private String rut;
