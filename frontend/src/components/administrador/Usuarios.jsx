@@ -10,6 +10,7 @@ const Usuarios = () => {
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => setShowModal(false);
   const mostrarModal = () => setShowModal(true);
+  const [tituloModal, setTituloModal] = useState("");
   const [cuerpoModal, setCuerpoModal] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -29,7 +30,6 @@ const Usuarios = () => {
     );
     setUsuarios(response.data.usuarios); // Actualiza el estado con los datos obtenidos
     console.log(response.data.usuarios);
-    // console.log(response.data.usuarios[1].usuarioUniversidadRoles[0].universidad.nombre);
   };
 
   useEffect(() => {
@@ -43,6 +43,7 @@ const Usuarios = () => {
         `http://localhost:8080/usuario/habilitar/${rut}`
       );
       console.log(response.data);
+      setTituloModal("Usuario habilitado");
       setCuerpoModal("Se ha habilitado correctamente el usuario");
       mostrarModal();
       await getUsuarios();
@@ -53,11 +54,18 @@ const Usuarios = () => {
 
   const deshabilitarUsuario = async (rut) => {
     //Agregar universidad a la base de datos.
+    if (rut === "00.000.000-0") {
+      setTituloModal("Error");
+      setCuerpoModal("No se puede deshabilitar al usuario administrador");
+      mostrarModal();
+      return;
+    }
     try {
       const response = await axios.patch(
         `http://localhost:8080/usuario/deshabilitar/${rut}`
       );
       console.log(response.data);
+      setTituloModal("Usuario deshabilitado");
       setCuerpoModal("Se ha deshabilitado correctamente el usuario");
       mostrarModal();
       await getUsuarios();
@@ -79,6 +87,12 @@ const Usuarios = () => {
   };
 
   const irEditarUsuario = (rut, nombres, apellidos, correo) => {
+    if (rut === "00.000.000-0") {
+      setTituloModal("Error");
+      setCuerpoModal("No se puede editar al usuario administrador");
+      mostrarModal();
+      return;
+    }
     navigate("/administrador/usuarios/editar", {
       state: { rut, nombres, apellidos, correo},
     });
@@ -129,18 +143,13 @@ const Usuarios = () => {
                   <td>
                     {usuario.nombres} {usuario.apellidos}
                   </td>
-                  <td>{usuario.usuarioUniversidadRoles[0]?.universidad?.nombre}</td>
+                  <td>{usuario.usuarioUniversidadRoles[0]?.universidad?.nombre ? usuario.usuarioUniversidadRoles[0]?.universidad?.abreviacion : usuario.usuarioUniversidadRoles[0]?.universidad}
+                  </td>
                   <td>
                     <button
                       className="btn btn-primary"
                       onClick={() =>
-                        irEditarUsuario(
-                          usuario.rut,
-                          usuario.nombres,
-                          usuario.apellidos,
-                          usuario.email,
-                          usuario.contrasena
-                        )
+                        irEditarUsuario( usuario.rut, usuario.nombres, usuario.apellidos, usuario.email, usuario.contrasena )
                       }
                       title="Editar Usuario"
                     >
@@ -179,6 +188,7 @@ const Usuarios = () => {
       </div>
       {showModal && (
         <VentanaModal
+          titulo={tituloModal}
           cuerpo={cuerpoModal}
           showModal={showModal}
           handleClose={handleClose}
