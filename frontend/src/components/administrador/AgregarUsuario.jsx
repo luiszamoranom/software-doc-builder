@@ -3,7 +3,9 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
-import VentanaModal from './VentanaModal';
+import VentanaModal from '../general/VentanaModal';
+import { useNavigate } from 'react-router-dom';
+
 
 const AgregarUsuario = () => {
     const [rut, setRut] = useState("");
@@ -16,6 +18,7 @@ const AgregarUsuario = () => {
     const [universidades, setUniversidades] = useState([]);
     
     const [showModal, setShowModal] = useState(false);
+    const [tituloModal, setTituloModal] = useState("");
     const [cuerpoModal, setCuerpoModal] = useState("");
     const handleClose = () => {
         setShowModal(false)
@@ -40,6 +43,7 @@ const AgregarUsuario = () => {
         e.preventDefault()
         
         if(universidadId === "" | rolId === ""){
+            setTituloModal('<span class="bi bi-exclamation-triangle text-danger mx-2"></span>Error');
             setCuerpoModal("Falta la universidad y/o rol"); 
             mostrarModal(); 
             return;
@@ -59,6 +63,13 @@ const AgregarUsuario = () => {
                 universidadId
 
             });
+            if (!response.data.exito) {
+                setTituloModal('<span class="bi bi-exclamation-triangle text-danger mx-2"></span>Error');
+                setCuerpoModal(response.data.mensaje); 
+                mostrarModal(); 
+                return;   
+            }
+            setTituloModal('<span class="bi bi-check-circle text-success mx-2"></span>Éxito');
             setCuerpoModal(response.data.mensaje); 
             mostrarModal();
             setRut("");
@@ -67,8 +78,17 @@ const AgregarUsuario = () => {
 
         }
         catch(error){
+            setTituloModal('<span class="bi bi-exclamation-triangle text-danger mx-2"></span>No se pudo agregar el usuario');
+            setCuerpoModal(error); 
+            mostrarModal();
             console.log(error)
         }
+    }
+
+    const navigate = useNavigate();
+
+    const volver = () => {
+        navigate('/administrador/usuarios');
     }
 
     return (
@@ -76,6 +96,7 @@ const AgregarUsuario = () => {
         <div>
             <h1 className='text-center'>Agregar Usuario</h1>
         </div>
+        <button className='btn btn-primary' onClick={volver}>Volver atrás</button>
         <div className='w-100 d-flex justify-content-center '>
             <div className='w-100' style={{maxWidth:"600px"}}>
                 <div className='p-4'>
@@ -150,7 +171,7 @@ const AgregarUsuario = () => {
                 </div>
             </div>
         </div>
-        {showModal && <VentanaModal cuerpo={cuerpoModal} showModal={showModal} handleClose={handleClose} />}
+        {showModal && <VentanaModal titulo={tituloModal} cuerpo={cuerpoModal} showModal={showModal} handleClose={handleClose} />}
         
     </div>
     

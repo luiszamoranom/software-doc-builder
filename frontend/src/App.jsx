@@ -19,6 +19,7 @@ import Modulos from './components/administrador/Modulos';
 import AgregarUniversidad from './components/administrador/AgregarUniversidad';
 import EditarUniversidad from './components/administrador/EditarUniversidad';
 import AgregarUsuario from './components/administrador/AgregarUsuario';
+import AgregarUsuarios from './components/administrador/AgregarUsuarios';
 import EditarUsuario from './components/administrador/EditarUsuario';
 
 // Jefe de Carrera
@@ -27,6 +28,7 @@ import BienvenidaDirector from './components/director/BienvenidaDirector';
 import {Modulos as ModulosDirector} from './components/director/Modulos';
 import EditarModulo from './components/director/EditarModulo';
 import InstanciaModulo from './components/director/InstanciaModulo';
+import AgregarModulo from './components/director/AgregarModulo';
 
 // Academico
 import AcademicoDashboard from './components/academico/AcademicoDashboard'
@@ -67,6 +69,7 @@ function App() {
                 <Route path='bienvenida' element= {<BienvenidaDirector />}/>
                 <Route path='modulos' element = {<ModulosDirector />} />
                 <Route path='modulos/editar' element = {<EditarModulo />} />
+                <Route path='modulos/agregar' element = {<AgregarModulo />} />
                 <Route path='instancias' element = {<InstanciaModulo />} />
               </Route> 
             </Route>
@@ -84,6 +87,7 @@ function App() {
                 
                 <Route path='usuarios' element= {<Usuarios />}/>
                 <Route path='usuarios/agregar' element= {<AgregarUsuario />}/>
+                <Route path='usuarios/agregarExcel' element={<AgregarUsuarios />} />
                 <Route path='usuarios/editar' element= {<EditarUsuario />}/>
 
 

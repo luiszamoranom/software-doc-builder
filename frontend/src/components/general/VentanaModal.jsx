@@ -2,12 +2,15 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-const VentanaModal = ({ cuerpo, showModal, handleClose }) => {
+const VentanaModal = ({ titulo, cuerpo, showModal, handleClose }) => {
   
     return (
         <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
-            <Modal.Title>Atención!</Modal.Title>
+            <Modal.Title> 
+                
+                <div dangerouslySetInnerHTML={{ __html: titulo }} /> 
+            </Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <p>{cuerpo}</p>

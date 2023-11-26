@@ -23,7 +23,7 @@ export const Modulos = () => {
   const handlePaginationClick = (page) => {
     setCurrentPage(page);
   };
-
+  
   const getModulos = async () => {
     const uni = authUser.universidad.abreviacion;
     const response = await axios.get(
@@ -84,7 +84,7 @@ export const Modulos = () => {
   const irAgregarModulo = () => {
     // navigate('/administrador/universidades/agregar',{ state: { nombre, apellido } }) //este es un ejemplo si es que se quiere pasar parametros
     
-    //navigate("/administrador/universidades/agregar");
+    navigate("/director/modulos/agregar",{state:{abreviacion:authUser.universidad.abreviacion}});
   };
 
   const irEditarModulo = (abreviacion,modulo) => {
