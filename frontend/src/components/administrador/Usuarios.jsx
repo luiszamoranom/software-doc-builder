@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
 import Pagination from 'react-bootstrap/Pagination';
-import VentanaModal from "./VentanaModal";
+import VentanaModal from "../general/VentanaModal";
 
 const Usuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -43,7 +43,7 @@ const Usuarios = () => {
         `http://localhost:8080/usuario/habilitar/${rut}`
       );
       console.log(response.data);
-      setTituloModal("Usuario habilitado");
+      setTituloModal('<span class="bi bi-check-circle text-success mx-2"></span>Usuario habilitado');
       setCuerpoModal("Se ha habilitado correctamente el usuario");
       mostrarModal();
       await getUsuarios();
@@ -55,7 +55,7 @@ const Usuarios = () => {
   const deshabilitarUsuario = async (rut) => {
     //Agregar universidad a la base de datos.
     if (rut === "00.000.000-0") {
-      setTituloModal("Error");
+      setTituloModal('<span class="bi bi-exclamation-triangle text-danger mx-2"></span>Error');
       setCuerpoModal("No se puede deshabilitar al usuario administrador");
       mostrarModal();
       return;
@@ -65,7 +65,7 @@ const Usuarios = () => {
         `http://localhost:8080/usuario/deshabilitar/${rut}`
       );
       console.log(response.data);
-      setTituloModal("Usuario deshabilitado");
+      setTituloModal('<span class="bi bi-check-circle text-success mx-2"></span>Usuario deshabilitado');
       setCuerpoModal("Se ha deshabilitado correctamente el usuario");
       mostrarModal();
       await getUsuarios();
@@ -88,7 +88,7 @@ const Usuarios = () => {
 
   const irEditarUsuario = (rut, nombres, apellidos, correo) => {
     if (rut === "00.000.000-0") {
-      setTituloModal("Error");
+      setTituloModal('<span class="bi bi-exclamation-triangle text-danger mx-2"></span>Error');
       setCuerpoModal("No se puede editar al usuario administrador");
       mostrarModal();
       return;
@@ -133,7 +133,7 @@ const Usuarios = () => {
                 <th>Nombre Completo</th>
                 <th>Universidad</th>
                 <th>Editar</th>
-                <th className="d-flex justify-content-center">Habilitar/deshabilitar</th>
+                <th className="d-flex justify-content-center">Estado</th>
               </tr>
             </thead>
             <tbody>
@@ -143,7 +143,7 @@ const Usuarios = () => {
                   <td>
                     {usuario.nombres} {usuario.apellidos}
                   </td>
-                  <td>{usuario.usuarioUniversidadRoles[0]?.universidad?.nombre ? usuario.usuarioUniversidadRoles[0]?.universidad?.abreviacion : usuario.usuarioUniversidadRoles[0]?.universidad}
+                  <td>{usuario.usuarioUniversidadRoles[0]?.universidad?.abreviacion ? usuario.usuarioUniversidadRoles[0]?.universidad?.abreviacion : usuario.usuarioUniversidadRoles[0]?.universidad}
                   </td>
                   <td>
                     <button
@@ -158,12 +158,12 @@ const Usuarios = () => {
                   </td>
                   <td className="d-flex justify-content-center">
                     {usuario.estado ? (
-                      <button className="btn btn-danger" onClick={() => deshabilitarUsuario(usuario.rut)} title="Deshabilitar Usuario" >
-                        <i className="bi bi-dash"></i>
+                      <button className="btn btn-danger" style={{width:'110px'}} onClick={() => deshabilitarUsuario(usuario.rut)} title="Deshabilitar Usuario" >
+                        Deshabilitar
                       </button>
                     ) : (
-                      <button className="btn btn-success" onClick={() => habilitarUsuario(usuario.rut) } title="Habilitar Usuario" >
-                        <i className="bi bi-check"></i>
+                      <button className="btn btn-success" style={{width:'110px'}} onClick={() => habilitarUsuario(usuario.rut) } title="Habilitar Usuario" >
+                        Habilitar
                       </button>
                     )}
                   </td>

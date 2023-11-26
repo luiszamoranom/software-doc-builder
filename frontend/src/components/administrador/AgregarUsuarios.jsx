@@ -4,7 +4,8 @@ import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import axios from "axios";
 import * as XLSX from "xlsx";
-import VentanaModal from "./VentanaModal";
+import VentanaModal from '../general/VentanaModal';
+import { useNavigate } from "react-router-dom";
 
 const AgregarUsuarios = () => {
   const inputRef = useRef(null);
@@ -37,7 +38,7 @@ const AgregarUsuarios = () => {
       // Ahora puedes procesar los datos y realizar la llamada a la API
       for (const usuario of datos) {
         if (!usuario.apellidos || !usuario.nombres || !usuario.rut || !usuario.contrasena || !usuario.email || !usuario.rolId || !usuario.universidadId) {
-          setTituloModal("Error");
+          setTituloModal('<span class="bi bi-exclamation-triangle text-danger mx-2"></span>Error');
           setCuerpoModal('Hay datos vacíos para un usuario, revisa el archivo');
           mostrarModal();
           cargarUsuarios = false;
@@ -46,7 +47,7 @@ const AgregarUsuarios = () => {
           try {
             const response = await axios.get(`http://localhost:8080/usuario/${usuario.rut}`);
             if (response.data.usuario) {
-              setTituloModal("Error");
+              setTituloModal('<span class="bi bi-exclamation-triangle text-danger mx-2"></span>Error');
               setCuerpoModal(`El usuario ${usuario.rut} ya existe en la base de datos`);
               mostrarModal();
               cargarUsuarios = false;
@@ -71,7 +72,7 @@ const AgregarUsuarios = () => {
               universidadId: usuario.universidadId,
             }
           );
-          setTituloModal("Éxito");
+          setTituloModal('<span class="bi bi-check-circle text-success mx-2"></span>Éxito');
           setCuerpoModal("Se han cargado correctamente los usuarios"); 
           mostrarModal();
           console.log(response.data); 
@@ -80,6 +81,11 @@ const AgregarUsuarios = () => {
     }
   }
   
+  const navigate = useNavigate();
+
+  const volver = () => {
+      navigate('/administrador/usuarios');
+  }
 
   const borrarSeleccion = () => {
     setArchivo(null);
@@ -91,6 +97,7 @@ const AgregarUsuarios = () => {
       <div>
         <h1 className="text-center">Agregar Usuarios</h1>
       </div>
+      <button className='btn btn-primary' onClick={volver}>Volver atrás</button>
       <div className="w-100 d-flex justify-content-center ">
         <div className="w-100" style={{ maxWidth: "600px" }}>
           <div className="p-4">
