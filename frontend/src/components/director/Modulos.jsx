@@ -13,6 +13,7 @@ export const Modulos = () => {
   const mostrarModal = () => setShowModal(true);
   const [cuerpoModal, setCuerpoModal] = useState("");
   const {authUser,updateAuth,lastPath,setLastPath} = useAuth()
+  const location = useLocation()
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Cantidad de elementos por página
@@ -83,11 +84,12 @@ export const Modulos = () => {
 
   const irAgregarModulo = () => {
     // navigate('/administrador/universidades/agregar',{ state: { nombre, apellido } }) //este es un ejemplo si es que se quiere pasar parametros
-    
+    setLastPath(location.pathname)
     navigate("/director/modulos/agregar",{state:{abreviacion:authUser.universidad.abreviacion}});
   };
 
   const irEditarModulo = (abreviacion,modulo) => {
+    setLastPath(location.pathname)
     navigate("/director/modulos/editar", {
       state: { abreviacion: abreviacion, nombreModulo:modulo},
     });

@@ -23,7 +23,7 @@ const Login = ({authUser}) => {
         e.preventDefault()
 
         try{
-            console.log(rutUsuario,contrasenaUsuario)
+            //console.log(rutUsuario,contrasenaUsuario)
             const datos = {
                 rut:rutUsuario,
                 contrasena:contrasenaUsuario
@@ -34,7 +34,7 @@ const Login = ({authUser}) => {
                     contrasenaUsuario
                 }
             });
-            console.log(response.data)
+            //console.log(response.data)
             // Verifica si la respuesta es exito
             if (response.data.exito == true) {
                 const respuesta = response.data.usuario
@@ -105,7 +105,7 @@ const Login = ({authUser}) => {
                 setContrasenaUsuario('')
 
                 if (respuesta.rol_plataforma == 'Administrador'){
-                    console.log("deberia entrar a administrador")
+                    //console.log("deberia entrar a administrador")
                     localStorage.setItem("auth", JSON.stringify(respuesta));
                     localStorage.setItem("logged", true);
                     updateAuth(respuesta);
@@ -136,7 +136,7 @@ const Login = ({authUser}) => {
                             }
                         }
                         
-                        console.log(nuevo_usuario)
+                        //console.log(nuevo_usuario)
 
                         localStorage.setItem("auth", JSON.stringify(nuevo_usuario));
                         localStorage.setItem("logged", true);
@@ -154,6 +154,28 @@ const Login = ({authUser}) => {
                     }
                     else{
                         //significa que el usuario tiene mas roles en varias instituciones
+                        // const datos_usuario ={
+                        //     usuario: {
+                        //         "rut":respuesta.rut,
+                        //         "nombres":respuesta.nombres,
+                        //         "apellidos":respuesta.apellidos,
+                        //         "email":respuesta.email,
+                        //         "rol_plataforma":respuesta.rol_plataforma
+                        //     },
+                        //     rol:{
+                        //         "id":"",
+                        //         "nombre":"",
+                        //         "universidad":[]
+                        //     },
+                        //     universidad:{
+                        //         "abreviacion": "",
+                        //         "nombre":"",
+                        //         "estado":""
+                        //     }
+                        // }
+                        // localStorage.setItem("auth", JSON.stringify(datos_usuario));
+                        // localStorage.setItem("logged", true);
+                        // updateAuth(datos_usuario);
                         navigate("/filtrador",{state:{respuesta},replace:true})
                     }
                 }

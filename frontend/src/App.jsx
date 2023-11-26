@@ -3,9 +3,14 @@ import { BrowserRouter as Router,useNavigate,Navigate, Route, Routes, Outlet } f
 import { AuthProvider, useAuth } from './context/AuthContext';
 import './App.css'
 import './Sidebar.css'
+// GENERAL
 import Layout from './components/general/Layout';
+import VerPerfil from './components/general/VerPerfil';
+
+//LOGIN
 import Login from './components/login/Login';
 import Filtrador from './components/login/Filtrador';
+
 
 import PrivateRoute from './routes/PrivateRoute';
 import { ProtectRoles } from './routes/PrivateRoute';
@@ -53,6 +58,8 @@ function App() {
               <Route path='/estudiante' element = {<EstudianteDashboard />}>
                 <Route index element={<Navigate to="bienvenida" />} />
                 <Route path='bienvenida' element= {<BienvenidaEstudiante />}/>
+
+                <Route path='perfil' element = {<VerPerfil />} />
               </Route>
             </Route>
 
@@ -60,6 +67,8 @@ function App() {
               <Route path='/profesor' element = {<AcademicoDashboard />}>
                 <Route index element={<Navigate to="bienvenida" />} />
                 <Route path='bienvenida' element= {<BienvenidoAcademico />}/>
+
+                <Route path='perfil' element = {<VerPerfil />} />
               </Route> 
             </Route>
 
@@ -71,6 +80,7 @@ function App() {
                 <Route path='modulos/editar' element = {<EditarModulo />} />
                 <Route path='modulos/agregar' element = {<AgregarModulo />} />
                 <Route path='instancias' element = {<InstanciaModulo />} />
+                <Route path='perfil' element = {<VerPerfil />} />
               </Route> 
             </Route>
 
@@ -87,10 +97,10 @@ function App() {
                 
                 <Route path='usuarios' element= {<Usuarios />}/>
                 <Route path='usuarios/agregar' element= {<AgregarUsuario />}/>
-                <Route path='usuarios/agregarExcel' element={<AgregarUsuarios />} />
+                <Route path='usuarios/agregar-excel' element={<AgregarUsuarios />} />
                 <Route path='usuarios/editar' element= {<EditarUsuario />}/>
 
-
+                <Route path='perfil' element = {<VerPerfil />} />
               </Route>
             </Route>
 

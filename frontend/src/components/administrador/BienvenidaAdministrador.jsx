@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import { BarChart, Bar, XAxis, YAxis } from 'recharts';
 import { useAuth } from '../../context/AuthContext';
 import axios from "axios";
+import { Route, Link, Outlet,useLocation} from 'react-router-dom';
 
 const BienvenidaAdministrador = () => {
   const {showSidebar,setShowSidebar, authUser} = useAuth()
@@ -31,14 +32,19 @@ const BienvenidaAdministrador = () => {
 
     // Contar la cantidad de usuarios por universidad
     usuariosData.forEach((usuario) => {
-      const abreviatura =
+      try {
+        const abreviatura =
         usuario.usuarioUniversidadRoles[0].universidad.abreviacion;
 
-      if (!usuariosPorUniversidad[abreviatura]) {
-        usuariosPorUniversidad[abreviatura] = 1;
-      } else {
-        usuariosPorUniversidad[abreviatura]++;
+        if (!usuariosPorUniversidad[abreviatura]) {
+          usuariosPorUniversidad[abreviatura] = 1;
+        } else {
+          usuariosPorUniversidad[abreviatura]++;
+        }
+      } catch (error) {
+        
       }
+
     });
 
     const datosPreprocesados = Object.keys(usuariosPorUniversidad).map(
@@ -60,7 +66,7 @@ const BienvenidaAdministrador = () => {
 
 
   return (
-    <div>
+    <div className='imagen-fondo'>
       <div className='justify-content-center text-center mb-5 mt-3  p-1'>
         <h1>Te damos la bienvenida {authUser.nombres} {authUser.apellidos}</h1>
       </div>
@@ -70,7 +76,9 @@ const BienvenidaAdministrador = () => {
           <h3>Acceso rapido</h3>
         </div>
         <div className='pb-5 pt-5 d-flex justify-content-around'>
-          <h5>Acceso rapido 1</h5><h5>Acceso rapido 2</h5><h5>Acceso rapido 3</h5>
+          <h5 class="d-flex"><Link className='link-acceso-directo' to="administrador/usuarios/agregar-excel"><i class="bi bi-file-earmark-plus me-2"></i>Agregar Usuarios con plantilla</Link></h5>
+          <h5 class="d-flex"><Link className='link-acceso-directo' to="administrador/universidades/agregar"><i class="bi bi-plus-square me-2"></i>Agregar Universidad</Link></h5>
+          <h5 class="d-flex"><Link className='link-acceso-directo' to="administrador/universidades/editar"><i class="bi bi-pen me-2"></i>Editar Universidad</Link></h5>
         </div>
       </div>
 

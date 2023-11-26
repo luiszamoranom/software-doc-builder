@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation,useNavigate} from 'react-router-dom';
 import VentanaModal from '../general/VentanaModal';
 import { useAuth } from "../../context/AuthContext"
 
@@ -12,6 +12,7 @@ const EditarModulo = () => {
     const [descripcion, setDescripcion] = useState("");
     const location = useLocation();
     const {authUser,updateAuth,lastPath,setLastPath} = useAuth()
+    const navigate = useNavigate();
     
     // useEffect(() => {
     //     setNombreModulo(location.state.nombres);
@@ -48,11 +49,17 @@ const EditarModulo = () => {
         }
     }
 
+    const volver = () => {
+        console.log(lastPath)
+        navigate(lastPath);
+    }
+
     return (
     <div>
         <div>
             <h1 className='text-center'>Editar Modulo</h1>
         </div>
+        <button className='btn btn-primary' onClick={volver}>Volver atrás</button>
         <div className='w-100 d-flex justify-content-center '>
             <div className='w-100' style={{maxWidth:"600px"}}>
                 <div className='p-4'>

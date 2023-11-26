@@ -86,15 +86,16 @@ const Usuarios = () => {
     navigate("/administrador/usuarios/agregarExcel");
   };
 
-  const irEditarUsuario = (rut, nombres, apellidos, correo) => {
+  const irEditarUsuario = (rut, nombres, apellidos, correo,contrasena,index,usuario) => {
     if (rut === "00.000.000-0") {
       setTituloModal('<span class="bi bi-exclamation-triangle text-danger mx-2"></span>Error');
       setCuerpoModal("No se puede editar al usuario administrador");
       mostrarModal();
       return;
     }
+    const roles = usuarios[index].usuarioUniversidadRoles
     navigate("/administrador/usuarios/editar", {
-      state: { rut, nombres, apellidos, correo},
+      state: { rut, nombres, apellidos, contrasena, correo,roles},
     });
   };
 
@@ -109,7 +110,6 @@ const Usuarios = () => {
       </div>
       <div>
         <div>
-          
           <div className="bg-white w-100 justify-content-end d-flex p-3">
             <button className="btn btn-primary border-0 rounded-2 p-1 d-flex text-white mx-2" onClick={irAgregarUsuarios} >
               <div className="p-1">
@@ -149,7 +149,7 @@ const Usuarios = () => {
                     <button
                       className="btn btn-primary"
                       onClick={() =>
-                        irEditarUsuario( usuario.rut, usuario.nombres, usuario.apellidos, usuario.email, usuario.contrasena )
+                        irEditarUsuario( usuario.rut, usuario.nombres, usuario.apellidos, usuario.email, usuario.contrasena, index,usuario)
                       }
                       title="Editar Usuario"
                     >

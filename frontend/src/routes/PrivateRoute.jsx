@@ -5,15 +5,17 @@ import Layout from '../components/general/Layout';
 import { NavBarExport } from '../components/general/Navbar';
 
 export const PrivateRoute = () => {
-	const {authUser, updateAuth} = useAuth()
+	const {authUser, updateAuth,setLastPath,lastPath} = useAuth()
 	//console.log("Pasa por private")
-	return (authUser?
-		<>
-			<NavBarExport/>
-			<Layout />
-		</>
-		:
-		<Navigate to='/login' />);
+	//console.log(lastPath)
+	return (
+		authUser?
+			<>
+				<NavBarExport/>
+				<Layout />
+			</>
+			:
+			<Navigate to='/login' />);
 };
 export default PrivateRoute
 
@@ -26,7 +28,7 @@ export const ProtectRoles = ({roles}) => {
 	useEffect(() => {
 		if (authUser?.rol_plataforma === 'Administrador') {
 		  pathRol += "administrador";
-		  console.log("Entro a administrador");
+		  //console.log("Entro a administrador");
 		} else {
 			// Comprueba el valor de 'rol.nombre' si 'rol_plataforma' no es 'Administrador'
 			if (authUser?.rol?.nombre === 'Estudiante') {

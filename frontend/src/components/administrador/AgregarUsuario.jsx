@@ -88,7 +88,7 @@ const AgregarUsuario = () => {
     const navigate = useNavigate();
 
     const volver = () => {
-        navigate('/administrador/usuarios');
+        navigate(last);
     }
 
     return (
@@ -148,7 +148,6 @@ const AgregarUsuario = () => {
                                 <option key={"1"} value="1">Jefe de Carrera</option>
                                 <option key={"2"} value="2">Profesor</option>
                                 <option key={"3"} value="3">Estudiante</option>
-                                
                             </Form.Select>
                         </Form.Group>
                         
