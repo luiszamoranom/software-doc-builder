@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
-import VentanaModal from "./VentanaModal";
+import VentanaModal from "../general/VentanaModal";
 import Pagination from "react-bootstrap/Pagination";
 
 const Universidades = () => {
@@ -10,6 +10,7 @@ const Universidades = () => {
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => setShowModal(false);
   const mostrarModal = () => setShowModal(true);
+  const [tituloModal, setTituloModal] = useState("");
   const [cuerpoModal, setCuerpoModal] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,7 +41,14 @@ const Universidades = () => {
       const response = await axios.patch(
         `http://localhost:8080/universidad/deshabilitar/${abreviacion}`
       );
-      console.log(response.data);
+      
+      if (!response.data.exito) {
+        setTituloModal('<span class="bi bi-exclamation-triangle text-danger mx-2"></span>Error');
+        setCuerpoModal('Ocurrió un error al deshabilitar la universidad'); 
+        mostrarModal(); 
+        return;
+      }
+      setTituloModal('<span class="bi bi-check-circle text-success mx-2"></span>Éxito');
       setCuerpoModal("Se ha deshabilitado correctamente la universidad");
       mostrarModal();
       await getUniversidades();
@@ -55,7 +63,13 @@ const Universidades = () => {
       const response = await axios.patch(
         `http://localhost:8080/universidad/habilitar/${abreviacion}`
       );
-      console.log(response.data);
+      if (!response.data.exito) {
+        setTituloModal('<span class="bi bi-exclamation-triangle text-danger mx-2"></span>Error');
+        setCuerpoModal('Ocurrió un error al habilitar la universidad'); 
+        mostrarModal(); 
+        return;
+      }
+      setTituloModal('<span class="bi bi-check-circle text-success mx-2"></span>Éxito');
       setCuerpoModal("Se ha habilitado correctamente la universidad");
       mostrarModal();
       await getUniversidades();
@@ -84,6 +98,7 @@ const Universidades = () => {
       <div className="pt-2 pb-5">
         <h1 className="text-center">Gestion de Universidades</h1>
       </div>
+      
       <div>
         <div>
           <div className="bg-white w-100 justify-content-end d-flex p-3">
@@ -107,7 +122,7 @@ const Universidades = () => {
                 <th>Abreviación</th>
                 <th>Habilitado</th>
                 <th>Editar</th>
-                <th className="d-flex justify-content-center">Habilitar/deshabilitar</th>
+                <th className="d-flex justify-content-center">Estado</th>
               </tr>
             </thead>
             <tbody>
@@ -130,24 +145,12 @@ const Universidades = () => {
                   </td>
                   <td className="d-flex justify-content-center">
                     {universidad.estado ? (
-                      <button
-                        className="btn btn-danger"
-                        onClick={() =>
-                          deshabilitarUniversidad(universidad.abreviacion)
-                        }
-                        title="Deshabilitar Universidad"
-                      >
-                        <i className="bi bi-dash"></i>
+                      <button className="btn btn-danger" style={{width:'110px'}} onClick={() => deshabilitarUniversidad(universidad.abreviacion) } title="Deshabilitar Universidad" >
+                        Deshabilitar
                       </button>
                     ) : (
-                      <button
-                        className="btn btn-success"
-                        onClick={() =>
-                          habilitarUniversidad(universidad.abreviacion)
-                        }
-                        title="Habilitar Universidad"
-                      >
-                        <i className="bi bi-check"></i>
+                      <button className="btn btn-success" style={{width:'110px'}} onClick={() => habilitarUniversidad(universidad.abreviacion) } title="Habilitar Universidad" >
+                        Habilitar
                       </button>
                     )}
                   </td>
@@ -172,6 +175,7 @@ const Universidades = () => {
       </div>
       {showModal && (
         <VentanaModal
+          titulo={tituloModal}
           cuerpo={cuerpoModal}
           showModal={showModal}
           handleClose={handleClose}

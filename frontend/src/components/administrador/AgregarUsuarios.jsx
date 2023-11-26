@@ -4,11 +4,13 @@ import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import axios from "axios";
 import * as XLSX from "xlsx";
-import VentanaModal from "./VentanaModal";
+import VentanaModal from '../general/VentanaModal';
+import { useNavigate } from "react-router-dom";
 
 const AgregarUsuarios = () => {
   const inputRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
+  const [tituloModal, setTituloModal] = useState("");
   const [cuerpoModal, setCuerpoModal] = useState("");
   const handleClose = () => {
     setShowModal(false);
@@ -22,11 +24,7 @@ const AgregarUsuarios = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!archivo) {
-      setCuerpoModal("No ha cargado ningún archivo");
-      mostrarModal();
-      return;
-    }
+
     const reader = new FileReader();
     reader.readAsArrayBuffer(archivo);
     reader.onload = async (e) => {
@@ -39,16 +37,19 @@ const AgregarUsuarios = () => {
       let cargarUsuarios = true;
       // Ahora puedes procesar los datos y realizar la llamada a la API
       for (const usuario of datos) {
-        console.log(usuario.apellidos);
         if (!usuario.apellidos || !usuario.nombres || !usuario.rut || !usuario.contrasena || !usuario.email || !usuario.rolId || !usuario.universidadId) {
+          setTituloModal('<span class="bi bi-exclamation-triangle text-danger mx-2"></span>Error');
           setCuerpoModal('Hay datos vacíos para un usuario, revisa el archivo');
+          mostrarModal();
           cargarUsuarios = false;
           return;
         } else {
           try {
             const response = await axios.get(`http://localhost:8080/usuario/${usuario.rut}`);
             if (response.data.usuario) {
+              setTituloModal('<span class="bi bi-exclamation-triangle text-danger mx-2"></span>Error');
               setCuerpoModal(`El usuario ${usuario.rut} ya existe en la base de datos`);
+              mostrarModal();
               cargarUsuarios = false;
               return;
             }
@@ -57,6 +58,7 @@ const AgregarUsuarios = () => {
           }
         }
       }
+      console.log('cargarUsuarios', cargarUsuarios);
       if(cargarUsuarios){
         datos.forEach(async (usuario) => {
           const response = await axios.post(
@@ -70,7 +72,8 @@ const AgregarUsuarios = () => {
               universidadId: usuario.universidadId,
             }
           );
-          setCuerpoModal(response.data.mensaje); 
+          setTituloModal('<span class="bi bi-check-circle text-success mx-2"></span>Éxito');
+          setCuerpoModal("Se han cargado correctamente los usuarios"); 
           mostrarModal();
           console.log(response.data); 
         });
@@ -78,6 +81,11 @@ const AgregarUsuarios = () => {
     }
   }
   
+  const navigate = useNavigate();
+
+  const volver = () => {
+      navigate('/administrador/usuarios');
+  }
 
   const borrarSeleccion = () => {
     setArchivo(null);
@@ -89,6 +97,7 @@ const AgregarUsuarios = () => {
       <div>
         <h1 className="text-center">Agregar Usuarios</h1>
       </div>
+      <button className='btn btn-primary' onClick={volver}>Volver atrás</button>
       <div className="w-100 d-flex justify-content-center ">
         <div className="w-100" style={{ maxWidth: "600px" }}>
           <div className="p-4">
@@ -117,6 +126,7 @@ const AgregarUsuarios = () => {
       </div>
       {showModal && (
         <VentanaModal
+          titulo={tituloModal}
           cuerpo={cuerpoModal}
           showModal={showModal}
           handleClose={handleClose}
