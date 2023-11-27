@@ -46,14 +46,50 @@ import BienvenidaEstudiante from './components/estudiante/BienvenidaEstudiante';
 function App() {
   const {authUser,updateAuth} = useAuth()
 
-  //console.log("app auth:",authUser)
+  let pathRol="";
+  if(authUser){
+    if (authUser?.rol_plataforma === 'Administrador') {
+      pathRol+="administrador/bienvenida";
+    }
+    else{
+      if (authUser.rol.nombre == 'Estudiante'){
+        pathRol+="estudiante/bienvenida"
+      }
+      else if (authUser.rol.nombre == 'Profesor'){
+        pathRol+="profesor/bienvenida"
+      }
+      else if (authUser.rol.nombre == 'Jefe de Carrera'){
+        pathRol+="director/bienvenida"
+      }
+    }
+  }
+  
+
+  useEffect(()=>{
+		if (authUser?.rol_plataforma === 'Administrador') {
+			pathRol+="administrador/bienvenida";
+		}
+		else{
+			if (authUser.rol.nombre == 'Estudiante'){
+				pathRol+="estudiante/bienvenida"
+			}
+			else if (authUser.rol.nombre == 'Profesor'){
+				pathRol+="profesor/bienvenida"
+			}
+			else if (authUser.rol.nombre == 'Jefe de Carrera'){
+				pathRol+="director/bienvenida"
+			}
+		}
+	},[])
+
+  console.log("app auth:",authUser)
   return (
       <Routes>
         <Route path='/login' element={<Login />} />
         <Route path='/filtrador' element={<Filtrador />} /> 
         <Route path='' element={<PrivateRoute />}>
           <Route element={<Layout/>}>
-
+            <Route index element={<Navigate to={pathRol} />} />
             <Route element={<ProtectRoles roles="Estudiante" />}>
               <Route path='/estudiante' element = {<EstudianteDashboard />}>
                 <Route index element={<Navigate to="bienvenida" />} />
