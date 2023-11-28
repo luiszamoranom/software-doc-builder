@@ -4,7 +4,7 @@ import { Route, Link, Outlet,useLocation} from 'react-router-dom';
 
 
 const BienvenidaAcademico = () => {
-    const {showSidebar,setShowSidebar, authUser} = useAuth()
+  const {showSidebar,setShowSidebar, authUser,direccionIP} = useAuth()
   return (
     <div className='imagen-fondo' >
       <div className='justify-content-center text-center mb-5 mt-3  p-1'>
@@ -16,9 +16,9 @@ const BienvenidaAcademico = () => {
           <h3>Acceso rapido</h3>
         </div>
         <div className='pb-5 pt-5 d-flex justify-content-around'>
-          <h5 class="d-flex"><Link className='link-acceso-directo' to="director/instancias/agregar"><i class="bi bi-patch-plus me-2"></i>Agregar Instancia de Módulo</Link></h5>
-          <h5 class="d-flex"><Link className='link-acceso-directo' to="#"><i class="bi bi-people me-2"></i>Ver usuarios</Link></h5>
-          <h5 class="d-flex"><Link className='link-acceso-directo' to="director/instancias"><i class="bi bi-card-checklist me-2"></i>Ver instancias</Link></h5>
+          <h5 className="d-flex"><Link className='link-acceso-directo' to="director/instancias/agregar"><i className="bi bi-patch-plus me-2"></i>Agregar Instancia de Módulo</Link></h5>
+          <h5 className="d-flex"><Link className='link-acceso-directo' to="#"><i className="bi bi-people me-2"></i>Ver usuarios</Link></h5>
+          <h5 className="d-flex"><Link className='link-acceso-directo' to="director/instancias"><i className="bi bi-card-checklist me-2"></i>Ver instancias</Link></h5>
         </div>
       </div>
 

@@ -6,8 +6,10 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import VentanaModal from '../general/VentanaModal';
+import { useAuth } from '../../context/AuthContext';
 
 const EditarUsuario = () => {
+    const {showSidebar,setShowSidebar, authUser,direccionIP} = useAuth()
     const [nombresUsuario,setNombresUsuario] = useState("");
     const [apellidosUsuario, setApellidosUsuario] = useState("");
     const [passwordUsuario, setPasswordUsuario] = useState("");
@@ -24,7 +26,7 @@ const EditarUsuario = () => {
     useEffect(() => {
         const fetchUniversidades = async () => {
         try {
-            const response = await axios.get("http://localhost:8080/universidad/filtro/habilitadas");
+            const response = await axios.get(`http://${direccionIP}/universidad/filtro/habilitadas`);
             setUniversidades(response.data.universidades);
         } catch (error) {
             console.error("Hubo un problema al obtener las universidades: ", error);
@@ -59,7 +61,7 @@ const EditarUsuario = () => {
         e.preventDefault()
         if (checkAgregarRol){
             try {
-                const response = await axios.patch('http://localhost:8080/usuario/asignar_rol_en_universidad', {
+                const response = await axios.patch(`http://${direccionIP}/usuario/asignar_rol_en_universidad`, {
                     rut:rut,
                     abreviacionUniversidad:uniAbreviacion,
                     rolId:rolId
@@ -75,7 +77,7 @@ const EditarUsuario = () => {
             }
         }else{
             try{
-                const response = await axios.patch('http://localhost:8080/usuario', {
+                const response = await axios.patch(`http://${direccionIP}/usuario`, {
                     rut,
                     nombres: nombresUsuario,
                     apellidos: apellidosUsuario,

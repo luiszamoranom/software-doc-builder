@@ -5,7 +5,7 @@ import axios from 'axios';
 
 
 const Login = ({authUser}) => {
-    const {updateAuth} = useAuth();
+    const {updateAuth,direccionIP} = useAuth();
 
     const [rutUsuario,setRutUsuario] = useState('');
     const [contrasenaUsuario,setContrasenaUsuario] = useState('');
@@ -28,7 +28,7 @@ const Login = ({authUser}) => {
                 rut:rutUsuario,
                 contrasena:contrasenaUsuario
             }
-            const response = await axios.get('http://localhost:8080/usuario/login',{
+            const response = await axios.get(`http://${direccionIP}/usuario/login`,{
                 params: {
                     rutUsuario,
                     contrasenaUsuario
@@ -153,29 +153,6 @@ const Login = ({authUser}) => {
                         }
                     }
                     else{
-                        //significa que el usuario tiene mas roles en varias instituciones
-                        // const datos_usuario ={
-                        //     usuario: {
-                        //         "rut":respuesta.rut,
-                        //         "nombres":respuesta.nombres,
-                        //         "apellidos":respuesta.apellidos,
-                        //         "email":respuesta.email,
-                        //         "rol_plataforma":respuesta.rol_plataforma
-                        //     },
-                        //     rol:{
-                        //         "id":"",
-                        //         "nombre":"",
-                        //         "universidad":[]
-                        //     },
-                        //     universidad:{
-                        //         "abreviacion": "",
-                        //         "nombre":"",
-                        //         "estado":""
-                        //     }
-                        // }
-                        // localStorage.setItem("auth", JSON.stringify(datos_usuario));
-                        // localStorage.setItem("logged", true);
-                        // updateAuth(datos_usuario);
                         navigate("/filtrador",{state:{respuesta},replace:true})
                     }
                 }

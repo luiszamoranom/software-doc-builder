@@ -11,7 +11,7 @@ const AgregarModulo = () => {
     const [nombre, setNombre] = useState("");
     const [descripcion,setDescripcion] = useState("");
     const location = useLocation();
-    const {showSidebar,setShowSidebar, authUser,setLastPath,lastPath} = useAuth()
+    const {showSidebar,setShowSidebar, authUser,setLastPath,lastPath,direccionIP} = useAuth()
     const navigate = useNavigate();
     
     const [showModal, setShowModal] = useState(false);
@@ -30,7 +30,7 @@ const AgregarModulo = () => {
 
         //Agregar universidad a la base de datos.
         try{
-            const response = await axios.post('http://localhost:8080/universidad/agregar_modulo_universidad', {
+            const response = await axios.post(`http://${direccionIP}/universidad/agregar_modulo_universidad`, {
                 abreviacionUniversidad:location.state.abreviacion,
                 nombreModulo:nombre,
                 descripcionModulo: descripcion,
@@ -45,7 +45,7 @@ const AgregarModulo = () => {
     }
 
     const volver = () => {
-        console.log(lastPath)
+        //console.log(lastPath)
         navigate(lastPath);
     }
 

@@ -3,8 +3,8 @@ import { useAuth } from '../../context/AuthContext';
 import { Route, Link, Outlet,useLocation} from 'react-router-dom';
 
 const BienvenidaDirector = () => {
-    const {showSidebar,setShowSidebar, authUser} = useAuth()
-    console.log(authUser)
+  const {showSidebar,setShowSidebar, authUser,direccionIP} = useAuth()
+  //console.log(authUser)
   return (
     <div className='imagen-fondo'>
       <div className='justify-content-center text-center mb-5 mt-3  p-1'>

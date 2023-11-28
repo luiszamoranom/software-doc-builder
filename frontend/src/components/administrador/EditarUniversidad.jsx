@@ -6,8 +6,10 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import VentanaModal from '../general/VentanaModal';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 const EditarUniversidad = () => {
+    const {showSidebar,setShowSidebar, authUser,direccionIP} = useAuth()
     const [nombreUniversidad,setNombreUniversidad] = useState()
     const location = useLocation();
     const abreviacion = location.state.parametro;
@@ -26,7 +28,7 @@ const EditarUniversidad = () => {
         e.preventDefault()
         //Agregar universidad a la base de datos.
         try{
-            const response = await axios.patch('http://localhost:8080/universidad', {
+            const response = await axios.patch(`http://${direccionIP}/universidad`, {
                 abreviacion: abreviacion,
                 nombre: nombreUniversidad
             });

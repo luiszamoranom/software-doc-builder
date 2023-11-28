@@ -5,8 +5,10 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
 import VentanaModal from '../general/VentanaModal';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 const AgregarUniversidad = () => {
+    const {showSidebar,setShowSidebar, authUser,lastPath,setLastPath,direccionIP} = useAuth()
     const [nombreUniversidad,setNombreUniversidad] = useState()
     const [abreviacion,setAbreviacion] = useState()
     
@@ -24,7 +26,7 @@ const AgregarUniversidad = () => {
         e.preventDefault()
         //Agregar universidad a la base de datos.
         try{
-            const response = await axios.post('http://localhost:8080/universidad', {
+            const response = await axios.post(`http://${direccionIP}/universidad`, {
                 nombre: nombreUniversidad,
                 abreviacion
             });

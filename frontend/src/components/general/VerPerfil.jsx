@@ -12,7 +12,7 @@ import { useEffect } from 'react';
 
 const VerPerfil = () => {
     const location = useLocation();
-    const {showSidebar,setShowSidebar,authUser, updateAuth} = useAuth()
+    const {showSidebar,setShowSidebar,authUser, updateAuth,direccionIP} = useAuth()
     const [usuario,setUsuario] = useState()
     const [rut,setRut] = useState()
     const [nombre,setNombre] = useState()
@@ -21,7 +21,7 @@ const VerPerfil = () => {
 
     const getUsuario = async (e) => {
         try{
-            const response = await axios.get(`http://localhost:8080/usuario/${authUser.usuario.rut}`);
+            const response = await axios.get(`http://${direccionIP}/usuario/${authUser.usuario.rut}`);
             setUsuario(response.data.usuario)
             setNombre(response.data.usuario.nombres)
             setApellido(response.data.usuario.apellidos)
@@ -35,7 +35,7 @@ const VerPerfil = () => {
 
     const handleSubmit = async (e) =>{
         try{
-            const response = await axios.patch('http://localhost:8080/usuario', {
+            const response = await axios.patch(`http://${direccionIP}/usuario`, {
                 rut:usuario.rut,
                 nombres: nombre,
                 apellidos: apellido,

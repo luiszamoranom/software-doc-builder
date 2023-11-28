@@ -5,14 +5,14 @@ import axios from "axios";
 import { Route, Link, Outlet,useLocation} from 'react-router-dom';
 
 const BienvenidaAdministrador = () => {
-  const {showSidebar,setShowSidebar, authUser} = useAuth()
+  const {showSidebar,setShowSidebar, authUser,direccionIP} = useAuth()
   const [universidades, setUniversidades] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
   let datosPreprocesados;
 
   const getUniversidades = async () => {
     const response = await axios.get(
-      "http://localhost:8080/universidad/filtro/todas"
+      `http://${direccionIP}/universidad/filtro/todas`
     );
     datosPreprocesados = response.data.universidades.map((universidad) => ({
       ...universidad,
@@ -23,7 +23,7 @@ const BienvenidaAdministrador = () => {
 
   const getUsuarios = async () => {
     const response = await axios.get(
-      "http://localhost:8080/usuario/filtro/todos"
+      `http://${direccionIP}/usuario/filtro/todos`
     );
     const usuariosData = response.data.usuarios;
 
@@ -76,9 +76,9 @@ const BienvenidaAdministrador = () => {
           <h3>Acceso rapido</h3>
         </div>
         <div className='pb-5 pt-5 d-flex justify-content-around'>
-          <h5 class="d-flex"><Link className='link-acceso-directo' to="administrador/usuarios/agregar-excel"><i class="bi bi-file-earmark-plus me-2"></i>Agregar Usuarios con plantilla</Link></h5>
-          <h5 class="d-flex"><Link className='link-acceso-directo' to="administrador/universidades/agregar"><i class="bi bi-plus-square me-2"></i>Agregar Universidad</Link></h5>
-          <h5 class="d-flex"><Link className='link-acceso-directo' to="administrador/universidades/editar"><i class="bi bi-pen me-2"></i>Editar Universidad</Link></h5>
+          <h5 className="d-flex"><Link className='link-acceso-directo' to="administrador/usuarios/agregar-excel"><i className="bi bi-file-earmark-plus me-2"></i>Agregar Usuarios con plantilla</Link></h5>
+          <h5 className="d-flex"><Link className='link-acceso-directo' to="administrador/universidades/agregar"><i className="bi bi-plus-square me-2"></i>Agregar Universidad</Link></h5>
+          <h5 className="d-flex"><Link className='link-acceso-directo' to="administrador/universidades/editar"><i className="bi bi-pen me-2"></i>Editar Universidad</Link></h5>
         </div>
       </div>
 

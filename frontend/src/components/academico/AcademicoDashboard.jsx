@@ -4,7 +4,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Route, Link, Outlet,useLocation} from 'react-router-dom';
 
 const AcademicoDashboard = () => {
-  const {showSidebar,setShowSidebar} = useAuth()
+  const {showSidebar,setShowSidebar, direccionIP} = useAuth()
   //const [show, setShow] = useState(false);
   const [localShowSidebar, setLocalShowSidebar] = useState(showSidebar);
 

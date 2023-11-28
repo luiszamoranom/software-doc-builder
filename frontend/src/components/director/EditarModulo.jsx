@@ -11,7 +11,7 @@ const EditarModulo = () => {
     const [nombreModulo,setNombreModulo] = useState("");
     const [descripcion, setDescripcion] = useState("");
     const location = useLocation();
-    const {authUser,updateAuth,lastPath,setLastPath} = useAuth()
+    const {authUser,updateAuth,lastPath,setLastPath,direccionIP} = useAuth()
     const navigate = useNavigate();
     
     // useEffect(() => {
@@ -31,11 +31,10 @@ const EditarModulo = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        
         //Agregar universidad a la base de datos.
         try{
             console.log(location.state.abreviacion,nombreModulo)
-            const response = await axios.patch('http://localhost:8080/universidad/actualizar_informacion_modulo', {
+            const response = await axios.patch(`http://${direccionIP}/universidad/actualizar_informacion_modulo`, {
                 abreviacionUniversidad:location.state.abreviacion,
                 nombreModulo: location.state.nombreModulo,
                 nuevaDescripcionModulo: descripcion
@@ -50,7 +49,7 @@ const EditarModulo = () => {
     }
 
     const volver = () => {
-        console.log(lastPath)
+        //console.log(lastPath)
         navigate(lastPath);
     }
 

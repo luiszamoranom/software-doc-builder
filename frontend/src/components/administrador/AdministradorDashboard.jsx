@@ -7,7 +7,7 @@ import { Route, Link, Outlet,useLocation} from 'react-router-dom';
 
 
 const AdministradorDashboard = () => {
-  const {showSidebar,setShowSidebar, authUser,lastPath,setLastPath} = useAuth()
+  const {showSidebar,setShowSidebar, authUser,lastPath,setLastPath,direccionIP} = useAuth()
   const location = useLocation();
   const currentPathname = location.pathname;
 

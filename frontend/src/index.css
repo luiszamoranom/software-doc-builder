@@ -203,3 +203,6 @@ background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(148,171,233,1) 
   border-radius: 5px; 
   background-color: #d7e7ff;
 }
+.card-hover:hover{
+  scale: 1.05;
+}

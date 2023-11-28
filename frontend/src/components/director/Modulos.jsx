@@ -12,7 +12,7 @@ export const Modulos = () => {
   const handleClose = () => setShowModal(false);
   const mostrarModal = () => setShowModal(true);
   const [cuerpoModal, setCuerpoModal] = useState("");
-  const {authUser,updateAuth,lastPath,setLastPath} = useAuth()
+  const {authUser,updateAuth,lastPath,setLastPath,direccionIP} = useAuth()
   const location = useLocation()
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -28,7 +28,7 @@ export const Modulos = () => {
   const getModulos = async () => {
     const uni = authUser.universidad.abreviacion;
     const response = await axios.get(
-      `http://localhost:8080/universidad/${uni}`
+      `http://${direccionIP}/universidad/${uni}`
     );
     setModulos(response.data.universidad.modulos); // Actualiza el estado con los datos obtenidos
   };
@@ -46,10 +46,10 @@ export const Modulos = () => {
         estadoModulo:"false"
       }
       const response = await axios.patch(
-        "http://localhost:8080/universidad/cambiar_estado_modulo",
+        `http://${direccionIP}/universidad/cambiar_estado_modulo`,
         datos
       );
-      console.log(response.data);
+      //console.log(response.data);
       setCuerpoModal("Se ha deshabilitado correctamente el Módulo");
       mostrarModal();
       await getModulos();
@@ -67,10 +67,10 @@ export const Modulos = () => {
         estadoModulo:"true"
       }
       const response = await axios.patch(
-        "http://localhost:8080/universidad/cambiar_estado_modulo",
+        `http://${direccionIP}/universidad/cambiar_estado_modulo`,
         datos
       );
-      console.log(response.data);
+      //console.log(response.data);
       setCuerpoModal("Se ha habilitado correctamente la universidad");
       mostrarModal();
       await getModulos();

@@ -10,14 +10,14 @@ import { useAuth } from '../../context/AuthContext';
 function Filtrador() {
     const location = useLocation();
     const {updateAuth} = useAuth();
-    // const respuesta = location.state.respuesta;
-  
-    // // Acceder a la variable respuesta aquí
-    // console.log(respuesta);
     const [rolUniversidad,setRolUniversidad] = useState()
     const [datosRol,setDatosRol] = useState()
-
     const [rolPorUniversidad,setRolPorUniversidad] = useState([])
+    const logo_utalca="/logo-utalca.jpg"
+    const logo_uc="/logo-uc.jpg"
+    const logo_uch="/logo-uch.jpg"
+    const logo_usm="/logo-usm.jpg"
+    const logo_ucm="/ucm-logo.png"
     const navigate = useNavigate();
   
     // Acceder a la variable datos aquí
@@ -45,7 +45,7 @@ function Filtrador() {
         }
 
         localStorage.setItem("auth", JSON.stringify(datos_usuario));
-        console.log(datos_usuario)
+        //console.log(datos_usuario)
         localStorage.setItem("logged", true);
         updateAuth(datos_usuario);
         //console.log("pasa aki primero")
@@ -74,33 +74,33 @@ function Filtrador() {
   
     return (
       <div>
-        <div>
+        <div className='mt-5'>
             <div className='pt-2 pb-5'>
                 <h1 className='text-center'>¿Cómo desea iniciar sesión?</h1>
             </div>
         </div>
         <div>
-            <Row xs={1} md={3} className="g-4 m-3 justify-content-center">
-                {/* <ListGroup>
-                    {rolPorUniversidad.map( (item) => (
-                        <ListGroup.Item action variant="info" key={item.id}>
-                            <button onClick={() => handleRol(item)}>
-                                <div>
-                                    <h2>{item.universidad.nombre}</h2>
-                                    <h5>{item.rol.nombre}</h5>
-                                </div>
-                                
-                            </button>
-                        </ListGroup.Item>
-                    )) }
-                </ListGroup> */}
+            <Row xs={1} md={3} className="g-4 m-5 justify-content-center">
                 {rolPorUniversidad.map( (item) => (
-                    
-                    <Card className='border-0' key={item.id}>
-                        <button onClick={() => handleRol(item)}>
+                    <Card style={{ width: '20rem',backgroundColor:"#0d6efd"}} className='border-0 me-5 justify-content-center align-items-center card-hover' key={item.id}>
+                        <button onClick={() => handleRol(item)} className='bg-transparent border-0'>
+                            <div className='p-2'>
+                                <Card.Img variant="top" 
+                                src={
+                                    item.universidad.abreviacion == "UTALCA"?
+                                        logo_utalca: item.universidad.abreviacion == "UC"?
+                                            logo_uc : item.universidad.abreviacion == "UCH"?
+                                                logo_uch : item.universidad.abreviacion == "USM"?
+                                                    logo_usm : logo_ucm
+                                } />
+                            </div>
                             <div>
-                                <h2>{item.universidad.nombre}</h2>
-                                <h5>{item.rol.nombre}</h5>
+                                <Card.Body className='bg-transparent text-white'>
+                                    <div>
+                                        <h2>{item.universidad.nombre}</h2>
+                                        <h5>{item.rol.nombre}</h5>
+                                    </div>
+                                </Card.Body>
                             </div>
                             
                         </button>

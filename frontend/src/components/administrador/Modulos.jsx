@@ -4,8 +4,10 @@ import Table from "react-bootstrap/Table";
 import axios from "axios";
 import VentanaModal from "../general/VentanaModal";
 import Pagination from "react-bootstrap/Pagination";
+import { useAuth } from '../../context/AuthContext';
 
 const Modulos = () => {
+  const {showSidebar,setShowSidebar, authUser,direccionIP} = useAuth()
   const [universidades, setUniversidades] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => setShowModal(false);
@@ -24,7 +26,7 @@ const Modulos = () => {
 
   const getUniversidades = async () => {
     const response = await axios.get(
-      "http://localhost:8080/universidad/filtro/todas"
+      `http://${direccionIP}/universidad/filtro/todas`
     );
     setUniversidades(response.data.universidades); // Actualiza el estado con los datos obtenidos
   };
@@ -37,14 +39,14 @@ const Modulos = () => {
     //Deshabilitar Módulo a la base de datos.
     try {
       const response = await axios.patch(
-        `http://localhost:8080/Módulo/deshabilitar/${abreviacion}`
+        `http://${direccionIP}/Módulo/deshabilitar/${abreviacion}`
       );
-      console.log(response.data);
+      //console.log(response.data);
       setCuerpoModal("Se ha deshabilitado correctamente la Módulo");
       mostrarModal();
       await getMóduloes();
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 
@@ -52,14 +54,14 @@ const Modulos = () => {
     //Habilitar Módulo a la base de datos.
     try {
       const response = await axios.patch(
-        `http://localhost:8080/universidad/habilitar/${abreviacion}`
+        `http://${direccionIP}/universidad/habilitar/${abreviacion}`
       );
-      console.log(response.data);
+      //console.log(response.data);
       setCuerpoModal("Se ha habilitado correctamente la universidad");
       mostrarModal();
       await getUniversidades();
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 

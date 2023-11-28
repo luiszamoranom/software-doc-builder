@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Route, Link, Outlet,useLocation} from 'react-router-dom';
 
 const JefeCarreraDashboard = () => {
-  const {showSidebar,setShowSidebar} = useAuth()
+  const {showSidebar,setShowSidebar,direccionIP} = useAuth()
   //const [show, setShow] = useState(false);
   const [localShowSidebar, setLocalShowSidebar] = useState(showSidebar);
 
@@ -41,7 +41,7 @@ const JefeCarreraDashboard = () => {
                   <h5><Link className='pt-2 pb-2 ps-4 text-decoration-none text-black w-100 d-flex' to="/director/usuarios">Usuarios</Link></h5>
                 </div>
                 <div className='border-2 rounded-2 mb-2 div-link'>
-                  <h5><Link className='pt-2 pb-2 ps-4 text-decoration-none text-black w-100 d-flex' to="/director/estadisticas">Estadisticas</Link></h5>
+                  <h5><Link className='pt-2 pb-2 ps-4 text-decoration-none text-black w-100 d-flex' to="/director/estadisticas">Estadísticas</Link></h5>
                 </div>
                 <div className='border-2 rounded-2 mb-2 div-link'>
                   <h5><Link className='pt-2 pb-2 ps-4 text-decoration-none text-black w-100 d-flex' to="/director/perfil">Perfil</Link></h5>

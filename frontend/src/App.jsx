@@ -66,23 +66,25 @@ function App() {
   
 
   useEffect(()=>{
-		if (authUser?.rol_plataforma === 'Administrador') {
-			pathRol+="administrador/bienvenida";
-		}
-		else{
-			if (authUser.rol.nombre == 'Estudiante'){
-				pathRol+="estudiante/bienvenida"
-			}
-			else if (authUser.rol.nombre == 'Profesor'){
-				pathRol+="profesor/bienvenida"
-			}
-			else if (authUser.rol.nombre == 'Jefe de Carrera'){
-				pathRol+="director/bienvenida"
-			}
-		}
+		if(authUser){
+      if (authUser?.rol_plataforma === 'Administrador') {
+        pathRol+="administrador/bienvenida";
+      }
+      else{
+        if (authUser.rol.nombre == 'Estudiante'){
+          pathRol+="estudiante/bienvenida"
+        }
+        else if (authUser.rol.nombre == 'Profesor'){
+          pathRol+="profesor/bienvenida"
+        }
+        else if (authUser.rol.nombre == 'Jefe de Carrera'){
+          pathRol+="director/bienvenida"
+        }
+      }
+    }
 	},[])
 
-  console.log("app auth:",authUser)
+  //console.log("app auth:",authUser)
   return (
       <Routes>
         <Route path='/login' element={<Login />} />
