@@ -2,16 +2,14 @@ package com.weboscrudos.softwaredocbuilder.models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -33,4 +31,8 @@ public class ModuloModel {
     @JoinColumn(name = "universidad_abreviacion")
     @JsonIgnore
     private UniversidadModel universidad;
+
+    @OneToMany
+    @JsonManagedReference
+    private List<InstanciaModulo> instancias;
 }
