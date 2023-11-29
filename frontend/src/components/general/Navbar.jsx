@@ -25,6 +25,7 @@ export const NavBarExport = () => {
 	};
 	
 	if (authUser){
+		//console.log(authUser)
 		let pathRol="/"
 		if (authUser?.rol_plataforma === 'Administrador') {
 			pathRol+="administrador";
@@ -45,9 +46,25 @@ export const NavBarExport = () => {
 		}
 		
 	}
-	// useEffect(()=>{
-
-	// },[])
+	useEffect(()=>{
+		if (authUser?.rol_plataforma === 'Administrador') {
+			pathRol+="administrador";
+		}
+		else{
+			if (authUser.rol.nombre == 'Estudiante'){
+				pathRol+="estudiante"
+			}
+			else if (authUser.rol.nombre == 'Profesor'){
+				pathRol+="profesor"
+			}
+			else if (authUser.rol.nombre == 'Jefe de Carrera'){
+				pathRol+="director"
+			}
+			else if (authUser.rol.nombre == 'Administrador'){
+				pathRol+="administrador"
+			}
+		}
+	},[])
 	
 	
 	return (
@@ -73,8 +90,18 @@ export const NavBarExport = () => {
 									<div className='user d-flex'>
 										<div className='ms-3 me-3 align-items-center d-flex'>
 											<Navbar.Text>
-												<span className='username'>Usuario: { authUser?.rol_plataforma == 'Administrador'  ? `${authUser.nombres} ${authUser.apellidos}` : authUser.usuario.nombres}</span>
+												<span className='username'>Usuario: { authUser?.rol_plataforma == 'Administrador'  ? 
+												`${authUser.nombres} ${authUser.apellidos}` : `${authUser.usuario.nombres} ${authUser.usuario.apellidos}`}</span>
 											</Navbar.Text>
+											{
+												authUser?.rol_plataforma != 'Administrador'?
+												<Navbar.Text className='ms-5'>
+													<span className='username'>Universidad: {authUser.universidad.abreviacion} </span>
+												</Navbar.Text>
+												:
+												<></>
+											}
+											
 										</div>
 										<div className='ms-3 me-3'>
 											<Button className='boton-logout' onClick={onLogout}>Cerrar sesión</Button>{' '}

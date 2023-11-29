@@ -7,7 +7,7 @@ import { Route, Link, Outlet,useLocation} from 'react-router-dom';
 
 
 const AdministradorDashboard = () => {
-  const {showSidebar,setShowSidebar, authUser,lastPath,setLastPath} = useAuth()
+  const {showSidebar,setShowSidebar, authUser,lastPath,setLastPath,direccionIP} = useAuth()
   const location = useLocation();
   const currentPathname = location.pathname;
 
@@ -44,6 +44,9 @@ const AdministradorDashboard = () => {
                 </div>
                 <div className='mb-3 div-link'>
                   <h5 className='m-0'><Link className='pt-2 pb-1 ps-4 text-decoration-none w-100 d-flex a-link' to="/administrador/usuarios">Usuarios</Link></h5>
+                </div>
+                <div className='mb-3 div-link'>
+                  <h5 className='m-0'><Link className='pt-2 pb-1 ps-4 text-decoration-none w-100 d-flex a-link' to="/administrador/perfil">Perfil</Link></h5>
                 </div>
               </div>
             </Offcanvas.Body>

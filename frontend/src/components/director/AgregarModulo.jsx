@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation,useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import VentanaModal from '../general/VentanaModal';
 
@@ -11,7 +11,8 @@ const AgregarModulo = () => {
     const [nombre, setNombre] = useState("");
     const [descripcion,setDescripcion] = useState("");
     const location = useLocation();
-    const {showSidebar,setShowSidebar, authUser} = useAuth()
+    const {showSidebar,setShowSidebar, authUser,setLastPath,lastPath,direccionIP} = useAuth()
+    const navigate = useNavigate();
     
     const [showModal, setShowModal] = useState(false);
     const [cuerpoModal, setCuerpoModal] = useState("");
@@ -21,7 +22,7 @@ const AgregarModulo = () => {
     const mostrarModal = () => {
         setShowModal(true)
     };
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault()
         
@@ -29,7 +30,7 @@ const AgregarModulo = () => {
 
         //Agregar universidad a la base de datos.
         try{
-            const response = await axios.post('http://localhost:8080/universidad/agregar_modulo_universidad', {
+            const response = await axios.post(`http://${direccionIP}/universidad/agregar_modulo_universidad`, {
                 abreviacionUniversidad:location.state.abreviacion,
                 nombreModulo:nombre,
                 descripcionModulo: descripcion,
@@ -43,11 +44,17 @@ const AgregarModulo = () => {
         }
     }
 
+    const volver = () => {
+        //console.log(lastPath)
+        navigate(lastPath);
+    }
+
     return (
     <div>
         <div>
             <h1 className='text-center'>Agregar Modulo</h1>
         </div>
+        <button className='btn btn-primary' onClick={volver}>Volver atrás</button>
         <div className='w-100 d-flex justify-content-center '>
             <div className='w-100' style={{maxWidth:"600px"}}>
                 <div className='p-4'>

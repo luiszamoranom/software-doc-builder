@@ -6,7 +6,9 @@ import VentanaModal from "../general/VentanaModal";
 import Pagination from "react-bootstrap/Pagination";
 import { useAuth } from "../../context/AuthContext"
 
+
 const InstanciaModulo = () => {
+  const {authUser,updateAuth,lastPath,setLastPath,direccionIP} = useAuth()
   return (
     <div>
       

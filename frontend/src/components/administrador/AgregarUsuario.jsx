@@ -5,9 +5,10 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
 import VentanaModal from '../general/VentanaModal';
 import { useNavigate } from 'react-router-dom';
-
+import { useAuth } from '../../context/AuthContext';
 
 const AgregarUsuario = () => {
+    const {showSidebar,setShowSidebar, authUser,lastPath,setLastPath,direccionIP} = useAuth()
     const [rut, setRut] = useState("");
     const [nombresUsuario,setNombresUsuario] = useState("");
     const [apellidosUsuario, setApellidosUsuario] = useState("");
@@ -30,7 +31,7 @@ const AgregarUsuario = () => {
     useEffect(() => {
         const fetchUniversidades = async () => {
         try {
-            const response = await axios.get("http://localhost:8080/universidad/filtro/habilitadas");
+            const response = await axios.get(`http://${direccionIP}/universidad/filtro/habilitadas`);
             setUniversidades(response.data.universidades);
         } catch (error) {
             console.error("Hubo un problema al obtener las universidades: ", error);
@@ -88,7 +89,7 @@ const AgregarUsuario = () => {
     const navigate = useNavigate();
 
     const volver = () => {
-        navigate('/administrador/usuarios');
+        navigate(last);
     }
 
     return (
@@ -148,7 +149,6 @@ const AgregarUsuario = () => {
                                 <option key={"1"} value="1">Jefe de Carrera</option>
                                 <option key={"2"} value="2">Profesor</option>
                                 <option key={"3"} value="3">Estudiante</option>
-                                
                             </Form.Select>
                         </Form.Group>
                         

@@ -4,8 +4,10 @@ import Table from "react-bootstrap/Table";
 import axios from "axios";
 import Pagination from 'react-bootstrap/Pagination';
 import VentanaModal from "../general/VentanaModal";
+import { useAuth } from '../../context/AuthContext';
 
 const Usuarios = () => {
+  const {showSidebar,setShowSidebar, authUser,direccionIP} = useAuth()
   const [usuarios, setUsuarios] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => setShowModal(false);
@@ -26,7 +28,7 @@ const Usuarios = () => {
 
   const getUsuarios = async () => {
     const response = await axios.get(
-      "http://localhost:8080/usuario/filtro/todos"
+      `http://${direccionIP}/usuario/filtro/todos`
     );
     setUsuarios(response.data.usuarios); // Actualiza el estado con los datos obtenidos
     console.log(response.data.usuarios);
@@ -40,7 +42,7 @@ const Usuarios = () => {
     //Agregar universidad a la base de datos.
     try {
       const response = await axios.patch(
-        `http://localhost:8080/usuario/habilitar/${rut}`
+        `http://${direccionIP}/usuario/habilitar/${rut}`
       );
       console.log(response.data);
       setTituloModal('<span class="bi bi-check-circle text-success mx-2"></span>Usuario habilitado');
@@ -62,7 +64,7 @@ const Usuarios = () => {
     }
     try {
       const response = await axios.patch(
-        `http://localhost:8080/usuario/deshabilitar/${rut}`
+        `http://${direccionIP}/usuario/deshabilitar/${rut}`
       );
       console.log(response.data);
       setTituloModal('<span class="bi bi-check-circle text-success mx-2"></span>Usuario deshabilitado');
@@ -86,15 +88,16 @@ const Usuarios = () => {
     navigate("/administrador/usuarios/agregarExcel");
   };
 
-  const irEditarUsuario = (rut, nombres, apellidos, correo) => {
+  const irEditarUsuario = (rut, nombres, apellidos, correo,contrasena,index,usuario) => {
     if (rut === "00.000.000-0") {
       setTituloModal('<span class="bi bi-exclamation-triangle text-danger mx-2"></span>Error');
       setCuerpoModal("No se puede editar al usuario administrador");
       mostrarModal();
       return;
     }
+    const roles = usuarios[index].usuarioUniversidadRoles
     navigate("/administrador/usuarios/editar", {
-      state: { rut, nombres, apellidos, correo},
+      state: { rut, nombres, apellidos, contrasena, correo,roles},
     });
   };
 
@@ -109,7 +112,6 @@ const Usuarios = () => {
       </div>
       <div>
         <div>
-          
           <div className="bg-white w-100 justify-content-end d-flex p-3">
             <button className="btn btn-primary border-0 rounded-2 p-1 d-flex text-white mx-2" onClick={irAgregarUsuarios} >
               <div className="p-1">
@@ -149,7 +151,7 @@ const Usuarios = () => {
                     <button
                       className="btn btn-primary"
                       onClick={() =>
-                        irEditarUsuario( usuario.rut, usuario.nombres, usuario.apellidos, usuario.email, usuario.contrasena )
+                        irEditarUsuario( usuario.rut, usuario.nombres, usuario.apellidos, usuario.email, usuario.contrasena, index,usuario)
                       }
                       title="Editar Usuario"
                     >

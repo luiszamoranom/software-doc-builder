@@ -28,7 +28,6 @@ public class UsuarioModel {
     private String apellidos;
 
     @Column
-    @JsonIgnore
     private String contrasena;
 
     @Column

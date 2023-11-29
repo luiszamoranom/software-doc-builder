@@ -6,8 +6,10 @@ import axios from "axios";
 import * as XLSX from "xlsx";
 import VentanaModal from '../general/VentanaModal';
 import { useNavigate } from "react-router-dom";
+import { useAuth } from '../../context/AuthContext';
 
 const AgregarUsuarios = () => {
+  const {showSidebar,setShowSidebar, authUser,lastPath,setLastPath,direccionIP} = useAuth()
   const inputRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const [tituloModal, setTituloModal] = useState("");
@@ -45,7 +47,7 @@ const AgregarUsuarios = () => {
           return;
         } else {
           try {
-            const response = await axios.get(`http://localhost:8080/usuario/${usuario.rut}`);
+            const response = await axios.get(`http://${direccionIP}/usuario/${usuario.rut}`);
             if (response.data.usuario) {
               setTituloModal('<span class="bi bi-exclamation-triangle text-danger mx-2"></span>Error');
               setCuerpoModal(`El usuario ${usuario.rut} ya existe en la base de datos`);

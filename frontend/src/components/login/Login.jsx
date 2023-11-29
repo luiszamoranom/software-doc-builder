@@ -5,7 +5,7 @@ import axios from 'axios';
 
 
 const Login = ({authUser}) => {
-    const {updateAuth} = useAuth();
+    const {updateAuth,direccionIP} = useAuth();
 
     const [rutUsuario,setRutUsuario] = useState('');
     const [contrasenaUsuario,setContrasenaUsuario] = useState('');
@@ -23,18 +23,18 @@ const Login = ({authUser}) => {
         e.preventDefault()
 
         try{
-            console.log(rutUsuario,contrasenaUsuario)
+            //console.log(rutUsuario,contrasenaUsuario)
             const datos = {
                 rut:rutUsuario,
                 contrasena:contrasenaUsuario
             }
-            const response = await axios.get('http://localhost:8080/usuario/login',{
+            const response = await axios.get(`http://${direccionIP}/usuario/login`,{
                 params: {
                     rutUsuario,
                     contrasenaUsuario
                 }
             });
-            console.log(response.data)
+            //console.log(response.data)
             // Verifica si la respuesta es exito
             if (response.data.exito == true) {
                 const respuesta = response.data.usuario
@@ -105,7 +105,7 @@ const Login = ({authUser}) => {
                 setContrasenaUsuario('')
 
                 if (respuesta.rol_plataforma == 'Administrador'){
-                    console.log("deberia entrar a administrador")
+                    //console.log("deberia entrar a administrador")
                     localStorage.setItem("auth", JSON.stringify(respuesta));
                     localStorage.setItem("logged", true);
                     updateAuth(respuesta);
@@ -136,7 +136,7 @@ const Login = ({authUser}) => {
                             }
                         }
                         
-                        console.log(nuevo_usuario)
+                        //console.log(nuevo_usuario)
 
                         localStorage.setItem("auth", JSON.stringify(nuevo_usuario));
                         localStorage.setItem("logged", true);
@@ -153,7 +153,6 @@ const Login = ({authUser}) => {
                         }
                     }
                     else{
-                        //significa que el usuario tiene mas roles en varias instituciones
                         navigate("/filtrador",{state:{respuesta},replace:true})
                     }
                 }
